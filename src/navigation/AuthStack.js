@@ -1,25 +1,18 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import Login from '../screens/Login.js'
-import Signup from '../screens/Signup.js'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import AuthScreen from '../screens/Auth'
 
-const Auth = createNativeStackNavigator()
+const AuthNativeStack = createNativeStackNavigator()
 
 const AuthStack = () => {
   return (
-    <Auth.Navigator>
-      <Auth.Screen
-        name='Login'
-        component={Login}
+    <AuthNativeStack.Navigator>
+      <AuthNativeStack.Screen
+        name='Auth'
+        component={AuthScreen}
         options={{ headerShown: false }}
       />
-      <Auth.Screen
-        name='Signup'
-        component={Signup}
-        options={{ headerShown: false }}
-      />
-    </Auth.Navigator>
+    </AuthNativeStack.Navigator>
   )
 }
 

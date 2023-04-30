@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "UniCar-App",
-    "slug": "UniCar-App",
+    "name": "UniCar",
+    "slug": "UniCar",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "scheme": "UniCar"
   }
 }
