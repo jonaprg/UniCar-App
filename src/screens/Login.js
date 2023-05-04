@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import FormInput from '../components/FormInput.js'
 import FormButton from '../components/FormButton.js'
 import { setAuthState } from '../features/auth/auth.js'
-import GoogleSignIn from '../components/GoogleSignIn.js'
+// import GoogleSignIn from '../components/GoogleSignIn.js'
 
 const Login = ({ onLogin, setEmail, setPassword }) => {
   const dispatch = useDispatch()
@@ -33,7 +33,6 @@ const Login = ({ onLogin, setEmail, setPassword }) => {
         buttonTitle='Iniciar sesión'
         onPress={onLogin}
       />
-      <GoogleSignIn />
       <TouchableOpacity
         className='w-64 bg-buttonColor py-3 rounded-full'
         onPress={() => dispatch(setAuthState('signUp'))}

@@ -18,9 +18,10 @@ const RootNavigator = () => {
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log('User is signed in', user)
-        await AsyncStorage.setItem('@token', user.getIdToken())
-        dispatch(restoreToken(user.getIdToken()))
+        const token = await user.getIdToken()
+        console.log(token)
+        await AsyncStorage.setItem('@token', JSON.stringify(token))
+        dispatch(restoreToken(token))
       } else {
         console.log('User is signed out')
         dispatch(restoreToken(null))

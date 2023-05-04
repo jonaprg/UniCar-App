@@ -23,10 +23,11 @@ const AuthScreen = () => {
     const emailValidation = validateEmail(email)
     const passwordValidation = validatePassword(password)
 
-    if (emailValidation || passwordValidation) {
+    if (!emailValidation || !passwordValidation) {
       console.log('emailValidation', emailValidation)
       console.log('passwordValidation', passwordValidation)
     } else {
+      console.log('ELSE onLogin')
       signInWithEmailAndPassword(auth, email, password)
         .then(user => {
           console.log(user)
@@ -48,7 +49,6 @@ const AuthScreen = () => {
     } else {
       createUserWithEmailAndPassword(auth, email, password)
         .then(user => {
-          console.log('CREATE NEW USER', user)
           createDocUser(user)
           dispatch(setAuthState('signedIn'))
         })
@@ -57,32 +57,33 @@ const AuthScreen = () => {
         })
     }
   }
-  const createDocUser = async (data) => {
+
+  const createDocUser = async (userData) => {
+    console.log('CREATE NEW USER', userData)
+
     const token = await auth.currentUser.getIdToken()
     console.log('TOKEN create doc user', token)
     const user = {
       name,
-      email: data.email,
-      password: data.password,
-      university
+      email: userData.user.email,
+      university,
+      uid: userData.user.uid
     }
     console.log('USER', user)
-    try {
-      const res = await fetch('http://localhost:3000/api/users/user', {
-        method: 'POST',
-        body: JSON.stringify(user),
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
-      })
-      console.log('RESPONSE DOC', res)
-      const data = await res.json()
-      console.log('DATA CREATE DOC USER', data)
-    } catch (error) {
-      console.log('ERROR CREATE DOC USER', error)
-    }
+
+    await fetch('http://192.168.1.58:3000/api/users/user', {
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(response => response.json())
+      .then(data => console.log('DATA CREATE DOC USER', data))
+      .catch(error => console.log('ERROR CREATE DOC USER', error))
   }
+
   console.log('authState', authState)
 
   return (
