@@ -3,14 +3,14 @@ import { Text, View, TextInput } from 'react-native'
 
 const FormInput = ({ name, placeholder, ...rest }) => {
   return (
-    <View>
-      <Text className='block text-gray-800 font-bold pr-4'>{name}</Text>
+    <View className='mb-4 w-64'>
+      <Text className='block text-gray-800 text-base font-bold '>{name}</Text>
       <TextInput
         numberOfLines={1}
         placeholder={placeholder}
-        placeholderTextColor='#666'
+        placeholderTextColor='gray'
         {...rest}
-        className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-buttonColor'
+        className='px-3 py-3 bg-white border-gray-300  rounded-md'
       />
     </View>
   )

@@ -3,8 +3,8 @@ import { Text, TouchableOpacity } from 'react-native'
 
 const FormButton = ({ buttonTitle, ...rest }) => {
   return (
-    <TouchableOpacity {...rest} className='w-64 mb-5 mt-5 bg-buttonColor py-3 rounded-full'>
-      <Text className='shado text-white font-bold py-2 px-4 rounded text-center'>
+    <TouchableOpacity {...rest} className='w-64 bg-buttonColor py-4 px-4 mt-4 rounded-full'>
+      <Text className='text-white font-bold text-center'>
         {buttonTitle}
       </Text>
     </TouchableOpacity>

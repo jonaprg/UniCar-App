@@ -14,19 +14,22 @@ const Login = ({ onLogin, setEmail, setPassword }) => {
   return (
     <View className='flex-1 items-center justify-center bg-primary'>
       <Image source={require('../../assets/UniCarLogo.png')} className='w-64 h-64' />
-      <View className='mb-10'>
+      <View className='mb-7 w-64'>
         <Text className='text-4xl font-normal text-white'>Encuentra</Text>
         <Text className='text-4xl font-normal text-white'>coche rápido</Text>
         <Text className='text-4xl font-normal text-white'>y fácil</Text>
       </View>
       <FormInput
+        name='Correo electronico'
         onChangeText={setEmail}
-        placeholder='Correo electronico'
-        keyboard='email-address'
+        placeholder='example@example.com'
+        keyboardType='email-address'
+        autoCapitalize='none'
       />
       <FormInput
+        name='Contraseña'
         onChangeText={setPassword}
-        placeholder='Contraseña'
+        placeholder='********'
         secureTextEntry
       />
       <FormButton
@@ -34,10 +37,11 @@ const Login = ({ onLogin, setEmail, setPassword }) => {
         onPress={onLogin}
       />
       <TouchableOpacity
-        className='w-64 bg-buttonColor py-3 rounded-full'
+        className='justify-items-center bg-primary flex-row py-3 px-4 mt-5'
         onPress={() => dispatch(setAuthState('signUp'))}
       >
-        <Text className='text-center text-white'>Crear una nueva cuenta</Text>
+        <Text className='font-bold text-gray-300'>No tienes una cuenta?</Text>
+        <Text className='font-bold text-white'> Registrarse</Text>
       </TouchableOpacity>
     </View>
 

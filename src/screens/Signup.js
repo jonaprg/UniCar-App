@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { useDispatch } from 'react-redux'
 import FormInput from '../components/FormInput.js'
 import FormButton from '../components/FormButton.js'
@@ -12,6 +12,8 @@ const SignUp = ({ onSignUp, setEmail, setPassword, setName, setUniversity }) => 
 
   return (
     <View className='flex-1 items-center justify-center bg-primary'>
+      <Image source={require('../../assets/UniCarLogo.png')} className='w-64 h-64' />
+
       <FormInput
         name='Nombre'
         onChangeText={setName}
@@ -40,10 +42,11 @@ const SignUp = ({ onSignUp, setEmail, setPassword, setName, setUniversity }) => 
         onPress={onSignUp}
       />
       <TouchableOpacity
-        className='w-64 bg-buttonColor py-3 rounded-full'
+        className='justify-items-center bg-primary flex-row py-3 px-4 mt-5'
         onPress={() => dispatch(setAuthState('signIn'))}
       >
-        <Text className='text-center text-white'>Inicia sesión</Text>
+        <Text className='font-bold text-gray-300'>Tienes una cuenta?</Text>
+        <Text className='font-bold text-white'> Inicia sessión</Text>
       </TouchableOpacity>
     </View>
 

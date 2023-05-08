@@ -18,8 +18,9 @@ const RootNavigator = () => {
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
       if (user) {
+        const userId = user.uid
+        await AsyncStorage.setItem('@userID', JSON.stringify(userId))
         const token = await user.getIdToken()
-        console.log(token)
         await AsyncStorage.setItem('@token', JSON.stringify(token))
         dispatch(restoreToken(token))
       } else {

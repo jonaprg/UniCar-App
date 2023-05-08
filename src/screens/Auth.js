@@ -62,7 +62,6 @@ const AuthScreen = () => {
     console.log('CREATE NEW USER', userData)
 
     const token = await auth.currentUser.getIdToken()
-    console.log('TOKEN create doc user', token)
     const user = {
       name,
       email: userData.user.email,
@@ -71,7 +70,7 @@ const AuthScreen = () => {
     }
     console.log('USER', user)
 
-    await fetch('http://192.168.1.58:3000/api/users/user', {
+    await fetch('http://192.168.1.41:3000/api/users/user', {
       method: 'POST',
       body: JSON.stringify(user),
       headers: {
