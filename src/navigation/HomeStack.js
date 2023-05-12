@@ -4,7 +4,6 @@ import BottomTab from './BottomTab'
 const HStack = createNativeStackNavigator()
 
 const configOptions = {
-  headerShown: false,
   headerTitleAlign: 'center',
   gestureEnabled: true,
   keyboardHandlingEnabled: true

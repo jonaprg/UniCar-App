@@ -32,7 +32,8 @@ const BottomTab = () => {
         options={{
           tabBarIcon: ({ color }) => (
             <FontAwesome name='home' color={color} size={24} />
-          )
+          ),
+          headerShown: false
         }}
       />
       <Tab.Screen
