@@ -1,48 +1,51 @@
 import { useEffect, useReducer } from 'react'
+import fetchReducer from '../reducers/fetch.js'
 
-const reducer = (state, { type, responseJSON, error }) => {
-  switch (type) {
-    case 'LOADING':
-      return { ...state, isLoading: true }
-    case 'RESPONSE_COMPLETE':
-      return { responseJSON, isLoading: false, error: null }
-    case 'ERROR':
-      return {
-        responseJSON: null,
-        isLoading: false,
-        error
-      }
-    default:
-      throw new Error('That action type is not supported')
+const useFetch = (url = '', method, token) => {
+  const initialState = {
+    data: [],
+    isLoading: false,
+    isError: false
   }
-}
 
-const useFetch = (url) => {
-  const [state, dispatch] = useReducer(reducer, {
-    responseJSON: null,
-    isLoading: true,
-    error: null
-  })
+  // call useReducer with reducer function.
+  // call dispatch function to set the state with the action type
+  // change action type accordingly.
+  const [state, dispatch] = useReducer(fetchReducer, initialState)
 
-  let shouldCancel = false
   useEffect(() => {
-    const callFetch = async () => {
-      dispatch({ type: 'LOADING' })
+    // if component is unmounted during the fetch for any reason, don't set the states.
+    let isMounted = true
+
+    const fetchData = async () => {
+      dispatch({ type: 'FETCH_INIT' })
       try {
-        const res = await fetch(url)
-        const responseJSON = await res.json()
-        if (shouldCancel) return
-        dispatch({ type: 'RESPONSE_COMPLETE', responseJSON })
+        const options = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token.replace(/"/g, '')}`
+          }
+        }
+        const response = await fetch(`http://192.168.1.36:3000/api/${url.replace(/"/g, '')}`, options)
+        const json = await response.json()
+
+        if (!isMounted) return
+        dispatch({ type: 'FETCH_SUCCESS', payload: json })
       } catch (error) {
-        if (shouldCancel) return
-        dispatch({ type: 'ERROR', error })
+        if (isMounted) {
+          dispatch({ type: 'FETCH_FAILURE' })
+        }
       }
     }
-    callFetch()
+
+    fetchData()
+
+    // cleanup function
     return () => {
-      shouldCancel = true
+      isMounted = false
     }
-  }, [])
+  }, [url, method, token])
 
   return state
 }

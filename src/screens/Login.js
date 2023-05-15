@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 
 import FormInput from '../components/FormInput.js'
 import FormButton from '../components/FormButton.js'
-import { setAuthState } from '../features/auth/auth.js'
+import { setAuthState } from '../reducers/auth/auth.js'
 // import GoogleSignIn from '../components/GoogleSignIn.js'
 
 const Login = ({ onLogin, setEmail, setPassword }) => {

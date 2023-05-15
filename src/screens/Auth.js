@@ -4,7 +4,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword
 } from 'firebase/auth'
-import { setAuthState } from '../features/auth/auth.js'
+import { setAuthState } from '../reducers/auth/auth.js'
 import Login from './Login.js'
 import SignUp from './Signup.js'
 import { auth } from '../firebaseConfig.js'
@@ -30,7 +30,8 @@ const AuthScreen = () => {
       console.log('ELSE onLogin')
       signInWithEmailAndPassword(auth, email, password)
         .then(user => {
-          console.log(user)
+          console.log('USER LOGEADO', user)
+
           dispatch(setAuthState('signedIn'))
         })
         .catch(error => {
@@ -70,20 +71,18 @@ const AuthScreen = () => {
     }
     console.log('USER', user)
 
-    await fetch('http://192.168.1.41:3000/api/users/user', {
+    await fetch('http://192.168.1.36:3000/api/users/user', {
       method: 'POST',
       body: JSON.stringify(user),
       headers: {
         'Content-type': 'application/json',
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token.replace(/""/g, '')}`
       }
     })
       .then(response => response.json())
       .then(data => console.log('DATA CREATE DOC USER', data))
       .catch(error => console.log('ERROR CREATE DOC USER', error))
   }
-
-  console.log('authState', authState)
 
   return (
     <>

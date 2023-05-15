@@ -6,15 +6,31 @@ import { useSelector, useDispatch } from 'react-redux'
 import AuthStack from './AuthStack.js'
 import HomeStack from './HomeStack.js'
 import Splash from '../screens/Splash.js'
-import { restoreToken } from '../features/auth/auth.js'
+import { restoreToken } from '../reducers/auth/auth.js'
 import { auth } from '../firebaseConfig.js'
 import { onAuthStateChanged } from 'firebase/auth'
+import { setUser } from '../reducers/user.js'
 
 const RootNavigator = () => {
   const { userToken } = useSelector((state) => state.auth)
   const [isLoading, setIsLoading] = React.useState(true)
-  const dispatch = useDispatch()
 
+  const dispatch = useDispatch()
+  const getUser = async (userID, token) => {
+    try {
+      const response = await fetch(`http://192.168.1.36:3000/api/users/${userID.replace(/""/g, '')}`, {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${token.replace(/""/g, '')}`
+        }
+      })
+      const data = await response.json()
+      return data
+    } catch (error) {
+      console.log('ERROR GET USER', error)
+    }
+  }
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -22,6 +38,21 @@ const RootNavigator = () => {
         await AsyncStorage.setItem('@userID', JSON.stringify(userId))
         const token = await user.getIdToken()
         await AsyncStorage.setItem('@token', JSON.stringify(token))
+        console.log('token', token)
+        const userData = await getUser(userId, token)
+        console.log('data', userData)
+        dispatch(setUser({
+          id: userId,
+          name: userData.name,
+          email: user.email,
+          university: userData.university,
+          phone: user.phoneNumber,
+          carModel: userData.carModel,
+          carColor: userData.carColor,
+          ratings: userData.ratingsu,
+          preferences: userData.preferences,
+          profilePicture: user.photoURL
+        }))
         dispatch(restoreToken(token))
       } else {
         console.log('User is signed out')
@@ -35,7 +66,7 @@ const RootNavigator = () => {
   if (isLoading) {
     return <Splash />
   }
-
+  console.log('userToken', userToken)
   return (
     <NavigationContainer>
       {userToken ? <HomeStack /> : <AuthStack />}

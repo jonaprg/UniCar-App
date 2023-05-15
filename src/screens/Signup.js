@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { useDispatch } from 'react-redux'
 import FormInput from '../components/FormInput.js'
 import FormButton from '../components/FormButton.js'
-import { setAuthState } from '../features/auth/auth.js'
+import { setAuthState } from '../reducers/auth/auth.js'
 
 const SignUp = ({ onSignUp, setEmail, setPassword, setName, setUniversity }) => {
   // const [university, setUniversity] = useState()
