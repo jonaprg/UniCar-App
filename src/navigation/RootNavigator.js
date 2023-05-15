@@ -18,7 +18,7 @@ const RootNavigator = () => {
   const dispatch = useDispatch()
   const getUser = async (userID, token) => {
     try {
-      const response = await fetch(`http://192.168.1.36:3000/api/users/${userID.replace(/""/g, '')}`, {
+      const response = await fetch(`http://192.168.1.40:3000/api/users/${userID.replace(/""/g, '')}`, {
         method: 'GET',
         headers: {
           'Content-type': 'application/json',
@@ -40,7 +40,6 @@ const RootNavigator = () => {
         await AsyncStorage.setItem('@token', JSON.stringify(token))
         console.log('token', token)
         const userData = await getUser(userId, token)
-        console.log('data', userData)
         dispatch(setUser({
           id: userId,
           name: userData.name,
@@ -51,7 +50,7 @@ const RootNavigator = () => {
           carColor: userData.carColor,
           ratings: userData.ratingsu,
           preferences: userData.preferences,
-          profilePicture: user.photoURL
+          profilePicture: `https://firebasestorage.googleapis.com/v0/b/unicar-jrg.appspot.com/o/profilePictures%2F${userId}?alt=media&token=435929b4-a6a1-46ac-898f-af689ea08cdd`
         }))
         dispatch(restoreToken(token))
       } else {

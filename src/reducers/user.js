@@ -23,9 +23,15 @@ const userSlice = createSlice({
     },
     resetUser: (state) => {
       return (state = initialState)
+    },
+    resetProfilePicture: (state, action) => {
+      return {
+        ...state,
+        profilePicture: action.payload
+      }
     }
   }
 })
 
-export const { setUser, resetUser } = userSlice.actions
+export const { setUser, resetUser, resetProfilePicture } = userSlice.actions
 export default userSlice.reducer
