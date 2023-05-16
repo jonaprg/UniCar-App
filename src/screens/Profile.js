@@ -1,6 +1,6 @@
 import React from 'react'
-import { View, Text } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { View } from 'react-native'
+import { useDispatch } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { setAuthState, signOut } from '../reducers/auth/auth.js'
@@ -9,9 +9,9 @@ import { signOut as signOutFirebase, deleteUser } from 'firebase/auth'
 import FormButton from '../components/FormButton.js'
 import { resetUser } from '../reducers/user.js'
 import ProfilePicture from '../components/ProfilePicture.js'
+import ProfileInfo from '../components/ProfileInfo.js'
 const Profile = () => {
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.user)
 
   const handleLogout = async () => {
     signOutFirebase(auth)
@@ -33,7 +33,7 @@ const Profile = () => {
     deleteUser(user)
       .then(async () => {
         console.log('user deleted')
-        await fetch(`http://192.168.1.40:3000/api/users/${user.uid.replace(/""/g, '')}`, {
+        await fetch(`http://192.168.1.36:3000/api/users/${user.uid.replace(/""/g, '')}`, {
           method: 'DELETE',
           headers: {
             'Content-type': 'application/json',
@@ -63,40 +63,7 @@ const Profile = () => {
 
       <View className='px-2 py-2 '>
         <ProfilePicture />
-        <View className='border-b flex py-5 px-5 flex-row flex-wrap'>
-          <View className=' px-2 py-2'>
-            <Text className='text-lg font-bold text-buttonColor'>Correo electronico</Text>
-            <Text>{user?.email}</Text>
-          </View>
-          <View className='px-2 py-2'>
-            <Text className='text-lg font-bold text-buttonColor'>Universidad</Text>
-            <Text>{user?.university}</Text>
-          </View>
-          <View className=' px-2 py-2'>
-            <Text className='text-lg font-bold text-buttonColor'>Móvil</Text>
-            <Text>{user?.phone ?? 'No hay movil'}</Text>
-          </View>
-        </View>
-        <View className='flex py-5 px-5 flex-row justify-around'>
-          <View className=' px-2 py-2'>
-            <Text className='text-lg font-bold text-buttonColor'>Vehículo</Text>
-            <Text>{user?.car ?? 'No hay coche'}</Text>
-          </View>
-          <View className=' px-10 py-2'>
-            <Text className='text-lg font-bold text-buttonColor'>Color</Text>
-            <Text>{user?.color ?? 'No tienes color'}</Text>
-          </View>
-          <View className=' px-2 py-2'>
-            <Text className='text-lg font-bold text-buttonColor'>Valoraciones</Text>
-            <Text>{user?.valoracion ?? 'No hay valoraciones'}</Text>
-          </View>
-        </View>
-        <View className='flex py-5 px-5 flex-col justify-around'>
-          <Text className='text-lg font-bold text-buttonColor'>Preferencias</Text>
-          <Text>No hay descripción</Text>
-          <Text>No hay descripción</Text>
-          <Text>No hay descripción</Text>
-        </View>
+        <ProfileInfo />
         <View className='mt-5 items-center justify-center'>
           <FormButton
             buttonTitle='Cerrar sesión'

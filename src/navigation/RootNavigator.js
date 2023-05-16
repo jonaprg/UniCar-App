@@ -18,7 +18,7 @@ const RootNavigator = () => {
   const dispatch = useDispatch()
   const getUser = async (userID, token) => {
     try {
-      const response = await fetch(`http://192.168.1.40:3000/api/users/${userID.replace(/""/g, '')}`, {
+      const response = await fetch(`http://192.168.1.36:3000/api/users/${userID.replace(/""/g, '')}`, {
         method: 'GET',
         headers: {
           'Content-type': 'application/json',
