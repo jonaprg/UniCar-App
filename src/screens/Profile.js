@@ -1,6 +1,6 @@
 import React from 'react'
-import { View } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { View, RefreshControl } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { setAuthState, signOut } from '../reducers/auth/auth.js'
@@ -10,8 +10,20 @@ import FormButton from '../components/FormButton.js'
 import { resetUser } from '../reducers/user.js'
 import ProfilePicture from '../components/ProfilePicture.js'
 import ProfileInfo from '../components/ProfileInfo.js'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { ScrollView } from 'react-native-gesture-handler'
 const Profile = () => {
   const dispatch = useDispatch()
+  const user = useSelector((state) => state.user)
+
+  const [refreshing, setRefreshing] = React.useState(false)
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true)
+    setTimeout(() => {
+      setRefreshing(false)
+    }, 2000)
+  }, [user])
 
   const handleLogout = async () => {
     signOutFirebase(auth)
@@ -33,7 +45,7 @@ const Profile = () => {
     deleteUser(user)
       .then(async () => {
         console.log('user deleted')
-        await fetch(`http://192.168.1.36:3000/api/users/${user.uid.replace(/""/g, '')}`, {
+        await fetch(`http://192.168.1.33:3000/api/users/${user.uid.replace(/""/g, '')}`, {
           method: 'DELETE',
           headers: {
             'Content-type': 'application/json',
@@ -58,26 +70,34 @@ const Profile = () => {
         console.log('user delete error', error)
       })
   }
+
   return (
-    <>
+    <SafeAreaView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        nestedScrollEnabled
+      >
+        <View className='px-2 '>
 
-      <View className='px-2 py-2 '>
-        <ProfilePicture />
-        <ProfileInfo />
-        <View className='mt-5 items-center justify-center'>
-          <FormButton
-            buttonTitle='Cerrar sesión'
-            onPress={handleLogout}
-          />
-          <FormButton
-            className='bg-errorColor'
-            buttonTitle='Eliminar cuenta'
-            onPress={handleDeleteAccount}
-          />
+          <ProfilePicture />
+          <ProfileInfo />
+
+          <View className='mt-5 items-center justify-center'>
+            <FormButton
+              buttonTitle='Cerrar sesión'
+              onPress={handleLogout}
+            />
+            <FormButton
+              className='bg-errorColor'
+              buttonTitle='Eliminar cuenta'
+              onPress={handleDeleteAccount}
+            />
+          </View>
         </View>
-      </View>
-
-    </>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 

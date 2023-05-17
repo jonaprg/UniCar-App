@@ -13,12 +13,13 @@ import { setUser } from '../reducers/user.js'
 
 const RootNavigator = () => {
   const { userToken } = useSelector((state) => state.auth)
+  const user = useSelector((state) => state.user)
   const [isLoading, setIsLoading] = React.useState(true)
 
   const dispatch = useDispatch()
   const getUser = async (userID, token) => {
     try {
-      const response = await fetch(`http://192.168.1.36:3000/api/users/${userID.replace(/""/g, '')}`, {
+      const response = await fetch(`http://192.168.1.33:3000/api/users/${userID.replace(/""/g, '')}`, {
         method: 'GET',
         headers: {
           'Content-type': 'application/json',
@@ -38,17 +39,17 @@ const RootNavigator = () => {
         await AsyncStorage.setItem('@userID', JSON.stringify(userId))
         const token = await user.getIdToken()
         await AsyncStorage.setItem('@token', JSON.stringify(token))
-        console.log('token', token)
         const userData = await getUser(userId, token)
+        console.log('userData', userData)
         dispatch(setUser({
           id: userId,
           name: userData.name,
           email: user.email,
           university: userData.university,
-          phone: user.phoneNumber,
+          phone: userData.phone,
           carModel: userData.carModel,
           carColor: userData.carColor,
-          ratings: userData.ratingsu,
+          ratings: userData.ratings,
           preferences: userData.preferences,
           profilePicture: `https://firebasestorage.googleapis.com/v0/b/unicar-jrg.appspot.com/o/profilePictures%2F${userId}?alt=media&token=435929b4-a6a1-46ac-898f-af689ea08cdd`
         }))
@@ -66,6 +67,7 @@ const RootNavigator = () => {
     return <Splash />
   }
   console.log('userToken', userToken)
+  console.log('user', user)
   return (
     <NavigationContainer>
       {userToken ? <HomeStack /> : <AuthStack />}

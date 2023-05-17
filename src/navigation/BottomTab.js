@@ -1,8 +1,8 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Home from '../screens/Home.js'
-import Profile from '../screens/Profile.js'
 import { FontAwesome } from '@expo/vector-icons'
+import ProfileStack from './ProfileStack.js'
 
 const Tab = createBottomTabNavigator()
 const screenOptions = {
@@ -33,16 +33,19 @@ const BottomTab = () => {
           tabBarIcon: ({ color }) => (
             <FontAwesome name='home' color={color} size={24} />
           ),
-          headerShown: false
+          headerShown: false,
+          title: 'Inicio'
         }}
       />
       <Tab.Screen
-        name='Perfil'
-        component={Profile}
+        name='ProfileStack'
+        component={ProfileStack}
         options={{
           tabBarIcon: ({ color }) => (
             <FontAwesome name='user' color={color} size={24} />
-          )
+          ),
+          headerShown: false,
+          title: 'Perfil'
         }}
       />
     </Tab.Navigator>

@@ -22,16 +22,60 @@ const userSlice = createSlice({
       return (state = action.payload)
     },
     resetUser: (state) => {
-      return (state = initialState)
+      return (state = {
+        id: null,
+        name: null,
+        email: null,
+        phone: null,
+        university: null,
+        carModel: null,
+        carColor: null,
+        ratings: null,
+        preferences: null,
+        notificationToken: null,
+        profilePicture: null
+      })
     },
     resetProfilePicture: (state, action) => {
       return {
         ...state,
         profilePicture: action.payload
       }
+    },
+    setUserNameRedux: (state, action) => {
+      return {
+        ...state,
+        name: action.payload
+      }
+    },
+    setUserEmailRedux: (state, action) => {
+      return {
+        ...state,
+        email: action.payload
+      }
+    },
+    setUserUniversityRedux: (state, action) => {
+      return {
+        ...state,
+        university: action.payload
+      }
+    },
+    setUserPhoneRredux: (state, action) => {
+      return {
+        ...state,
+        phone: action.payload
+      }
     }
   }
 })
 
-export const { setUser, resetUser, resetProfilePicture } = userSlice.actions
+export const {
+  setUser,
+  resetUser,
+  resetProfilePicture,
+  setUserNameRedux,
+  setUserEmailRedux,
+  setUserUniversityRedux,
+  setUserPhoneRredux
+} = userSlice.actions
 export default userSlice.reducer

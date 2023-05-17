@@ -4,16 +4,17 @@ import { updateEmail } from 'firebase/auth'
 
 export const updateUserName = async (userID, newName) => {
   const token = await AsyncStorage.getItem('@token')
-  await fetch(`http://192.168.1.36:3000/api/users/${userID.replace(/""/g, '')}`, {
-    method: 'PATCH',
+  await fetch(`http://192.168.1.33:3000/api/users/${userID.replace(/""/g, '')}`, {
+    method: 'PUT',
     headers: {
       'Content-type': 'application/json',
-      Authorization: `Bearer ${token.replace(/""/g, '')}`
+      Authorization: `Bearer ${token.replace(/"/g, '')}`
     },
     body: JSON.stringify({
       name: newName
     })
   }).then(response => {
+    console.log('response', response.status)
     if (response.ok) {
       console.log('user name updated')
     } else {
@@ -27,11 +28,11 @@ export const updateUserName = async (userID, newName) => {
 export const updateUserPhone = async (userID, newPhone) => {
   const token = await AsyncStorage.getItem('@token')
   console.log('jajsdnaj', token)
-  await fetch(`http://192.168.1.36:3000/api/users/${userID.replace(/""/g, '')}`, {
-    method: 'PATCH',
+  await fetch(`http://192.168.1.33:3000/api/users/${userID.replace(/""/g, '')}`, {
+    method: 'PUT',
     headers: {
       'Content-type': 'application/json',
-      Authorization: `Bearer ${token.replace(/""/g, '')}`
+      Authorization: `Bearer ${token.replace(/"/g, '')}`
     },
     body: JSON.stringify({
       phone: newPhone
@@ -50,11 +51,11 @@ export const updateUserPhone = async (userID, newPhone) => {
 export const updateUserUniversity = async (userID, newUniversity) => {
   const token = await AsyncStorage.getItem('@token')
   console.log('jajsdnaj', token)
-  await fetch(`http://192.168.1.36:3000/api/users/${userID.replace(/""/g, '')}`, {
-    method: 'PATCH',
+  await fetch(`http://192.168.1.33:3000/api/users/${userID.replace(/""/g, '')}`, {
+    method: 'PUT',
     headers: {
       'Content-type': 'application/json',
-      Authorization: `Bearer ${token.replace(/""/g, '')}`
+      Authorization: `Bearer ${token.replace(/"/g, '')}`
     },
     body: JSON.stringify({
       university: newUniversity

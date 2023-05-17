@@ -1,23 +1,13 @@
 import * as React from 'react'
 import { View, Pressable, StyleSheet, Image, Alert } from 'react-native'
-import MyText from '../components/MyText.js'
 import { useSelector, useDispatch } from 'react-redux'
 import * as ImagePicker from 'expo-image-picker'
 import { resetProfilePicture } from '../reducers/user.js'
 import { getStorage, ref, uploadBytes } from 'firebase/storage'
 
-function ProfileFallback ({ name }) {
-  return (
-    <View style={styles.fallback}>
-      <MyText style={styles.initialLetter}>{name}</MyText>
-    </View>
-  )
-}
-
 export default function ProfilePicture () {
   const user = useSelector((state) => state.user)
-  const { name, profilePicture, id } = user
-  console.log('USER', user)
+  const { profilePicture, id } = user
   const dispatch = useDispatch()
   const storage = getStorage()
 
@@ -66,38 +56,21 @@ export default function ProfilePicture () {
             <Image source={{ uri: profilePicture }} style={styles.image} />
             )
           : (
-            <ProfileFallback firstName={name} />
+            <Image source={{ uri: 'assets:/profile.png' }} />
             )}
       </Pressable>
-      <MyText style={{ fontWeight: 'bold' }}>
-        {name}
-      </MyText>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center'
-  },
-  fallback: {
-    backgroundColor: 'lightcoral',
-
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginBottom: 6
+    alignItems: 'center',
+    marginBottom: 10
   },
   image: {
     width: 100,
     height: 100,
-    borderRadius: 50,
-    marginBottom: 6
-  },
-  initialLetter: {
-    fontSize: 60,
-    lineHeight: 100,
-    textAlign: 'center',
-    color: 'white'
+    borderRadius: 50
   }
 })

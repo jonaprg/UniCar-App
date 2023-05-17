@@ -1,24 +1,41 @@
 import React from 'react'
-import { SafeAreaView, Text, View, StyleSheet } from 'react-native'
+import { SafeAreaView, Text, View, StyleSheet, Alert } from 'react-native'
 import SearchableDropdown from 'react-native-searchable-dropdown'
 
-const SeachDropdown = ({ items, title }) => {
+// Items array for the dropdown. The list contains brand of cars.
+const items = [
+  { id: 1, name: 'audi' },
+  { id: 2, name: 'mercedes' },
+  { id: 3, name: 'bmw' },
+  { id: 4, name: 'lexus' },
+  { id: 5, name: 'toyota' },
+  { id: 6, name: 'honda' },
+  { id: 7, name: 'hyundai' },
+  { id: 8, name: 'ferrari' },
+  { id: 9, name: 'jaguar' },
+  { id: 10, name: 'volvo' },
+  { id: 11, name: 'ford' },
+  { id: 12, name: 'chevrolet' },
+  { id: 13, name: 'tesla' }
+]
+
+const SeachDropdown = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView className=' '>
       <View style={styles.container}>
         <Text style={styles.titleText}>
-          {title}
+          Coche
         </Text>
         <SearchableDropdown
-          onTextChange={(text) => console.log(text)}
+          onTextChange={(text) => console.log('text', text)}
           // On text change listner on the searchable input
-          onItemSelect={(item) => { return item }}
+          onItemSelect={(item) => Alert.alert(JSON.stringify(item))}
           // onItemSelect called after the selection from the dropdown
           containerStyle={{ padding: 5 }}
           // suggestion container style
           textInputStyle={{
             // inserted text style
-            padding: 12,
+            padding: 5,
             borderWidth: 1,
             borderColor: '#ccc',
             backgroundColor: '#FAF7F6'
@@ -27,9 +44,8 @@ const SeachDropdown = ({ items, title }) => {
             // single dropdown item style
             padding: 10,
             marginTop: 2,
-            backgroundColor: '#FAF9F8',
-            borderColor: '#bbb',
-            borderWidth: 1
+            backgroundColor: '#FAF9F8'
+
           }}
           itemTextStyle={{
             // text style of a single dropdown item
@@ -38,7 +54,7 @@ const SeachDropdown = ({ items, title }) => {
           itemsContainerStyle={{
             // items container style you can pass maxHeight
             // to restrict the items dropdown hieght
-            maxHeight: '60%'
+            maxHeight: '100%'
           }}
           items={items}
           // mapping of item array
@@ -49,7 +65,6 @@ const SeachDropdown = ({ items, title }) => {
           resetValue={false}
           // reset textInput Value with true and false state
           underlineColorAndroid='transparent'
-          // To remove the underline from the android input
         />
       </View>
     </SafeAreaView>
@@ -59,11 +74,7 @@ const SeachDropdown = ({ items, title }) => {
 export default SeachDropdown
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    padding: 10
-  },
+
   titleText: {
     padding: 8,
     fontSize: 16,

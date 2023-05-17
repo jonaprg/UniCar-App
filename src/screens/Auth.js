@@ -70,7 +70,7 @@ const AuthScreen = () => {
     }
     console.log('USER', user)
 
-    await fetch('http://192.168.1.36:3000/api/users/user', {
+    await fetch('http://192.168.1.33:3000/api/users/user', {
       method: 'POST',
       body: JSON.stringify(user),
       headers: {
