@@ -9,7 +9,7 @@ const configOptions = {
   keyboardHandlingEnabled: true
 }
 
-const HomeStack = () => {
+const RootStack = () => {
   return (
     <HStack.Navigator initialRouteName='Home' screenOptions={configOptions}>
       <HStack.Screen
@@ -21,4 +21,4 @@ const HomeStack = () => {
   )
 }
 
-export default HomeStack
+export default RootStack

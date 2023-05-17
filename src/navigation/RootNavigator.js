@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useSelector, useDispatch } from 'react-redux'
 
 import AuthStack from './AuthStack.js'
-import HomeStack from './HomeStack.js'
+import RootStack from './RootStack.js'
 import Splash from '../screens/Splash.js'
 import { restoreToken } from '../reducers/auth/auth.js'
 import { auth } from '../firebaseConfig.js'
@@ -70,7 +70,7 @@ const RootNavigator = () => {
   console.log('user', user)
   return (
     <NavigationContainer>
-      {userToken ? <HomeStack /> : <AuthStack />}
+      {userToken ? <RootStack /> : <AuthStack />}
     </NavigationContainer>
   )
 }
