@@ -2,7 +2,9 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Profile from '../screens/Profile.js'
-import CarEdit from '../screens/CarEdit.js'
+import CarBrandEdit from '../screens/CarBrandEdit.js'
+import CarColorEdit from '../screens/CarColorEdit.js'
+import PreferencesEdit from '../screens/PreferencesEdit.js'
 const Stack = createNativeStackNavigator()
 
 const ProfileStack = () => {
@@ -15,9 +17,21 @@ const ProfileStack = () => {
         // Configuración para la pantalla de perfil
       />
       <Stack.Screen
-        name='CarEdit'
-        component={CarEdit}
-        options={{ title: 'Editar coche' }}
+        name='CarBrandEdit'
+        component={CarBrandEdit}
+        options={{ title: 'Marca del coche' }}
+        // Configuración para la pantalla de edición del coche
+      />
+      <Stack.Screen
+        name='CarColorEdit'
+        component={CarColorEdit}
+        options={{ title: 'Color del coche' }}
+        // Configuración para la pantalla de edición del coche
+      />
+      <Stack.Screen
+        name='PreferencesEdit'
+        component={PreferencesEdit}
+        options={{ title: 'Preferencias' }}
         // Configuración para la pantalla de edición del coche
       />
     </Stack.Navigator>

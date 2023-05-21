@@ -79,7 +79,7 @@ const Profile = () => {
         }
         nestedScrollEnabled
       >
-        <View className='px-2 '>
+        <View>
 
           <ProfilePicture />
           <ProfileInfo />

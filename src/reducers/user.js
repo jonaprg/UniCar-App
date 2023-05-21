@@ -6,7 +6,7 @@ const initialState = {
   email: null,
   phone: null,
   university: null,
-  carModel: null,
+  carBrand: null,
   carColor: null,
   ratings: null,
   preferences: null,
@@ -19,7 +19,20 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      return (state = action.payload)
+      return {
+        ...state,
+        id: action.payload.id,
+        name: action.payload.name,
+        email: action.payload.email,
+        phone: action.payload.phone,
+        university: action.payload.university,
+        carBrand: action.payload.carBrand,
+        carColor: action.payload.carColor,
+        ratings: action.payload.ratings,
+        preferences: action.payload.preferences,
+        notificationToken: action.payload.notificationToken,
+        profilePicture: action.payload.profilePicture
+      }
     },
     resetUser: (state) => {
       return (state = {
@@ -28,7 +41,7 @@ const userSlice = createSlice({
         email: null,
         phone: null,
         university: null,
-        carModel: null,
+        carBrand: null,
         carColor: null,
         ratings: null,
         preferences: null,
@@ -60,10 +73,28 @@ const userSlice = createSlice({
         university: action.payload
       }
     },
-    setUserPhoneRredux: (state, action) => {
+    setUserPhoneRedux: (state, action) => {
       return {
         ...state,
         phone: action.payload
+      }
+    },
+    setUserCarBrandRedux: (state, action) => {
+      return {
+        ...state,
+        carBrand: action.payload
+      }
+    },
+    setUserCarColorRedux: (state, action) => {
+      return {
+        ...state,
+        carColor: action.payload
+      }
+    },
+    setUserPreferencesRedux: (state, action) => {
+      return {
+        ...state,
+        preferences: action.payload
       }
     }
   }
@@ -76,6 +107,9 @@ export const {
   setUserNameRedux,
   setUserEmailRedux,
   setUserUniversityRedux,
-  setUserPhoneRredux
+  setUserPhoneRedux,
+  setUserCarBrandRedux,
+  setUserCarColorRedux,
+  setUserPreferencesRedux
 } = userSlice.actions
 export default userSlice.reducer

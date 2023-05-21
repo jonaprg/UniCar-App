@@ -1,8 +1,10 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import Home from '../screens/Home.js'
-import { FontAwesome } from '@expo/vector-icons'
+import { FontAwesome, Ionicons, AntDesign } from '@expo/vector-icons'
 import ProfileStack from './ProfileStack.js'
+import HomeStack from './HomeStack.js'
+import DriverStack from './DriverStack.js'
+import TripsStack from './TripsStack.js'
 
 const Tab = createBottomTabNavigator()
 const screenOptions = {
@@ -27,14 +29,36 @@ const BottomTab = () => {
   return (
     <Tab.Navigator {...{ screenOptions }}>
       <Tab.Screen
-        name='Home'
-        component={Home}
+        name='HomeStack'
+        component={HomeStack}
         options={{
           tabBarIcon: ({ color }) => (
             <FontAwesome name='home' color={color} size={24} />
           ),
           headerShown: false,
           title: 'Inicio'
+        }}
+      />
+      <Tab.Screen
+        name='DriverStack'
+        component={DriverStack}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <AntDesign name='pluscircleo' color={color} size={24} />
+          ),
+          headerShown: false,
+          title: 'Publicar'
+        }}
+      />
+      <Tab.Screen
+        name='TripsStack'
+        component={TripsStack}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Ionicons name='list-circle-outline' color={color} size={24} />
+          ),
+          headerShown: false,
+          title: 'Rutas'
         }}
       />
       <Tab.Screen
@@ -48,6 +72,7 @@ const BottomTab = () => {
           title: 'Perfil'
         }}
       />
+
     </Tab.Navigator>
   )
 }

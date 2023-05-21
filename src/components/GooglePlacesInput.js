@@ -2,7 +2,12 @@ import * as React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
-const GooglePlacesInput = ({ placeholder }) => {
+const GooglePlacesInput = ({ placeholder, onPlaceSelected }) => {
+  const handlePlaceSelected = (data, details = null) => {
+    if (onPlaceSelected) {
+      onPlaceSelected(data.description)
+    }
+  }
   return (
     <View style={styles.container}>
       <GooglePlacesAutocomplete
@@ -13,7 +18,7 @@ const GooglePlacesInput = ({ placeholder }) => {
           language: 'es',
           components: 'country:es'
         }}
-        onPress={(data, details = null) => console.log(data)}
+        onPress={handlePlaceSelected}
         onFail={(error) => console.error(error)}
         requestUrl={{
           url:

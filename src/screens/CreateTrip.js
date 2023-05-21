@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {
   View, Text, TouchableOpacity,
-  Image, TouchableWithoutFeedback,
+  TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Keyboard, Platform
 } from 'react-native'
@@ -10,11 +10,8 @@ import { useColorScheme } from 'nativewind'
 import GooglePlacesInput from '../components/GooglePlacesInput.js'
 import DatePickerModal from '../components/DatePicker.js'
 
-const Home = () => {
+const CreateTrip = () => {
   const [count, setCount] = useState(1)
-  const [origin, setOrigin] = useState('')
-  const [destination, setDestination] = useState('')
-  const [selectedDate, setSelectedDate] = useState(null)
   const { colorScheme } = useColorScheme()
 
   const handleDecreaseCount = () => {
@@ -29,6 +26,11 @@ const Home = () => {
     }
   }
 
+  const handlePlaceSelected = (data) => {
+    console.log('Place selected:', data)
+    // Hacer algo con el valor seleccionado
+  }
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -36,10 +38,6 @@ const Home = () => {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
         <View className='bg-primary flex-1'>
-          <Image
-            source={require('../../assets/headerHome.jpg')}
-            className='w-full h-52'
-          />
           <View className='p-5'>
             <Text className='text-2xl font-bold text-secondary'>
               ¿Donde quieres ir?
@@ -50,7 +48,7 @@ const Home = () => {
                   Origen
                 </Text>
 
-                <GooglePlacesInput placeholder='De' />
+                <GooglePlacesInput placeholder='De' onPlaceSelected={handlePlaceSelected} />
                 <Text className='text-lg font-medium text-black/60'>
                   Destino
                 </Text>
@@ -74,7 +72,7 @@ const Home = () => {
                   </View>
                   <TouchableOpacity className='flex-row justify-center rounded-full bg-buttonColor p-3 w-2/4 self-center'>
                     <Text className='text-white dark:text-black font-bold'>
-                      Buscar
+                      Publicar viaje
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -88,4 +86,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default CreateTrip

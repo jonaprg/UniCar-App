@@ -50,7 +50,6 @@ export const updateUserPhone = async (userID, newPhone) => {
 
 export const updateUserUniversity = async (userID, newUniversity) => {
   const token = await AsyncStorage.getItem('@token')
-  console.log('jajsdnaj', token)
   await fetch(`http://192.168.1.33:3000/api/users/${userID.replace(/""/g, '')}`, {
     method: 'PUT',
     headers: {

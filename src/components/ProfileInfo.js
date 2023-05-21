@@ -1,15 +1,15 @@
 import * as React from 'react'
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
 import MyText from '../components/MyText.js'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
-import { FontAwesome } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons'
 
 import {
   setUserNameRedux,
   setUserEmailRedux,
   setUserUniversityRedux,
-  setUserPhoneRredux
+  setUserPhoneRedux
 } from '../reducers/user.js'
 import {
   updateUserName,
@@ -22,8 +22,14 @@ export default function ProfileInfo () {
   const user = useSelector((state) => state.user)
   console.log('profileUser', user)
   const navigation = useNavigation()
-  const handleCarEdit = () => {
-    navigation.navigate('CarEdit')
+  const handleCarBrandEdit = (props) => {
+    navigation.navigate('CarBrandEdit', props)
+  }
+  const handleCarColorEdit = (props) => {
+    navigation.navigate('CarColorEdit', props)
+  }
+  const handlePreferencesEdit = (props) => {
+    navigation.navigate('PreferencesEdit', props)
   }
   return (
     <View>
@@ -55,7 +61,7 @@ export default function ProfileInfo () {
           value={user.phone}
           canEdit
           handleUpdate={updateUserPhone}
-          handleRedux={setUserPhoneRredux}
+          handleRedux={setUserPhoneRedux}
         />
 
         <View className='flex mt-3'>
@@ -63,21 +69,56 @@ export default function ProfileInfo () {
             <View className='py-2'>
               <TouchableOpacity
                 className='flex-row items-center'
-                onPress={() => handleCarEdit()}
+                onPress={() => handleCarBrandEdit({ userId: user?.id, carBrandValue: user?.carBrand })}
               >
-                <Text className='font-bold text-lg text-errorColor mr-2'>Coche</Text>
-                <FontAwesome name='edit' color='red' size={20} />
+                <Text className='font-bold text-lg text-buttonColor mr-2'>Coche</Text>
+                <AntDesign name='edit' color='black' size={18} />
               </TouchableOpacity>
-              <Text>{user?.carModel ?? 'Sin modelo'}</Text>
-              <Text>{user?.carModel ?? 'Sin color'}</Text>
+              <Text>{user?.carBrand ?? 'Sin modelo'}</Text>
             </View>
-            <View className='py-2' />
+            <View className='py-2'>
+              <TouchableOpacity
+                className='flex-row items-center'
+                onPress={() => handleCarColorEdit({ userId: user?.id, carColorValue: user?.carColor })}
+              >
+                <Text className='font-bold text-lg text-buttonColor mr-2'>Color</Text>
+                <AntDesign name='edit' color='black' size={18} />
+              </TouchableOpacity>
+              <Text>{user?.carColor ?? 'Sin color'}</Text>
+            </View>
             <View className='py-2'>
               <Text className='text-lg font-bold '>Valoraciones</Text>
-              <Text>{user?.valoracion ?? 'No hay valoraciones'}</Text>
+              <Text>{user?.ratings ?? 'No hay valoraciones'}</Text>
             </View>
           </View>
         </View>
+        <View className='flex mt-3'>
+          <View className='flex-row justify-between'>
+            <View className='py-2'>
+              <TouchableOpacity
+                className='flex-row items-center'
+                onPress={() => handlePreferencesEdit({ userId: user?.id, preferencesValues: user?.preferences })}
+              >
+                <Text className='font-bold text-lg text-buttonColor mr-2'>Preferencias</Text>
+                <AntDesign name='edit' color='black' size={18} />
+              </TouchableOpacity>
+
+              {user?.preferences == null
+                ? (
+                  <Text>No hay preferencias</Text>
+                  )
+                : (
+                  <FlatList
+                    data={user?.preferences}
+                    renderItem={({ item }) => <Text>{item}</Text>}
+                    keyExtractor={(item, index) => index.toString()}
+                  />
+                  )}
+            </View>
+
+          </View>
+        </View>
+
       </View>
     </View>
   )

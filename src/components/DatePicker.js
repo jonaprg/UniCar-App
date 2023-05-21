@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { View, Text } from 'react-native'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import moment from 'moment'
+import localization from 'moment/locale/es'
 import FormButton from './FormButton.js'
 
 const DatePickerModal = () => {
@@ -22,15 +23,22 @@ const DatePickerModal = () => {
   }
 
   return (
-    <View className='flex flex-row justify-between items-center '>
-      <Text className=''>{`Fecha:  ${selectedDate ? moment(selectedDate).format('MM/DD/YYYY') : 'MM/DD/YYYY'}`}</Text>
-      <FormButton buttonTitle='Escoge el día' className='w-1/2 p-3 ' onPress={showDatePicker} />
+    <View className='flex'>
+
+      <FormButton buttonTitle='Escoge el día y la hora' className='p-3 self-center ' onPress={showDatePicker} />
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
-        mode='date'
+        mode='datetime'
+        locale='es-ES'
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
+        is24Hour
       />
+
+      <Text
+        className='text-sm font-medium text-black/60 text-center mt-2'
+      >{`${selectedDate ? moment(selectedDate).locale('es', localization).format('LLLL') : ''}`}
+      </Text>
     </View>
   )
 }

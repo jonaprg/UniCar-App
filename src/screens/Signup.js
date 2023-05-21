@@ -17,13 +17,14 @@ const SignUp = ({ onSignUp, setEmail, setPassword, setName, setUniversity }) => 
       <FormInput
         name='Nombre'
         onChangeText={setName}
-        placeholder='Correo electronico'
+        placeholder='Nombre'
       />
       <FormInput
         name='Correo electronico'
         onChangeText={setEmail}
         placeholder='Correo electronico'
-        keyboard='email-address'
+        keyboardType='email-address'
+        autoCapitalize='none'
       />
       <FormInput
         name='Universidad'

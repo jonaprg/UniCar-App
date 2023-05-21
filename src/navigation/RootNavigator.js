@@ -47,7 +47,7 @@ const RootNavigator = () => {
           email: user.email,
           university: userData.university,
           phone: userData.phone,
-          carModel: userData.carModel,
+          carBrand: userData.carBrand,
           carColor: userData.carColor,
           ratings: userData.ratings,
           preferences: userData.preferences,
