@@ -5,9 +5,9 @@ import moment from 'moment'
 import localization from 'moment/locale/es'
 import FormButton from './FormButton.js'
 
-const DatePickerModal = () => {
-  const [selectedDate, setSelectedDate] = useState()
+const DatePickerModal = ({ dateTimeSelected }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
+  const [selectedDate, setSelectedDate] = useState(null)
 
   const showDatePicker = () => {
     setDatePickerVisibility(true)
@@ -19,8 +19,13 @@ const DatePickerModal = () => {
 
   const handleConfirm = (date) => {
     setSelectedDate(date)
+
+    if (dateTimeSelected) {
+      dateTimeSelected(date)
+    }
     hideDatePicker()
   }
+  console.log('datePicker', selectedDate)
 
   return (
     <View className='flex'>
@@ -36,7 +41,7 @@ const DatePickerModal = () => {
       />
 
       <Text
-        className='text-sm font-medium text-black/60 text-center mt-2'
+        className='text-sm font-medium text-black/60 text-center my-2'
       >{`${selectedDate ? moment(selectedDate).locale('es', localization).format('LLLL') : ''}`}
       </Text>
     </View>

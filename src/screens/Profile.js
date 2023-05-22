@@ -31,6 +31,7 @@ const Profile = () => {
         AsyncStorage.removeItem('@token')
         AsyncStorage.removeItem('@userID')
         dispatch(setAuthState('signIn'))
+        dispatch(resetUser())
         dispatch(signOut())
       })
       .catch(error => {
@@ -78,6 +79,7 @@ const Profile = () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         nestedScrollEnabled
+
       >
         <View>
 

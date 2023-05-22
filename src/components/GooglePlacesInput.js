@@ -5,7 +5,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 const GooglePlacesInput = ({ placeholder, onPlaceSelected }) => {
   const handlePlaceSelected = (data, details = null) => {
     if (onPlaceSelected) {
-      onPlaceSelected(data.description)
+      onPlaceSelected(data.terms[0].value)
     }
   }
   return (

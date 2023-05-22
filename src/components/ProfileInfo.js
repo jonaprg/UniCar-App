@@ -31,6 +31,11 @@ export default function ProfileInfo () {
   const handlePreferencesEdit = (props) => {
     navigation.navigate('PreferencesEdit', props)
   }
+
+  const renderPreferenceItem = ({ item }) => (
+    <Text>{item}</Text>
+  )
+
   return (
     <View>
       <View className='px-5'>
@@ -108,9 +113,11 @@ export default function ProfileInfo () {
                   <Text>No hay preferencias</Text>
                   )
                 : (
+
                   <FlatList
+                    scrollEnabled={false}
                     data={user?.preferences}
-                    renderItem={({ item }) => <Text>{item}</Text>}
+                    renderItem={renderPreferenceItem}
                     keyExtractor={(item, index) => index.toString()}
                   />
                   )}
