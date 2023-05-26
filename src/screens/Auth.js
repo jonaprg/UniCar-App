@@ -27,7 +27,6 @@ const AuthScreen = () => {
       console.log('emailValidation', emailValidation)
       console.log('passwordValidation', passwordValidation)
     } else {
-      console.log('ELSE onLogin')
       signInWithEmailAndPassword(auth, email, password)
         .then(user => {
           console.log('USER LOGEADO', user)
@@ -66,11 +65,11 @@ const AuthScreen = () => {
     const user = {
       name,
       university,
-      uid: userData.user.uid
+      email: userData.user.email
     }
     console.log('USER', user)
-
-    await fetch('http://192.168.1.33:3000/api/users/user', {
+    const userID = userData.user.uid.replace(/""/g, '')
+    await fetch(`http://192.168.1.39:3000/api/v1/users/user/${userID}`, {
       method: 'POST',
       body: JSON.stringify(user),
       headers: {

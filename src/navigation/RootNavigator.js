@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import AuthStack from './AuthStack.js'
 import RootStack from './RootStack.js'
 import Splash from '../screens/Splash.js'
-import { restoreToken } from '../reducers/auth/auth.js'
+import { restoreToken, setAuthState } from '../reducers/auth/auth.js'
 import { auth } from '../firebaseConfig.js'
 import { onAuthStateChanged } from 'firebase/auth'
 import { setUser } from '../reducers/user.js'
@@ -19,7 +19,7 @@ const RootNavigator = () => {
   const dispatch = useDispatch()
   const getUser = async (userID, token) => {
     try {
-      const response = await fetch(`http://192.168.1.33:3000/api/users/${userID.replace(/""/g, '')}`, {
+      const response = await fetch(`http://192.168.1.39:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
         method: 'GET',
         headers: {
           'Content-type': 'application/json',
@@ -27,14 +27,17 @@ const RootNavigator = () => {
         }
       })
       const data = await response.json()
+      console.log('I HAVE THE USER')
       return data
     } catch (error) {
+      dispatch(setAuthState('signIn'))
       console.log('ERROR GET USER', error)
     }
   }
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
       if (user) {
+        console.log('User is signed in')
         const userId = user.uid
         await AsyncStorage.setItem('@userID', JSON.stringify(userId))
         const token = await user.getIdToken()
@@ -68,6 +71,7 @@ const RootNavigator = () => {
   }
   console.log('userToken', userToken)
   console.log('user', user)
+
   return (
     <NavigationContainer>
       {userToken ? <RootStack /> : <AuthStack />}

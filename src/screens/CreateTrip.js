@@ -87,7 +87,7 @@ const CreateTrip = () => {
     }
     const token = await AsyncStorage.getItem('@token')
     console.log('TOKEN', token.replace(/"/g, ''))
-    await fetch('http://192.168.1.33:3000/api/trips/trip', {
+    await fetch('http://192.168.1.39:3000/api/v1/trips/trip', {
       method: 'POST',
       body: JSON.stringify(tripData),
       headers: {
