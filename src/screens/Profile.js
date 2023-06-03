@@ -46,7 +46,7 @@ const Profile = () => {
     deleteUser(user)
       .then(async () => {
         console.log('user deleted')
-        await fetch(`http://192.168.1.39:3000/api/v1/users/${user.uid.replace(/""/g, '')}`, {
+        await fetch(`http://192.168.1.33:3000/api/v1/users/${user.uid.replace(/""/g, '')}`, {
           method: 'DELETE',
           headers: {
             'Content-type': 'application/json',

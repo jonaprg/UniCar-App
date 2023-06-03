@@ -9,7 +9,7 @@ import GooglePlacesInput from '../components/GooglePlacesInput.js'
 import DatePickerModal from '../components/DatePicker.js'
 import SeatsInput from '../components/SeatsInput.js'
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const [count, setCount] = useState(1)
   const [origin, setOrigin] = useState('')
   const [destination, setDestination] = useState('')
@@ -41,7 +41,7 @@ const Home = () => {
                   Destino
                 </Text>
                 <GooglePlacesInput placeholder='A' />
-                <DatePickerModal />
+                <DatePickerModal modeTime='date' />
 
                 <View className='flex-row justify-between items-center my-3'>
                   <SeatsInput />

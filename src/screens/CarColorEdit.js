@@ -33,7 +33,7 @@ const CarColorEdit = ({ navigation, route }) => {
 
   const handleUpdateCarColor = async () => {
     const token = await AsyncStorage.getItem('@token')
-    await fetch(`http://192.168.1.39:3000/api/v1/users/${userId}`, {
+    await fetch(`http://192.168.1.33:3000/api/v1/users/${userId}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
@@ -47,10 +47,11 @@ const CarColorEdit = ({ navigation, route }) => {
         dispatch(setUserCarColorRedux(carColor))
         navigation.goBack()
       } else {
-        console.log('The brand car not updated')
+        console.log('The color car not updated')
+        navigation.goBack()
       }
     }).catch(error => {
-      console.log('The brand car update error', error)
+      console.log('The color car update error', error)
     })
   }
 

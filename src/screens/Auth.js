@@ -4,7 +4,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword
 } from 'firebase/auth'
-import { setAuthState } from '../reducers/auth/auth.js'
+import { setAuthState, signIn } from '../reducers/auth/auth.js'
 import Login from './Login.js'
 import SignUp from './Signup.js'
 import { auth } from '../firebaseConfig.js'
@@ -30,7 +30,7 @@ const AuthScreen = () => {
       signInWithEmailAndPassword(auth, email, password)
         .then(user => {
           console.log('USER LOGEADO', user)
-
+          dispatch(signIn(user._tokenResponse.idToken))
           dispatch(setAuthState('signedIn'))
         })
         .catch(error => {
@@ -69,7 +69,7 @@ const AuthScreen = () => {
     }
     console.log('USER', user)
     const userID = userData.user.uid.replace(/""/g, '')
-    await fetch(`http://192.168.1.39:3000/api/v1/users/user/${userID}`, {
+    await fetch(`http://192.168.1.33:3000/api/v1/users/user/${userID}`, {
       method: 'POST',
       body: JSON.stringify(user),
       headers: {

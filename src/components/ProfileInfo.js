@@ -63,7 +63,7 @@ export default function ProfileInfo () {
         />
         <InfoField
           label='Telefono'
-          value={user.phone}
+          value={user.phone ? user.phone.toString() : ''}
           canEdit
           handleUpdate={updateUserPhone}
           handleRedux={setUserPhoneRedux}

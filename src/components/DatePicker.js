@@ -5,7 +5,7 @@ import moment from 'moment'
 import localization from 'moment/locale/es'
 import FormButton from './FormButton.js'
 
-const DatePickerModal = ({ dateTimeSelected }) => {
+const DatePickerModal = ({ dateTimeSelected, modeTime }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
   const [selectedDate, setSelectedDate] = useState(null)
 
@@ -25,7 +25,6 @@ const DatePickerModal = ({ dateTimeSelected }) => {
     }
     hideDatePicker()
   }
-  console.log('datePicker', selectedDate)
 
   return (
     <View className='flex'>
@@ -33,7 +32,7 @@ const DatePickerModal = ({ dateTimeSelected }) => {
       <FormButton buttonTitle='Escoge el día y la hora' className='p-3 self-center ' onPress={showDatePicker} />
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
-        mode='datetime'
+        mode={{ modeTime }}
         locale='es-ES'
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}

@@ -23,8 +23,7 @@ const CreateTrip = () => {
     seats: 1,
     price: 2,
     carBrand: user?.carBrand,
-    carColor: user?.carColor,
-    userDriverId: user?.id
+    carColor: user?.carColor
   }
   const [tripData, setTripData] = useState(initialTripData)
 
@@ -67,8 +66,6 @@ const CreateTrip = () => {
     console.log('tripData:', tripData)
   }, [tripData])
 
-  const MemoizedDatePickerModal = React.memo(DatePickerModal)
-
   const createDocTrip = async () => {
     const areAllFieldsFilled = () => {
       for (const key in tripData) {
@@ -87,7 +84,7 @@ const CreateTrip = () => {
     }
     const token = await AsyncStorage.getItem('@token')
     console.log('TOKEN', token.replace(/"/g, ''))
-    await fetch('http://192.168.1.39:3000/api/v1/trips/trip', {
+    await fetch('http://192.168.1.33:3000/api/v1/trips/trip', {
       method: 'POST',
       body: JSON.stringify(tripData),
       headers: {
@@ -150,7 +147,7 @@ const CreateTrip = () => {
                   Destino
                 </Text>
                 <GooglePlacesInput placeholder='A' onPlaceSelected={handlePlaceDestination} />
-                <MemoizedDatePickerModal dateTimeSelected={(date) => handleDateTime(date)} />
+                <DatePickerModal dateTimeSelected={(date) => handleDateTime(date)} modeTime='dateTime' />
                 <PriceInput priceSelected={handlePriceTrip} />
 
                 <View className='flex-row justify-between items-center my-5'>

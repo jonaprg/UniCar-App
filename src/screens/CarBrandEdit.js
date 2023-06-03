@@ -36,7 +36,7 @@ const CarBrandEdit = ({ navigation, route }) => {
 
   const handleUpdateCarBrand = async () => {
     const token = await AsyncStorage.getItem('@token')
-    await fetch(`http://192.168.1.39:3000/api/v1/users/${userId}`, {
+    await fetch(`http://192.168.1.33:3000/api/v1/users/${userId}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',

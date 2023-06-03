@@ -7,7 +7,7 @@ export const getTripsFromDatabase = async () => {
   console.log('token', token)
   console.log('userID', userID.replace(/"/g, ''))
   try {
-    const response = await fetch(`http://192.168.1.39:3000/api/v1/trips/trips/${userID.replace(/"/g, '')}`, {
+    const response = await fetch(`http://192.168.1.33:3000/api/v1/trips/trips/${userID.replace(/"/g, '')}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',

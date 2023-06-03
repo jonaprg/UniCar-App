@@ -2,7 +2,9 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Home from '../screens/Home.js'
-import SearchTrips from '../screens/SearchTrips.js'
+import ResultsTrips from '../screens/ResultsTrips.js'
+import DetailTrip from '../screens/DetailTrip.js'
+import ReservationTrip from '../screens/ReservationTrip.js'
 
 const Stack = createNativeStackNavigator()
 
@@ -13,14 +15,23 @@ const HomeStack = () => {
         name='Home'
         component={Home}
         options={{ headerShown: false }}
-        // Configuración para la pantalla de perfil
       />
       <Stack.Screen
-        name='SearchTrips'
-        component={SearchTrips}
-        options={{ title: 'Rutas' }}
-        // Configuración para la pantalla de edición del coche
+        name='ResultsTrips'
+        component={ResultsTrips}
+        options={{ title: 'Resultados' }}
       />
+      <Stack.Screen
+        name='DetailTrip'
+        component={DetailTrip}
+        options={{ title: 'Detalle' }}
+      />
+      <Stack.Screen
+        name='ReservationTrip'
+        component={ReservationTrip}
+        options={{ title: 'Reserva' }}
+      />
+
     </Stack.Navigator>
   )
 }

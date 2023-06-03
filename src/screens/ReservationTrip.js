@@ -1,11 +1,12 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-const SearchTrips = () => {
+
+const ReservationTrip = () => {
   return (
     <View>
-      <Text>Search trips</Text>
+      <Text>ReservationTrip </Text>
     </View>
   )
 }
 
-export default SearchTrips
+export default ReservationTrip
