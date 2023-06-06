@@ -27,7 +27,7 @@ const useFetch = (url = '', method, token) => {
             Authorization: `Bearer ${token.replace(/"/g, '')}`
           }
         }
-        const response = await fetch(`http://192.168.1.33:3000/api/v1/${url.replace(/"/g, '')}`, options)
+        const response = await fetch(`http://192.168.1.41:3000/api/v1/${url.replace(/"/g, '')}`, options)
         const json = await response.json()
 
         if (!isMounted) return

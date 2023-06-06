@@ -4,7 +4,7 @@ import { updateEmail } from 'firebase/auth'
 
 export const updateUserName = async (userID, newName) => {
   const token = await AsyncStorage.getItem('@token')
-  await fetch(`http://192.168.1.33:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
+  await fetch(`http://192.168.1.41:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
     method: 'PUT',
     headers: {
       'Content-type': 'application/json',
@@ -28,7 +28,7 @@ export const updateUserName = async (userID, newName) => {
 export const updateUserPhone = async (userID, newPhone) => {
   const token = await AsyncStorage.getItem('@token')
   console.log('jajsdnaj', token)
-  await fetch(`http://192.168.1.33:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
+  await fetch(`http://192.168.1.41:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
     method: 'PUT',
     headers: {
       'Content-type': 'application/json',
@@ -50,7 +50,7 @@ export const updateUserPhone = async (userID, newPhone) => {
 
 export const updateUserUniversity = async (userID, newUniversity) => {
   const token = await AsyncStorage.getItem('@token')
-  await fetch(`http://192.168.1.33:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
+  await fetch(`http://192.168.1.41:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
     method: 'PUT',
     headers: {
       'Content-type': 'application/json',

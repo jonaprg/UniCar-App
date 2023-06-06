@@ -5,7 +5,7 @@ import moment from 'moment'
 import localization from 'moment/locale/es'
 import FormButton from './FormButton.js'
 
-const DatePickerModal = ({ dateTimeSelected, modeTime }) => {
+const DatePickerModal = ({ dateTimeSelected, modeTime, titleButton }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
   const [selectedDate, setSelectedDate] = useState(null)
 
@@ -19,7 +19,6 @@ const DatePickerModal = ({ dateTimeSelected, modeTime }) => {
 
   const handleConfirm = (date) => {
     setSelectedDate(date)
-
     if (dateTimeSelected) {
       dateTimeSelected(date)
     }
@@ -29,10 +28,10 @@ const DatePickerModal = ({ dateTimeSelected, modeTime }) => {
   return (
     <View className='flex'>
 
-      <FormButton buttonTitle='Escoge el día y la hora' className='p-3 self-center ' onPress={showDatePicker} />
+      <FormButton buttonTitle={titleButton} className='p-3 self-center ' onPress={showDatePicker} />
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
-        mode={{ modeTime }}
+        mode={modeTime}
         locale='es-ES'
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
@@ -41,7 +40,10 @@ const DatePickerModal = ({ dateTimeSelected, modeTime }) => {
 
       <Text
         className='text-sm font-medium text-black/60 text-center my-2'
-      >{`${selectedDate ? moment(selectedDate).locale('es', localization).format('LLLL') : ''}`}
+      >{`${selectedDate && modeTime === 'datetime'
+      ? moment(selectedDate).locale('es', localization).format('LLLL')
+      : moment(selectedDate).locale('es', localization).format('LL')}`}
+
       </Text>
     </View>
   )

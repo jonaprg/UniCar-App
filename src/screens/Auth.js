@@ -69,7 +69,7 @@ const AuthScreen = () => {
     }
     console.log('USER', user)
     const userID = userData.user.uid.replace(/""/g, '')
-    await fetch(`http://192.168.1.33:3000/api/v1/users/user/${userID}`, {
+    await fetch(`http://192.168.1.41:3000/api/v1/users/user/${userID}`, {
       method: 'POST',
       body: JSON.stringify(user),
       headers: {

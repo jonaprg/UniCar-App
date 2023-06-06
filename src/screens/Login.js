@@ -8,7 +8,7 @@ import FormButton from '../components/FormButton.js'
 import { setAuthState } from '../reducers/auth/auth.js'
 // import GoogleSignIn from '../components/GoogleSignIn.js'
 
-const Login = ({ onLogin, setEmail, setPassword }) => {
+const Login = ({ onLogin, setEmail, setPassword, errorMessage }) => {
   const dispatch = useDispatch()
 
   return (
@@ -36,6 +36,7 @@ const Login = ({ onLogin, setEmail, setPassword }) => {
         buttonTitle='Iniciar sesión'
         onPress={onLogin}
       />
+      <Text className='text-errorColor text-center'>{errorMessage}</Text>
       <TouchableOpacity
         className='justify-items-center bg-primary flex-row py-3 px-4 mt-5'
         onPress={() => dispatch(setAuthState('signUp'))}

@@ -12,8 +12,10 @@ import SeatsInput from '../components/SeatsInput.js'
 import FormButton from '../components/FormButton.js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useSelector } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 
 const CreateTrip = () => {
+  const navigation = useNavigation()
   const [errorMessage, setErrorMessage] = useState('')
   const user = useSelector((state) => state.user)
   const initialTripData = {
@@ -84,7 +86,7 @@ const CreateTrip = () => {
     }
     const token = await AsyncStorage.getItem('@token')
     console.log('TOKEN', token.replace(/"/g, ''))
-    await fetch('http://192.168.1.33:3000/api/v1/trips/trip', {
+    await fetch('http://192.168.1.41:3000/api/v1/trips/trip', {
       method: 'POST',
       body: JSON.stringify(tripData),
       headers: {
@@ -108,6 +110,7 @@ const CreateTrip = () => {
             setErrorMessage('')
           }, 5000)
           setTripData(initialTripData)
+          navigation.navigate('TripsStack', { screen: 'ListTrips' })
         }
         if (data.status === 403) {
           setErrorMessage('No tiene permisos para crear un viaje.')
@@ -146,8 +149,8 @@ const CreateTrip = () => {
                 <Text className='text-lg font-medium text-black/60'>
                   Destino
                 </Text>
-                <GooglePlacesInput placeholder='A' onPlaceSelected={handlePlaceDestination} />
-                <DatePickerModal dateTimeSelected={(date) => handleDateTime(date)} modeTime='dateTime' />
+                <GooglePlacesInput placeholder='A' onPlaceSelected={handlePlaceDestination} value={tripData.destination} />
+                <DatePickerModal dateTimeSelected={(date) => handleDateTime(date)} modeTime='datetime' titleButton='Escoga el dia y hora' />
                 <PriceInput priceSelected={handlePriceTrip} />
 
                 <View className='flex-row justify-between items-center my-5'>

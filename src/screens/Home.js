@@ -41,7 +41,7 @@ const Home = ({ navigation }) => {
                   Destino
                 </Text>
                 <GooglePlacesInput placeholder='A' />
-                <DatePickerModal modeTime='date' />
+                <DatePickerModal modeTime='date' titleButton='Escoge el dia' />
 
                 <View className='flex-row justify-between items-center my-3'>
                   <SeatsInput />
