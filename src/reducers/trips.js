@@ -1,25 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { getTripsFromDatabase } from '../utils/tripsOperations.js'
-const initialState = []
+import {
+  FETCH_TRIP_REQUEST,
+  FETCH_TRIP_SUCCESS,
+  FETCH_TRIP_FAILURE
+} from './actions/tripActions.js'
 
-const tripsSlice = createSlice({
-  name: 'trips',
-  initialState,
-  reducers: {
-    getTrips: async (state, action) => {
-      const trips = await getTripsFromDatabase()
-      console.log(JSON.stringify(trips))
-      return {
-        ...state,
-        trips
-      }
-    }
+const initialState = {
+  data: [],
+  isLoading: false,
+  error: null
+}
 
+const tripsReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case FETCH_TRIP_REQUEST:
+      return { ...state, isLoading: true, error: null }
+    case FETCH_TRIP_SUCCESS:
+      return { ...state, isLoading: false, data: action.payload, error: null }
+    case FETCH_TRIP_FAILURE:
+      return { ...state, isLoading: false, error: action.payload }
+    default:
+      return state
   }
-})
+}
 
-export const {
-  getTrips
-
-} = tripsSlice.actions
-export default tripsSlice.reducer
+export default tripsReducer
