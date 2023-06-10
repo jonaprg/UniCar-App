@@ -30,7 +30,7 @@
     "react": "^18.2.0",
     "react-native": "0.71.8",
     "react-native-dropdown-picker": "^5.4.6",
-    "react-native-gesture-handler": "c~2.9.0",
+    "react-native-gesture-handler": "~2.9.0",
     "react-native-google-places-autocomplete": "^2.5.1",
     "react-native-modal-datetime-picker": "^15.0.1",
     "react-native-popup-confirm-toast": "^2.3.2",

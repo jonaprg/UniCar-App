@@ -11,21 +11,19 @@ import PriceInput from '../components/PriceInput.js'
 import SeatsInput from '../components/SeatsInput.js'
 import FormButton from '../components/FormButton.js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
 const CreateTrip = () => {
   const navigation = useNavigation()
   const [errorMessage, setErrorMessage] = useState('')
-  const user = useSelector((state) => state.user)
+
   const initialTripData = {
     origin: '',
     destination: '',
     dateTime: '',
     seats: 1,
-    price: 2,
-    carBrand: user?.carBrand,
-    carColor: user?.carColor
+    price: 2
+
   }
   const [tripData, setTripData] = useState(initialTripData)
 
@@ -134,19 +132,19 @@ const CreateTrip = () => {
       style={{ flex: 1 }}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
-        <View className='bg-primary flex-1'>
+        <View className='bg-secondary  flex-1'>
           <View className='p-5'>
-            <Text className='text-2xl font-bold text-secondary'>
+            <Text className='text-2xl font-bold text-buttonColor'>
               ¿Donde quieres ir?
             </Text>
-            <View className='w-full bg-secondary rounded-3xl p-5 my-5'>
+            <View className='w-full bg-white shadow shadow-gray-500 rounded-3xl p-5 my-5'>
               <View className='mt-5'>
-                <Text className='text-lg font-medium text-black/60'>
+                <Text className='text-lg font-medium text-buttonColor'>
                   Origen
                 </Text>
 
                 <GooglePlacesInput placeholder='De' onPlaceSelected={handlePlaceOrigin} />
-                <Text className='text-lg font-medium text-black/60'>
+                <Text className='text-lg font-medium text-buttonColor'>
                   Destino
                 </Text>
                 <GooglePlacesInput placeholder='A' onPlaceSelected={handlePlaceDestination} value={tripData.destination} />

@@ -2,6 +2,7 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import ListTrips from '../screens/ListTrips.js'
+import DetailTrip from '../screens/DetailTrip.js'
 
 const Stack = createNativeStackNavigator()
 
@@ -11,8 +12,23 @@ const TripsStack = () => {
       <Stack.Screen
         name='ListTrips'
         component={ListTrips}
-        options={{ title: 'Rutas' }}
+        options={{
+          title: 'Rutas',
+          headerStyle: {
+            backgroundColor: '#488484'
+          }
+        }}
         // Configuración para la pantalla de edición del coche
+      />
+      <Stack.Screen
+        name='DetailTrip'
+        component={DetailTrip}
+        options={{
+          title: 'Detalle de la ruta',
+          headerStyle: {
+            backgroundColor: '#488484'
+          }
+        }}
       />
     </Stack.Navigator>
   )

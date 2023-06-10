@@ -79,3 +79,21 @@ export const updateUserEmail = async (userID, newEmail) => {
       console.log('user email update error', error)
     })
 }
+
+export const getUserProfile = async (userID) => {
+  const token = await AsyncStorage.getItem('@token')
+  try {
+    const response = await fetch(`http://192.168.1.41:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${token.replace(/"/g, '')}`
+      }
+    })
+    const data = await response.json()
+    console.log('Get user profile data')
+    return data
+  } catch (error) {
+    console.log('Errot get user profile', error)
+  }
+}

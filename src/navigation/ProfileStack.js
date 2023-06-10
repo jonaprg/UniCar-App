@@ -13,25 +13,45 @@ const ProfileStack = () => {
       <Stack.Screen
         name='Profile'
         component={Profile}
-        options={{ title: 'Perfil' }}
+        options={{
+          title: 'Perfil',
+          headerStyle: {
+            backgroundColor: '#488484'
+          }
+        }}
         // Configuración para la pantalla de perfil
       />
       <Stack.Screen
         name='CarBrandEdit'
         component={CarBrandEdit}
-        options={{ title: 'Marca del coche' }}
+        options={{
+          title: 'Marca del coche',
+          headerStyle: {
+            backgroundColor: '#488484'
+          }
+        }}
         // Configuración para la pantalla de edición del coche
       />
       <Stack.Screen
         name='CarColorEdit'
         component={CarColorEdit}
-        options={{ title: 'Color del coche' }}
+        options={{
+          title: 'Color del coche',
+          headerStyle: {
+            backgroundColor: '#488484'
+          }
+        }}
         // Configuración para la pantalla de edición del coche
       />
       <Stack.Screen
         name='PreferencesEdit'
         component={PreferencesEdit}
-        options={{ title: 'Preferencias' }}
+        options={{
+          title: 'Preferencias',
+          headerStyle: {
+            backgroundColor: '#488484'
+          }
+        }}
         // Configuración para la pantalla de edición del coche
       />
     </Stack.Navigator>

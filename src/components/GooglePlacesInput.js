@@ -25,6 +25,11 @@ const GooglePlacesInput = ({ placeholder, onPlaceSelected }) => {
             'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api',
           useOnPlatform: 'web'
         }}
+        styles={{
+          textInput: {
+            backgroundColor: '#F1F4F8'
+          }
+        }}
 
       />
     </View>

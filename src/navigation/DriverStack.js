@@ -11,7 +11,12 @@ const DriverStack = () => {
       <Stack.Screen
         name='CreateTrip'
         component={CreateTrip}
-        options={{ title: 'Publicar' }}
+        options={{
+          title: 'Publicar',
+          headerStyle: {
+            backgroundColor: '#488484'
+          }
+        }}
         // Configuración para la pantalla de edición del coche
       />
     </Stack.Navigator>
