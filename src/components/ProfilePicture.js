@@ -3,7 +3,7 @@ import { View, Pressable, StyleSheet, Image, Alert } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import * as ImagePicker from 'expo-image-picker'
 import { resetProfilePicture } from '../reducers/user.js'
-import { getStorage, ref, uploadBytes } from 'firebase/storage'
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 export default function ProfilePicture () {
   const user = useSelector((state) => state.user)
@@ -39,10 +39,18 @@ export default function ProfilePicture () {
       console.log('STORAGE REF', storageRef)
       uploadBytes(storageRef, blob).then((snapshot) => {
         console.log('Uploaded a blob or file!', snapshot)
-        dispatch(resetProfilePicture(`https://firebasestorage.googleapis.com/v0/b/unicar-jrg.appspot.com/o/profilePictures%2F${id}?alt=media&token=435929b4-a6a1-46ac-898f-af689ea08cdd`))
       }).catch((error) => {
         console.log('ERROR uploded', error)
       })
+
+      const imageRef = await ref(storage, `profilePictures/${id}`)
+      await getDownloadURL(imageRef)
+        .then((url) => {
+          dispatch(resetProfilePicture(url))
+        })
+        .catch((error) => {
+          console.log('ERROR', error)
+        })
     } catch (e) {
       console.log('ERROR', e)
     }

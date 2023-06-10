@@ -24,7 +24,6 @@ const SeatsInput = ({ seatsSelected }) => {
       }
     }
   }, [seats, seatsSelected])
-  console.log(seats)
   return (
     <View className='flex-column items-center'>
       <Text className=' text-lg font-medium text-buttonColor'>Pasajeros</Text>

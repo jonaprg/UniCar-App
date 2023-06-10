@@ -65,6 +65,7 @@ export default function ProfileInfo () {
           label='Telefono'
           value={user.phone ? user.phone.toString() : ''}
           canEdit
+
           handleUpdate={updateUserPhone}
           handleRedux={setUserPhoneRedux}
         />

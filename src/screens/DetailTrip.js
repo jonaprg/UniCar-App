@@ -6,6 +6,8 @@ import {
   getUserProfile
 } from '../utils/userOperations.js'
 import { useNavigation } from '@react-navigation/native'
+import localization from 'moment/locale/es'
+import { auth } from '../firebaseConfig.js'
 
 const DetailTrip = ({ route }) => {
   const { trip, isDriver } = route.params
@@ -14,11 +16,16 @@ const DetailTrip = ({ route }) => {
   const tripDate = moment(trip.dateTime).locale('es').format('LL')
   const tripTime = moment(trip.dateTime).locale('es').format('LT')
   const priceTotal = isDriver ? (trip.price * trip.passengers.length || 0) : trip.price
-  const handleProfileUser = (id) => {
-    const dataUser = getUserProfile(id)
-    console.log('DATA USER', dataUser)
-    navigation.navigate('ProfileUser', { dataUser })
+
+  const tripDateTime = moment(trip.dateTime).locale('es', localization)
+  const now = moment()
+  const isExpired = now.isAfter(tripDateTime.add(2, 'hours'))
+
+  const handleProfileUser = async (id) => {
+    const dataUser = await getUserProfile(id)
+    navigation.navigate('ProfileUser', { dataUser, id })
   }
+
   return (
     <View className='bg-white rounded-lg shadow p-4 flex-1  '>
 
@@ -33,10 +40,18 @@ const DetailTrip = ({ route }) => {
         </View>
         {/* Fecha y hora */}
         <View className='flex'>
-          <View className='justify-center items-center mb-5'>
-            <Text className='text-xl font-bold'>{tripDate}</Text>
-            <Text className='text-lg font-bold'>Salida - {tripTime}</Text>
-          </View>
+          {isExpired
+            ? (
+              <View className='justify-center items-center mb-5'>
+                <Text className='text-xl font-bold'>Ha finalizado el trayecto</Text>
+              </View>
+              )
+            : (
+              <View className='justify-center items-center mb-5'>
+                <Text className='text-xl font-bold'>{tripDate}</Text>
+                <Text className='text-lg font-bold'>Salida - {tripTime}</Text>
+              </View>
+              )}
         </View>
         <View className='flex-row justify-between items-center mb-5'>
           <View className='flex-column  items-center'>
@@ -69,22 +84,28 @@ const DetailTrip = ({ route }) => {
               <Text className='text-base font-bold'>No hay preferencias disponibles</Text>
               )}
         </View>
-        <View className='flex-column mb-2'>
-          <Text className='text-lg font-normal'>Conductor</Text>
-          {trip.userDriverName
-            ? (
-              <View className='flex-row  items-center mb-2 bg-secondary rounded-lg shadow shadow-gray-500 p-3 '>
-                <Text className='text-lg font-bold'>{trip.userDriverName}</Text>
-                <TouchableOpacity className='bg-buttonColor px-3 py-2 rounded ml-auto'>
-                  <Text className='text-white font-bold'>Ver Perfil</Text>
-                </TouchableOpacity>
-              </View>
-              )
-            : (
-              <Text className='text-base font-bold'>No tiene nombre</Text>
-              )}
+        {trip.userDriver !== auth.currentUser.uid && (
+          <View className='flex-column mb-2'>
+            <Text className='text-lg font-normal'>Conductor</Text>
+            {trip.userDriverName
+              ? (
+                <View className='flex-row  items-center mb-2 bg-secondary rounded-lg shadow shadow-gray-500 p-3 '>
+                  <Text className='text-lg font-bold'>{trip.userDriverName}</Text>
+                  <TouchableOpacity
+                    className='bg-buttonColor px-3 py-2 rounded ml-auto'
+                    onPress={() => handleProfileUser(trip.userDriver)}
+                  >
+                    <Text className='text-white font-bold'>Ver Perfil</Text>
+                  </TouchableOpacity>
+                </View>
+                )
+              : (
+                <Text className='text-base font-bold'>No tiene nombre</Text>
+                )}
 
-        </View>
+          </View>
+        )}
+
         <View className='flex-column mb-2'>
           <Text className='text-lg font-normal'>Pasajeros</Text>
           {trip.passengersData
@@ -95,7 +116,10 @@ const DetailTrip = ({ route }) => {
                 renderItem={({ item }) => (
                   <View className='flex-row  items-center mb-2 bg-secondary rounded-lg shadow shadow-gray-500 p-3 '>
                     <Text className='text-lg font-bold'>{item.name}</Text>
-                    <TouchableOpacity className='bg-buttonColor px-3 py-2 rounded ml-auto'>
+                    <TouchableOpacity
+                      className='bg-buttonColor px-3 py-2 rounded ml-auto'
+                      onPress={() => handleProfileUser(item.id)}
+                    >
                       <Text className='text-white font-bold'>Ver Perfil</Text>
                     </TouchableOpacity>
                   </View>
@@ -107,7 +131,7 @@ const DetailTrip = ({ route }) => {
               )}
         </View>
 
-        {isDriver && (
+        {isDriver && !isExpired && (
           <FormButton
             className='self-center'
             buttonTitle='EDITAR'

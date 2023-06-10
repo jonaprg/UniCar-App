@@ -1,8 +1,8 @@
-
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import ListTrips from '../screens/ListTrips.js'
 import DetailTrip from '../screens/DetailTrip.js'
+import ProfileUser from '../screens/ProfileUser.js'
 
 const Stack = createNativeStackNavigator()
 
@@ -25,6 +25,16 @@ const TripsStack = () => {
         component={DetailTrip}
         options={{
           title: 'Detalle de la ruta',
+          headerStyle: {
+            backgroundColor: '#488484'
+          }
+        }}
+      />
+      <Stack.Screen
+        name='ProfileUser'
+        component={ProfileUser}
+        options={{
+          title: 'Perfil de usuario',
           headerStyle: {
             backgroundColor: '#488484'
           }

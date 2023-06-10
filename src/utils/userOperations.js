@@ -90,8 +90,8 @@ export const getUserProfile = async (userID) => {
         Authorization: `Bearer ${token.replace(/"/g, '')}`
       }
     })
-    const data = await response.json()
-    console.log('Get user profile data')
+    const data = await response.json().then(data => data)
+    console.log('Get user profile data', data)
     return data
   } catch (error) {
     console.log('Errot get user profile', error)

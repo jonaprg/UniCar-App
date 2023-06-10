@@ -70,20 +70,17 @@ const CreateTrip = () => {
     const areAllFieldsFilled = () => {
       for (const key in tripData) {
         if (tripData[key] === '') {
-          console.log('KEY', key)
           return false // Si hay algún campo vacío, retorna false
         }
       }
       return true // Todos los campos están llenos, retorna true
     }
-    console.log(areAllFieldsFilled())
 
     if (!areAllFieldsFilled()) {
       setErrorMessage('Por favor, complete todos los campos antes de publicar el viaje.')
       return // Si algún campo está vacío, no se realiza la petición
     }
     const token = await AsyncStorage.getItem('@token')
-    console.log('TOKEN', token.replace(/"/g, ''))
     await fetch('http://192.168.1.41:3000/api/v1/trips/trip', {
       method: 'POST',
       body: JSON.stringify(tripData),
@@ -94,8 +91,6 @@ const CreateTrip = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('DATA CREATE DOC TRIP', data)
-
         if (data.status === 400) {
           setErrorMessage('No se pudo crear el viaje. Por favor, intente nuevamente.')
           setTimeout(() => {
