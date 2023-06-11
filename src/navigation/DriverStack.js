@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import CreateTrip from '../screens/CreateTrip.js'
@@ -15,7 +14,8 @@ const DriverStack = () => {
           title: 'Publicar',
           headerStyle: {
             backgroundColor: '#488484'
-          }
+          },
+          headerTintColor: '#fff'
         }}
         // Configuración para la pantalla de edición del coche
       />

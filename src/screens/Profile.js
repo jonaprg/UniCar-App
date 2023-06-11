@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, RefreshControl } from 'react-native'
+import { View, RefreshControl, Alert } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -42,15 +42,13 @@ const Profile = () => {
   const handleDeleteAccount = async () => {
     const token = await AsyncStorage.getItem('@token')
     const user = auth.currentUser
-    console.log('user', token)
-    deleteUser(user)
+    await deleteUser(user)
       .then(async () => {
-        console.log('user deleted')
         await fetch(`http://192.168.1.41:3000/api/v1/users/${user.uid.replace(/""/g, '')}`, {
           method: 'DELETE',
           headers: {
             'Content-type': 'application/json',
-            Authorization: `Bearer ${token.replace(/""/g, '')}`
+            Authorization: `Bearer ${token.replace(/"/g, '')}`
           }
         }).then(response => {
           if (response.ok) {
@@ -90,11 +88,21 @@ const Profile = () => {
             <FormButton
               buttonTitle='Cerrar sesión'
               onPress={handleLogout}
+
             />
             <FormButton
               className='bg-errorColor'
               buttonTitle='Eliminar cuenta'
-              onPress={handleDeleteAccount}
+              onPress={() =>
+                Alert.alert('Quieres eliminar tu cuenta?', 'Se eliminará todos los datos que tengas en esta cuenta :(', [
+                  {
+                    text: 'Cancelar',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel'
+                  },
+                  { text: 'Eliminar', onPress: () => handleDeleteAccount() }
+                ])}
+
             />
           </View>
         </View>

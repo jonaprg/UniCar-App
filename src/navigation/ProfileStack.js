@@ -16,7 +16,8 @@ const ProfileStack = () => {
           title: 'Perfil',
           headerStyle: {
             backgroundColor: '#488484'
-          }
+          },
+          headerTintColor: '#fff'
         }}
         // Configuración para la pantalla de perfil
       />
@@ -27,7 +28,8 @@ const ProfileStack = () => {
           title: 'Marca del coche',
           headerStyle: {
             backgroundColor: '#488484'
-          }
+          },
+          headerTintColor: '#fff'
         }}
         // Configuración para la pantalla de edición del coche
       />
@@ -38,7 +40,8 @@ const ProfileStack = () => {
           title: 'Color del coche',
           headerStyle: {
             backgroundColor: '#488484'
-          }
+          },
+          headerTintColor: '#fff'
         }}
         // Configuración para la pantalla de edición del coche
       />
@@ -49,7 +52,8 @@ const ProfileStack = () => {
           title: 'Preferencias',
           headerStyle: {
             backgroundColor: '#488484'
-          }
+          },
+          headerTintColor: '#fff'
         }}
         // Configuración para la pantalla de edición del coche
       />

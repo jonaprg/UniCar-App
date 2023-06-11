@@ -5,7 +5,7 @@ import FormInput from '../components/FormInput.js'
 import FormButton from '../components/FormButton.js'
 import { setAuthState } from '../reducers/auth/auth.js'
 
-const SignUp = ({ onSignUp, setEmail, setPassword, setName, setUniversity }) => {
+const SignUp = ({ onSignUp, setEmail, setPassword, setName }) => {
   // const [university, setUniversity] = useState()
 
   const dispatch = useDispatch()
@@ -15,21 +15,16 @@ const SignUp = ({ onSignUp, setEmail, setPassword, setName, setUniversity }) => 
       <Image source={require('../../assets/UniCarLogo.png')} className='w-64 h-64' />
 
       <FormInput
-        name='Nombre'
+        name='Nombre y apellido'
         onChangeText={setName}
-        placeholder='Nombre'
+        placeholder='Nombre y apellido'
       />
       <FormInput
         name='Correo electronico'
         onChangeText={setEmail}
-        placeholder='Correo electronico'
+        placeholder='exemple@unicar.com'
         keyboardType='email-address'
         autoCapitalize='none'
-      />
-      <FormInput
-        name='Universidad'
-        onChangeText={setUniversity}
-        placeholder='Universidad'
       />
       <FormInput
         name='Contraseña'

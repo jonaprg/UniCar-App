@@ -2,13 +2,15 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  updateProfile
 } from 'firebase/auth'
 import { setAuthState, signIn } from '../reducers/auth/auth.js'
 import Login from './Login.js'
 import SignUp from './Signup.js'
 import { auth } from '../firebaseConfig.js'
 import { validateEmail, validatePassword } from '../utils/validations'
+import Toast from 'react-native-toast-message'
 
 const AuthScreen = () => {
   const { authState } = useSelector((state) => state.auth)
@@ -17,7 +19,6 @@ const AuthScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
-  const [university, setUniversity] = useState('')
 
   const onLogin = () => {
     const emailValidation = validateEmail(email)
@@ -26,15 +27,26 @@ const AuthScreen = () => {
     if (!emailValidation || !passwordValidation) {
       console.log('emailValidation', emailValidation)
       console.log('passwordValidation', passwordValidation)
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Usuario o contraseña incorrectos'
+
+      })
     } else {
       signInWithEmailAndPassword(auth, email, password)
         .then(user => {
-          console.log('USER LOGEADO', user)
           dispatch(signIn(user._tokenResponse.idToken))
           dispatch(setAuthState('signedIn'))
         })
         .catch(error => {
           console.log('onLogin', error)
+          Toast.show({
+            type: 'error',
+            text1: 'Error',
+            text2: 'Usuario o contraseña incorrectos'
+
+          })
         })
     }
   }
@@ -46,14 +58,30 @@ const AuthScreen = () => {
     if (!emailValidation || !passwordValidation) {
       console.log('emailValidation', emailValidation)
       console.log('passwordValidation', passwordValidation)
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'El correo o la contraseña no son válidos'
+
+      })
     } else {
       createUserWithEmailAndPassword(auth, email, password)
-        .then(user => {
-          createDocUser(user)
+        .then(async user => {
+          await updateProfile(auth.currentUser, {
+            displayName: name
+          })
+          await createDocUser(user)
+          dispatch(signIn(user._tokenResponse.idToken))
           dispatch(setAuthState('signedIn'))
         })
         .catch(error => {
-          console.log('ongSingUp', error)
+          console.log('Not created user', error)
+          Toast.show({
+            type: 'error',
+            text1: 'Error',
+            text2: 'El email ya existe o la contraseña no es válido'
+
+          })
         })
     }
   }
@@ -63,11 +91,9 @@ const AuthScreen = () => {
 
     const token = await auth.currentUser.getIdToken()
     const user = {
-      name,
-      university,
+      name: userData.user.displayName,
       email: userData.user.email
     }
-    console.log('USER', user)
     const userID = userData.user.uid.replace(/""/g, '')
     await fetch(`http://192.168.1.41:3000/api/v1/users/user/${userID}`, {
       method: 'POST',
@@ -78,7 +104,15 @@ const AuthScreen = () => {
       }
     })
       .then(response => response.json())
-      .then(data => console.log('DATA CREATE DOC USER', data))
+      .then(data => {
+        if (data.status === 201) {
+          Toast.show({
+            type: 'success',
+            text1: 'Usuario creado',
+            text2: 'Usuario creado correctamente'
+          })
+        }
+      })
       .catch(error => console.log('ERROR CREATE DOC USER', error))
   }
 
@@ -97,7 +131,6 @@ const AuthScreen = () => {
           setEmail={setEmail}
           setPassword={setPassword}
           setName={setName}
-          setUniversity={setUniversity}
         />
       )}
     </>

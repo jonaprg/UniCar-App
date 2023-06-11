@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import AuthStack from './AuthStack.js'
 import RootStack from './RootStack.js'
 import Splash from '../screens/Splash.js'
-import { restoreToken, setAuthState } from '../reducers/auth/auth.js'
+import { restoreToken, setAuthState, signOut } from '../reducers/auth/auth.js'
 import { auth } from '../firebaseConfig.js'
 import { onAuthStateChanged } from 'firebase/auth'
 import { setUser } from '../reducers/user.js'
@@ -21,14 +21,19 @@ const RootNavigator = () => {
   const getPhoto = async (id) => {
     let urld
     const imageRef = await ref(storage, `profilePictures/${id}`)
-    await getDownloadURL(imageRef)
-      .then((url) => {
-        console.log('URL', url)
-        urld = url
-      })
-      .catch((error) => {
-        console.log('ERROR', error)
-      })
+    console.log('imageRef', imageRef)
+    if (imageRef._url !== undefined) {
+      await getDownloadURL(imageRef)
+        .then((url) => {
+          console.log('URL', url)
+          urld = url
+        })
+        .catch((error) => {
+          console.log('ERROR', error)
+        })
+    } else {
+      urld = undefined
+    }
     return urld
   }
   const dispatch = useDispatch()
@@ -43,9 +48,10 @@ const RootNavigator = () => {
         }
       })
       const data = await response.json()
-      console.log('I HAVE THE USER')
+
       return data
     } catch (error) {
+      dispatch(signOut())
       dispatch(setAuthState('signIn'))
       console.log('ERROR GET USER', error)
     }
@@ -60,7 +66,8 @@ const RootNavigator = () => {
         const token = await user.getIdToken()
         await AsyncStorage.setItem('@token', JSON.stringify(token))
         const userData = await getUser(userId, token)
-        console.log('userData', userData)
+        console.log('userDataAAA', userData)
+        console.log(user)
         dispatch(setUser({
           id: userId,
           name: userData.name,

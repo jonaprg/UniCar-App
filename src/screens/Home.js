@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   View, Text, TouchableOpacity,
   Image, TouchableWithoutFeedback,
@@ -6,14 +6,15 @@ import {
   Keyboard, Platform
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import Toast from 'react-native-toast-message'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import GooglePlacesInput from '../components/GooglePlacesInput.js'
 import DatePickerModal from '../components/DatePicker.js'
 import SeatsInput from '../components/SeatsInput.js'
+import { Toast } from 'react-native-toast-message/lib/src/Toast.js'
 
-const Home = ({ navigation }) => {
+const Home = () => {
+  const navigation = useNavigation()
   const initialSearchData = {
     origin: '',
     destination: '',
@@ -88,11 +89,18 @@ const Home = ({ navigation }) => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('trips', data)
+        navigation.navigate('TripsSearch', { trips: data, seats: searchData.seats })
       })
-      .catch(error => console.log('ERRO GET TRIPS', error))
+      .catch(error => {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'No se encontraron viajes'
+        })
+        navigation.navigate('Home')
+        console.log('ERRO GET TRIPS', error)
+      })
   }
-  console.log('trip', searchData)
 
   return (
     <KeyboardAvoidingView
@@ -124,10 +132,13 @@ const Home = ({ navigation }) => {
 
                 <View className='flex-row justify-between items-center my-3'>
                   <SeatsInput seatsSelected={handleSearchSeats} />
-                  <TouchableOpacity className='flex-row justify-center rounded-full bg-primary p-4 w-2/4 self-center'>
+                  <TouchableOpacity
+                    className='flex-row justify-center rounded-full bg-primary p-4 w-2/4 self-center'
+                    onPress={handleSearchTrip}
+                  >
                     <Text
                       className='text-white dark:text-black font-bold'
-                      onPress={handleSearchTrip}
+
                     >
                       Buscar
                     </Text>

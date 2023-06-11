@@ -1,10 +1,10 @@
-
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Home from '../screens/Home.js'
-import ResultsTrips from '../screens/ResultsTrips.js'
-import DetailTrip from '../screens/DetailTrip.js'
-import ReservationTrip from '../screens/ReservationTrip.js'
+import TripsSearch from '../screens/TripsSearch.js'
+import DetailTripSearch from '../screens/DetailTripSearch.js'
+import TripReservation from '../screens/TripReservation.js'
+import ProfileUserSearch from '../screens/ProfileUserSearch.js'
 
 const Stack = createNativeStackNavigator()
 
@@ -17,19 +17,49 @@ const HomeStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name='ResultsTrips'
-        component={ResultsTrips}
-        options={{ title: 'Resultados' }}
+        name='TripsSearch'
+        component={TripsSearch}
+        options={{
+          title: 'Tú busqueda',
+          headerStyle: {
+            backgroundColor: '#488484'
+          },
+          headerTintColor: '#fff'
+        }}
       />
       <Stack.Screen
-        name='DetailTrip'
-        component={DetailTrip}
-        options={{ title: 'Detalle' }}
+        name='DetailTripSearch'
+        component={DetailTripSearch}
+        options={{
+          title: 'Detalle del viaje',
+          headerStyle: {
+            backgroundColor: '#488484'
+          },
+          headerTintColor: '#fff'
+        }}
       />
       <Stack.Screen
-        name='ReservationTrip'
-        component={ReservationTrip}
-        options={{ title: 'Reserva' }}
+        name='ProfileUserSearch'
+        component={ProfileUserSearch}
+        options={{
+          title: 'Perfil del usuario',
+          headerStyle: {
+            backgroundColor: '#488484'
+
+          },
+          headerTintColor: '#fff'
+        }}
+      />
+      <Stack.Screen
+        name='TripReservation'
+        component={TripReservation}
+        options={{
+          title: 'Resumen del viaje',
+          headerStyle: {
+            backgroundColor: '#488484'
+          },
+          headerTintColor: '#fff'
+        }}
       />
 
     </Stack.Navigator>

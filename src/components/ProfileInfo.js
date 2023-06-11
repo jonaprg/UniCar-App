@@ -20,7 +20,7 @@ import {
 
 export default function ProfileInfo () {
   const user = useSelector((state) => state.user)
-  console.log('profileUser', user)
+  console.log('profileUser', user?.name)
   const navigation = useNavigation()
   const handleCarBrandEdit = (props) => {
     navigation.navigate('CarBrandEdit', props)
@@ -65,7 +65,6 @@ export default function ProfileInfo () {
           label='Telefono'
           value={user.phone ? user.phone.toString() : ''}
           canEdit
-
           handleUpdate={updateUserPhone}
           handleRedux={setUserPhoneRedux}
         />

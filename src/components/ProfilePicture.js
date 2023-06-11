@@ -32,11 +32,9 @@ export default function ProfilePicture () {
 
   const savePhoto = async (uri) => {
     try {
-      console.log('URI', uri)
       const response = await fetch(uri)
       const blob = await response.blob()
       const storageRef = ref(storage, `profilePictures/${id}`)
-      console.log('STORAGE REF', storageRef)
       uploadBytes(storageRef, blob).then((snapshot) => {
         console.log('Uploaded a blob or file!', snapshot)
       }).catch((error) => {
@@ -59,12 +57,12 @@ export default function ProfilePicture () {
   return (
     <View style={styles.container}>
       <Pressable onPress={pickeImage}>
-        {profilePicture
+        {profilePicture !== undefined
           ? (
             <Image source={{ uri: profilePicture }} style={styles.image} />
             )
           : (
-            <Image source={{ uri: 'assets:/profile.png' }} />
+            <Image source={require('../../assets/profile.png')} style={styles.image} />
             )}
       </Pressable>
     </View>

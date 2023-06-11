@@ -92,8 +92,9 @@ const TripScreen = () => {
 
   const renderTrip = ({ item }) => {
     const tripDateTime = moment(item.dateTime).locale('es', localization)
+
     const now = moment()
-    const isExpired = now.isAfter(tripDateTime.add(2, 'hours'))
+    const isExpired = now.isAfter(moment(item.dateTime).locale('es', localization).add(2, 'hours'))
 
     return (
 
@@ -119,19 +120,22 @@ const TripScreen = () => {
                 Ver
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity className='w-1/3 bg-errorColor py-2 px-2 rounded-full'>
+            <TouchableOpacity
+              className='w-1/3 bg-errorColor py-2 px-2 rounded-full'
+              onPress={() =>
+
+                Alert.alert('Quieres eliminar el viaje?', 'Se eliminará el viaje', [
+                  {
+                    text: 'Cancelar',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel'
+                  },
+                  { text: 'Eliminar', onPress: () => handleDeleteTrip(item) }
+                ])}
+            >
               <Text
                 className='text-white font-bold text-center'
-                onPress={() =>
 
-                  Alert.alert('Quieres eliminar el viaje?', 'Se eliminará el viaje', [
-                    {
-                      text: 'Cancelar',
-                      onPress: () => console.log('Cancel Pressed'),
-                      style: 'cancel'
-                    },
-                    { text: 'Eliminar', onPress: () => handleDeleteTrip(item) }
-                  ])}
               >
                 Eliminar
               </Text>

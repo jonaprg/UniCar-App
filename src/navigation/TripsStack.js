@@ -16,7 +16,8 @@ const TripsStack = () => {
           title: 'Rutas',
           headerStyle: {
             backgroundColor: '#488484'
-          }
+          },
+          headerTintColor: '#fff'
         }}
         // Configuración para la pantalla de edición del coche
       />
@@ -27,7 +28,8 @@ const TripsStack = () => {
           title: 'Detalle de la ruta',
           headerStyle: {
             backgroundColor: '#488484'
-          }
+          },
+          headerTintColor: '#fff'
         }}
       />
       <Stack.Screen
@@ -37,7 +39,8 @@ const TripsStack = () => {
           title: 'Perfil de usuario',
           headerStyle: {
             backgroundColor: '#488484'
-          }
+          },
+          headerTintColor: '#fff'
         }}
       />
     </Stack.Navigator>

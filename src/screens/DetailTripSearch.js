@@ -9,13 +9,12 @@ import { useNavigation } from '@react-navigation/native'
 import localization from 'moment/locale/es'
 import { auth } from '../firebaseConfig.js'
 
-const DetailTrip = ({ route }) => {
-  const { trip, isDriver } = route.params
+const DetailTripSearch = ({ route }) => {
+  const { trip, isDriver, seats } = route.params
+  console.log(route.params)
   const navigation = useNavigation()
-  console.log('TRIP', trip)
   const tripDate = moment(trip.dateTime).locale('es').format('LL')
   const tripTime = moment(trip.dateTime).locale('es').format('LT')
-  const priceTotal = isDriver ? (trip.price * trip.passengers.length || 0) : trip.price
 
   const tripDateTime = moment(trip.dateTime).locale('es', localization)
   const now = moment()
@@ -23,7 +22,7 @@ const DetailTrip = ({ route }) => {
 
   const handleProfileUser = async (id) => {
     const dataUser = await getUserProfile(id)
-    navigation.navigate('ProfileUser', { dataUser, id })
+    navigation.navigate('ProfileUserSearch', { dataUser, id })
   }
 
   return (
@@ -64,8 +63,8 @@ const DetailTrip = ({ route }) => {
           </View>
 
           <View className='flex-column items-center'>
-            <Text className='text-lg font-normal'>{isDriver ? 'Importe total' : 'Importe'}</Text>
-            <Text className='text-2xl font-bold'>{priceTotal}€</Text>
+            <Text className='text-lg font-normal'>Importe</Text>
+            <Text className='text-2xl font-bold'>{trip.price}€/per.</Text>
           </View>
         </View>
         <View className='flex-column mb-2'>
@@ -131,11 +130,11 @@ const DetailTrip = ({ route }) => {
               )}
         </View>
 
-        {isDriver && !isExpired && (
+        {!isDriver && !isExpired && (
           <FormButton
             className='self-center'
-            buttonTitle='EDITAR'
-            onPress={() => console.log('Actualizar')}
+            buttonTitle='CONTINUAR'
+            onPress={() => navigation.navigate('TripReservation', { trip, seats })}
           />
         )}
       </View>
@@ -143,4 +142,4 @@ const DetailTrip = ({ route }) => {
   )
 }
 
-export default DetailTrip
+export default DetailTripSearch
