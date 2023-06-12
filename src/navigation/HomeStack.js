@@ -5,6 +5,7 @@ import TripsSearch from '../screens/TripsSearch.js'
 import DetailTripSearch from '../screens/DetailTripSearch.js'
 import TripReservation from '../screens/TripReservation.js'
 import ProfileUserSearch from '../screens/ProfileUserSearch.js'
+import RequestTrip from '../screens/RequestTrip.js'
 
 const Stack = createNativeStackNavigator()
 
@@ -59,6 +60,17 @@ const HomeStack = () => {
             backgroundColor: '#488484'
           },
           headerTintColor: '#fff'
+        }}
+      />
+      <Stack.Screen
+        name='RequestTrip'
+        component={RequestTrip}
+        options={{
+          headerShown: false,
+          headerStyle: {
+            backgroundColor: '#488484'
+          }
+
         }}
       />
 

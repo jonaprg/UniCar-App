@@ -105,9 +105,9 @@ const TripScreen = () => {
             <Text className='text-base font-bold text-gray-900'>{isExpired ? 'Ha finalizado' : tripDateTime.format('DD MMM YY, H:mm')}</Text>
 
           </View>
-          <Text>{item.userDriver === uid.toString() ? 'Conductor' : 'Pasajero'}</Text>
         </View>
         <Text class='text-sm font-medium text-gray-600'>Plazas disponibles: {item.seatsAvailable === 0 ? 'No hay plazas' : item.seatsAvailable}</Text>
+        <Text>{item.userDriver === uid.toString() ? 'Conductor' : 'Pasajero'}</Text>
 
         <View className='mt-5'>
           <View className='flex flex-row justify-between items-center'>

@@ -29,15 +29,23 @@ const TripsSearch = ({ route }) => {
     const dateB = moment(b.dateTime)
     return dateA - dateB
   })
-
+  // Verificar si hay viajes no expirados
+  const hasValidTrips = sortedData.some(item => {
+    const now = moment()
+    return !now.isAfter(moment(item.dateTime).locale('es', localization).add(2, 'hours'))
+  })
   const renderTrip = ({ item }) => {
     const tripDateTime = moment(item.dateTime).locale('es', localization)
     const now = moment()
     const isExpired = now.isAfter(moment(item.dateTime).locale('es', localization).add(2, 'hours'))
 
+    if (isExpired) {
+      return null // No mostrar la tarjeta si ha expirado
+    }
+
     return (
 
-      <View className={`m-2 rounded-lg  shadow shadow-gray-900  p-4 ${isExpired ? 'bg-slate-100' : 'bg-white'}`}>
+      <View className='m-2 rounded-lg  shadow shadow-gray-900  p-4 bg-white'>
         <View className='flex-row justify-between'>
           <View className='flex-column align-middle text-center'>
             <Text className='text-base font-bold text-gray-900'>{item.origin} - {item.destination}</Text>
@@ -54,7 +62,7 @@ const TripsSearch = ({ route }) => {
           {!isExpired && (
             <View className='flex flex-row justify-between items-center'>
 
-              <Text className='text-base font-bold text-gray-900'>Precio: {item.price}€/persona</Text>
+              <Text className='text-base font-bold text-gray-900'>Precio: {item.price}€/pasajero</Text>
               <TouchableOpacity
                 className='w-1/3 bg-buttonColor py-2 px-2 rounded-full'
                 onPress={() => handleView(item)}
@@ -75,7 +83,8 @@ const TripsSearch = ({ route }) => {
   return (
     <View style={{ flex: 1 }}>
 
-      {trips.length !== 0
+      {sortedData.length !== 0 && hasValidTrips
+
         ? (
           <FlatList
             className='bg-secondary flex-1 w-full'

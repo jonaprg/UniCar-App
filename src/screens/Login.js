@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, Image, TouchableOpacity, Keyboard } from 'react-native'
 import { useDispatch } from 'react-redux'
 
 import FormInput from '../components/FormInput.js'
@@ -10,10 +10,27 @@ import { setAuthState } from '../reducers/auth/auth.js'
 
 const Login = ({ onLogin, setEmail, setPassword, errorMessage }) => {
   const dispatch = useDispatch()
+  const [keyboardOpen, setKeyboardOpen] = useState(false)
 
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardOpen(true)
+    })
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardOpen(false)
+    })
+
+    return () => {
+      keyboardDidShowListener.remove()
+      keyboardDidHideListener.remove()
+    }
+  }, [])
+
+  const logoSize = keyboardOpen ? 150 : 250
+  const marginSize = keyboardOpen ? 100 : 0
   return (
     <View className='flex-1 items-center justify-center bg-primary'>
-      <Image source={require('../../assets/UniCarLogo.png')} className='w-64 h-64' />
+      <Image source={require('../../assets/UniCarLogo.png')} style={[{ marginTop: marginSize, width: logoSize, height: logoSize }]} />
       <View className='mb-7 w-64'>
         <Text className='text-4xl font-normal text-white'>Encuentra</Text>
         <Text className='text-4xl font-normal text-white'>coche rápido</Text>

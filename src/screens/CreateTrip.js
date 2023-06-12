@@ -12,10 +12,10 @@ import SeatsInput from '../components/SeatsInput.js'
 import FormButton from '../components/FormButton.js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
+import { Toast } from 'react-native-toast-message/lib/src/Toast.js'
 
 const CreateTrip = () => {
   const navigation = useNavigation()
-  const [errorMessage, setErrorMessage] = useState('')
 
   const initialTripData = {
     origin: '',
@@ -77,7 +77,11 @@ const CreateTrip = () => {
     }
 
     if (!areAllFieldsFilled()) {
-      setErrorMessage('Por favor, complete todos los campos antes de publicar el viaje.')
+      Toast.show({
+        type: 'error',
+        text1: 'No se pudo crear el viaje.',
+        text2: 'Por favor, complete todos los campos'
+      })
       return // Si algún campo está vacío, no se realiza la petición
     }
     const token = await AsyncStorage.getItem('@token')
@@ -92,30 +96,35 @@ const CreateTrip = () => {
       .then(response => response.json())
       .then(data => {
         if (data.status === 400) {
-          setErrorMessage('No se pudo crear el viaje. Por favor, intente nuevamente.')
-          setTimeout(() => {
-            setErrorMessage('')
-          }, 5000)
+          Toast.show({
+            type: 'error',
+            text1: 'No se pudo crear el viaje.',
+            text2: 'Por favor, intente nuevamente.'
+          })
         }
         if (data.status === 201) {
-          setErrorMessage('Viaje creado con éxito.')
+          Toast.show({
+            type: 'success',
+            text1: 'Viaje creado con éxito.',
+            text2: 'Se te redirigirá a la lista de viajes.'
+          })
           setTimeout(() => {
-            setErrorMessage('')
-          }, 5000)
+          }, 3000)
           setTripData(initialTripData)
           navigation.navigate('TripsStack', { screen: 'ListTrips' })
         }
         if (data.status === 403) {
-          setErrorMessage('No tiene permisos para crear un viaje.')
-          setTimeout(() => {
-            setErrorMessage('')
-          }, 5000)
+          Toast.show({
+            type: 'error',
+            text1: 'No se pudo crear el viaje.'
+          })
         }
         if (data.status === 409) {
-          setErrorMessage('Ya has ingresado un viaje existente con estos mismos datos.')
-          setTimeout(() => {
-            setErrorMessage('')
-          }, 5000)
+          Toast.show({
+            type: 'error',
+            text1: 'No se pudo crear el viaje.',
+            text2: 'Ya has ingresado un viaje existente con estos mismos datos.'
+          })
         }
       })
       .catch(error => console.log('ERROR CREATE DOC TRIP', error))
@@ -155,7 +164,6 @@ const CreateTrip = () => {
                     onPress={createDocTrip}
                   />
                 </View>
-                {errorMessage !== '' && <Text className='text-errorColor'>{errorMessage}</Text>}
               </View>
             </View>
           </View>

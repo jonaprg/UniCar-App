@@ -59,12 +59,21 @@ const DetailTripSearch = ({ route }) => {
           </View>
           <View className='flex-column items-center'>
             <Text className='text-lg font-normal'>Coche</Text>
-            <Text className='text-xl font-bold'>{trip.carBrand && trip.carColor ? trip.carBrand + ' - ' + trip.carColor : 'No disponible'}</Text>
+            {trip.carBrand || trip.carColor
+              ? (
+                <View>
+                  <Text className='text-xl font-bold'>{trip.carBrand}</Text>
+                  <Text className='text-sm font-bold'>{trip.carColor}</Text>
+                </View>
+                )
+              : (
+                <Text className='text-xl font-bold'>No disponible</Text>
+                )}
           </View>
 
           <View className='flex-column items-center'>
             <Text className='text-lg font-normal'>Importe</Text>
-            <Text className='text-2xl font-bold'>{trip.price}€/per.</Text>
+            <Text className='text-2xl font-bold'>{trip.price}€/pas.</Text>
           </View>
         </View>
         <View className='flex-column mb-2'>
