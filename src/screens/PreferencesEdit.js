@@ -7,6 +7,7 @@ import { setUserPreferencesRedux } from '../reducers/user.js'
 import FormButton from '../components/FormButton.js'
 
 import DropDownPicker from 'react-native-dropdown-picker'
+import Toast from 'react-native-toast-message'
 
 const PreferencesEdit = ({ navigation, route }) => {
   const { userId, preferencesValues } = route.params
@@ -43,17 +44,23 @@ const PreferencesEdit = ({ navigation, route }) => {
         preferences
       })
     }).then(response => {
-      if (response.ok) {
+      if (response.status === 200) {
         dispatch(setUserPreferencesRedux(preferences))
+        Toast.show({
+          type: 'success',
+          text1: 'Preferencias actualizadas'
+        })
         navigation.goBack()
       } else {
-        console.log('The brand car not updated')
+        Toast.show({
+          type: 'error',
+          text1: 'No se pudieron actualizar las preferencias'
+        })
       }
     }).catch(error => {
-      console.log('The brand car update error', error)
+      console.log('ERROR -The preferences not updated', error)
     })
   }
-  console.log('preferences', preferences)
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -68,9 +75,9 @@ const PreferencesEdit = ({ navigation, route }) => {
               nestedScrollEnabled: true
             }}
             dropDownContainerStyle={{
-              position: 'relative', // to fix scroll issue ... it is by default 'absolute'
+              position: 'relative',
               top: 0,
-              minHeight: 400// to fix gap between label box and container
+              minHeight: 400
             }}
             open={openCar}
             value={preferences}

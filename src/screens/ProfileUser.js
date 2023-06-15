@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native'
 // import { getStorage, ref, getDownloadURL } from 'firebase/storage'
 const UserProfile = ({ route }) => {
   const { dataUser, id } = route.params
-  console.log('DATA USER', dataUser)
   const navigation = useNavigation()
   // const storage = getStorage()
 
@@ -69,7 +68,7 @@ const UserProfile = ({ route }) => {
 
           <Text className='text-lg font-normal'>Contacta vía mensaje</Text>
           <TouchableOpacity
-            className='bg-buttonColor px-3 py-2 rounded ml-auto'
+            className='bg-blueColor px-3 py-2 rounded ml-auto'
             onPress={() => console.log('Enviar mensaje')}
           >
             <Text className='text-white font-bold'>Abrir chat</Text>

@@ -2,6 +2,7 @@ import {
   FETCH_TRIP_REQUEST,
   FETCH_TRIP_SUCCESS,
   FETCH_TRIP_FAILURE
+
 } from './actions/tripActions.js'
 
 const initialState = {

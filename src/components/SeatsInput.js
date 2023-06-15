@@ -26,7 +26,7 @@ const SeatsInput = ({ seatsSelected }) => {
   }, [seats, seatsSelected])
   return (
     <View className='flex-column items-center'>
-      <Text className=' text-lg font-medium text-buttonColor'>Pasajeros</Text>
+      <Text className=' text-lg font-medium text-blueColor'>Pasajeros</Text>
       <View className='flex-row justify-center items-center gap-3'>
         <AntDesign
           name='minuscircleo'

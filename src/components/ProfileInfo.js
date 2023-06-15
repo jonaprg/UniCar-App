@@ -20,7 +20,7 @@ import {
 
 export default function ProfileInfo () {
   const user = useSelector((state) => state.user)
-  console.log('profileUser', user?.name)
+  console.log(user)
   const navigation = useNavigation()
   const handleCarBrandEdit = (props) => {
     navigation.navigate('CarBrandEdit', props)
@@ -42,7 +42,7 @@ export default function ProfileInfo () {
         <Text className='text-lg font-bold '>Información</Text>
         <InfoField
           label='Nombre'
-          value={user?.name}
+          value={user.name}
           canEdit
           handleUpdate={updateUserName}
           handleRedux={setUserNameRedux}
@@ -76,7 +76,7 @@ export default function ProfileInfo () {
                 className='flex-row items-center'
                 onPress={() => handleCarBrandEdit({ userId: user?.id, carBrandValue: user?.carBrand })}
               >
-                <Text className='font-bold text-lg text-buttonColor mr-2'>Coche</Text>
+                <Text className='font-bold text-lg text-blueColor mr-2'>Coche</Text>
                 <AntDesign name='edit' color='black' size={18} />
               </TouchableOpacity>
               <Text>{user?.carBrand ?? 'Sin modelo'}</Text>
@@ -86,7 +86,7 @@ export default function ProfileInfo () {
                 className='flex-row items-center'
                 onPress={() => handleCarColorEdit({ userId: user?.id, carColorValue: user?.carColor })}
               >
-                <Text className='font-bold text-lg text-buttonColor mr-2'>Color</Text>
+                <Text className='font-bold text-lg text-blueColor mr-2'>Color</Text>
                 <AntDesign name='edit' color='black' size={18} />
               </TouchableOpacity>
               <Text>{user?.carColor ?? 'Sin color'}</Text>
@@ -104,7 +104,7 @@ export default function ProfileInfo () {
                 className='flex-row items-center'
                 onPress={() => handlePreferencesEdit({ userId: user?.id, preferencesValues: user?.preferences })}
               >
-                <Text className='font-bold text-lg text-buttonColor mr-2'>Preferencias</Text>
+                <Text className='font-bold text-lg text-blueColor mr-2'>Preferencias</Text>
                 <AntDesign name='edit' color='black' size={18} />
               </TouchableOpacity>
 
@@ -144,7 +144,7 @@ function InfoField ({
   return (
     <View style={styles.fieldContainer}>
       <MyText
-        className='text-buttonColor'
+        className='text-blueColor'
         type='caption'
         style={{
           fontWeight: '500',
@@ -158,9 +158,17 @@ function InfoField ({
         value={localValue}
         onChangeText={canEdit && setLocalValue}
         keyboardType={canEdit ? 'web-search' : 'default'}
-        onSubmitEditing={(event) => {
-          canEdit && handleUpdate(id, event.nativeEvent.text)
-          canEdit && dispatch(handleRedux(event.nativeEvent.text))
+        onSubmitEditing={async (event) => {
+          event.persist()
+          if (canEdit) {
+            const success = await handleUpdate(id, event.nativeEvent.text)
+            if (success) {
+              dispatch(handleRedux(event.nativeEvent.text))
+              setLocalValue(event.nativeEvent.text)
+            } else {
+              setLocalValue(value)
+            }
+          }
         }}
         style={{ fontWeight: '500', color: 'black', textAlign: 'right' }}
       />

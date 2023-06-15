@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import * as ImagePicker from 'expo-image-picker'
 import { resetProfilePicture } from '../reducers/user.js'
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import Toast from 'react-native-toast-message'
 
 export default function ProfilePicture () {
   const user = useSelector((state) => state.user)
@@ -36,9 +37,16 @@ export default function ProfilePicture () {
       const blob = await response.blob()
       const storageRef = ref(storage, `profilePictures/${id}`)
       uploadBytes(storageRef, blob).then((snapshot) => {
-        console.log('Uploaded a blob or file!', snapshot)
+        Toast.show({
+          type: 'success',
+          text2: 'Foto de perfil actualizada'
+        })
       }).catch((error) => {
-        console.log('ERROR uploded', error)
+        Toast.show({
+          type: 'error',
+          text2: 'No se pudo actualizar la foto de perfil'
+        })
+        console.log('ERROR - Uploded photo', error)
       })
 
       const imageRef = await ref(storage, `profilePictures/${id}`)
@@ -47,10 +55,10 @@ export default function ProfilePicture () {
           dispatch(resetProfilePicture(url))
         })
         .catch((error) => {
-          console.log('ERROR', error)
+          console.log('ERROR - Get photo', error)
         })
     } catch (e) {
-      console.log('ERROR', e)
+      console.log('ERROR - Save photo', e)
     }
   }
 

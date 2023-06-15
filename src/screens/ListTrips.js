@@ -14,9 +14,8 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import localization from 'moment/locale/es'
 import moment from 'moment'
 import { auth } from '../firebaseConfig.js'
-import Toast from 'react-native-toast-message'
 
-import { fetchTrip } from '../reducers/actions/tripActions.js'
+import { fetchTrips } from '../reducers/actions/tripActions.js'
 import { deleteDriverTrip, deletePassengerTrip } from '../utils/tripsOperations.js'
 
 const TripScreen = () => {
@@ -27,7 +26,7 @@ const TripScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(fetchTrip())
+      dispatch(fetchTrips())
     }, [dispatch])
   )
   const handleView = (item) => {
@@ -38,7 +37,7 @@ const TripScreen = () => {
   }
 
   const handleRefresh = () => {
-    dispatch(fetchTrip())
+    dispatch(fetchTrips())
   }
   // Ordenar la lista por fecha
   const sortedData = data.sort((a, b) => {
@@ -49,44 +48,16 @@ const TripScreen = () => {
 
   const handleDeleteTrip = async (item) => {
     const isDriver = item.userDriver === uid.toString()
-    // Realizar la petición a la API para eliminar el viaje
 
     try {
       if (isDriver) {
-        const response = await deleteDriverTrip(item.tripId)
-        console.log('response', response)
-        if (!response) {
-          Toast.show({
-            type: 'error',
-            text1: 'No se ha podido eliminar el viaje'
-          })
-        } else {
-          Toast.show({
-            type: 'success',
-            text1: 'Viaje eliminado'
-          })
-        }
+        await deleteDriverTrip(item.tripId)
       } else {
-        const response = await deletePassengerTrip(item.tripId)
-        console.log('response', response)
-        if (!response) {
-          Toast.show({
-            type: 'error',
-            text1: 'No te has podido desapuntar del viaje'
-          })
-        } else {
-          Toast.show({
-            type: 'success',
-            text1: 'Te has desapuntado del viaje'
-          })
-        };
+        await deletePassengerTrip(item.tripId)
       }
-
-      // Actualizar la pantalla después de eliminar el viaje
-      dispatch(fetchTrip())
+      dispatch(fetchTrips())
     } catch (error) {
-      // Manejar el error en caso de que ocurra
-      console.error('Error al eliminar el viaje:', error)
+      console.error('ERROR - Not deleted trip:', error)
     }
   }
 
@@ -113,7 +84,7 @@ const TripScreen = () => {
           <View className='flex flex-row justify-between items-center'>
             <Text className='text-base font-bold text-gray-900'>Precio: {item.price}€</Text>
             <TouchableOpacity
-              className='w-1/3 bg-buttonColor py-2 px-2 rounded-full'
+              className='w-1/3 bg-blueColor py-2 px-2 rounded-full'
               onPress={() => handleView(item)}
             >
               <Text className='text-white font-bold text-center'>
@@ -176,7 +147,7 @@ const TripScreen = () => {
               )
             : (
               <View className='flex-1 justify-center bg-secondary'>
-                <Text className='text-3xl font-bold text-center text-buttonColor '>No hay viajes disponibles</Text>
+                <Text className='text-3xl font-bold text-center text-blueColor '>No hay viajes disponibles</Text>
               </View>
               )}
     </View>

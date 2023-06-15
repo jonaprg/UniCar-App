@@ -11,7 +11,6 @@ import { auth } from '../firebaseConfig.js'
 
 const DetailTripSearch = ({ route }) => {
   const { trip, isDriver, seats } = route.params
-  console.log(route.params)
   const navigation = useNavigation()
   const tripDate = moment(trip.dateTime).locale('es').format('LL')
   const tripTime = moment(trip.dateTime).locale('es').format('LT')
@@ -100,7 +99,7 @@ const DetailTripSearch = ({ route }) => {
                 <View className='flex-row  items-center mb-2 bg-secondary rounded-lg shadow shadow-gray-500 p-3 '>
                   <Text className='text-lg font-bold'>{trip.userDriverName}</Text>
                   <TouchableOpacity
-                    className='bg-buttonColor px-3 py-2 rounded ml-auto'
+                    className='bg-blueColor px-3 py-2 rounded ml-auto'
                     onPress={() => handleProfileUser(trip.userDriver)}
                   >
                     <Text className='text-white font-bold'>Ver Perfil</Text>
@@ -125,7 +124,7 @@ const DetailTripSearch = ({ route }) => {
                   <View className='flex-row  items-center mb-2 bg-secondary rounded-lg shadow shadow-gray-500 p-3 '>
                     <Text className='text-lg font-bold'>{item.name}</Text>
                     <TouchableOpacity
-                      className='bg-buttonColor px-3 py-2 rounded ml-auto'
+                      className='bg-blueColor px-3 py-2 rounded ml-auto'
                       onPress={() => handleProfileUser(item.id)}
                     >
                       <Text className='text-white font-bold'>Ver Perfil</Text>

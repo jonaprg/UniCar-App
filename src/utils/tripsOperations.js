@@ -1,8 +1,8 @@
+import Toast from 'react-native-toast-message'
 import { auth } from '../firebaseConfig.js'
 
 export const getTripsFromDatabase = async () => {
   const token = await auth.currentUser.getIdToken()
-  console.log('token', token)
   try {
     const response = await fetch('http://192.168.1.41:3000/api/v1/trips/user', {
       method: 'GET',
@@ -14,39 +14,42 @@ export const getTripsFromDatabase = async () => {
     if (response.status !== 200) {
       return []
     }
-    const data = await response.json()
-    console.log('data', data)
-    return data
+    return await response.json()
   } catch (error) {
-    console.log('ERROR GET USER', error)
+    console.log('ERROR - Not authorized', error)
   }
 }
 
 export const deleteDriverTrip = async (tripID) => {
   const token = await auth.currentUser.getIdToken()
-  let isDeleted = false
-  await fetch(`http://192.168.1.41:3000/api/v1/trips/${tripID}`, {
+  await fetch(`http://192.168.1.41:3000/api/v1/trips/${tripID}aa`, {
     method: 'DELETE',
     headers: {
       'Content-type': 'application/json',
       Authorization: `Bearer ${token.replace(/"/g, '')}`
     }
   }).then(response => {
-    if (response.ok) {
+    console.log('data', response)
+    if (response.status === 200) {
       console.log('trip deleted from db')
-      isDeleted = true
+      Toast.show({
+        type: 'success',
+        text1: 'Viaje eliminado',
+        text2: 'El viaje se ha eliminado correctamente'
+      })
     } else {
-      console.log('trip not deleted')
+      Toast.show({
+        type: 'error',
+        text1: 'No se pudo eliminar el viaje'
+      })
     }
   }).catch(error => {
-    console.log('Error not deleted trip', error)
+    console.log('ERROR - Not authorized', error)
   })
-  return isDeleted
 }
 
 export const deletePassengerTrip = async (tripID) => {
   const token = await auth.currentUser.getIdToken()
-  let isDeleted = false
   await fetch(`http://192.168.1.41:3000/api/v1/trips/${tripID}/passenger`, {
     method: 'PUT',
     headers: {
@@ -54,14 +57,39 @@ export const deletePassengerTrip = async (tripID) => {
       Authorization: `Bearer ${token.replace(/"/g, '')}`
     }
   }).then(response => {
-    if (response.ok) {
-      console.log('trip deleted from db')
-      isDeleted = true
+    if (response.status === 200) {
+      Toast.show({
+        type: 'success',
+        text2: 'El viaje se ha eliminado correctamente'
+      })
     } else {
-      console.log('trip not deleted')
+      Toast.show({
+        type: 'error',
+        text1: 'No te has podido desapuntar del viaje'
+      })
     }
   }).catch(error => {
-    console.log('Error not deleted trip', error)
+    console.log('ERROR - Not authorized', error)
   })
-  return isDeleted
+}
+
+export const getRequestsByTripFromDatabase = async (tripId) => {
+  const token = await auth.currentUser.getIdToken()
+  console.log('token', token)
+  try {
+    const response = await fetch(`http://192.168.1.41:3000/api/v1/trips/${tripId}/requestsPassenger`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${token.replace(/""/g, '')}`
+      }
+    })
+    if (response.status === 404 || response.status === 500) {
+      return []
+    }
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.log('ERROR GET USER', error)
+  }
 }

@@ -12,7 +12,6 @@ import { auth } from '../firebaseConfig.js'
 
 const TripsSearch = ({ route }) => {
   const { trips, seats } = route.params
-  console.log(route.params)
   const uid = auth.currentUser.uid
   const navigation = useNavigation()
 
@@ -64,7 +63,7 @@ const TripsSearch = ({ route }) => {
 
               <Text className='text-base font-bold text-gray-900'>Precio: {item.price}€/pasajero</Text>
               <TouchableOpacity
-                className='w-1/3 bg-buttonColor py-2 px-2 rounded-full'
+                className='w-1/3 bg-blueColor py-2 px-2 rounded-full'
                 onPress={() => handleView(item)}
               >
                 <Text className='text-white font-bold text-center'>
@@ -96,7 +95,7 @@ const TripsSearch = ({ route }) => {
           )
         : (
           <View className='flex-1 justify-center bg-secondary'>
-            <Text className='text-3xl font-bold text-center text-buttonColor '>No hay viajes disponibles</Text>
+            <Text className='text-3xl font-bold text-center text-blueColor '>No hay viajes disponibles</Text>
           </View>
           )}
     </View>

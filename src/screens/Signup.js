@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image, KeyboardAvoidingView, 
 import { useDispatch } from 'react-redux'
 import FormInput from '../components/FormInput.js'
 import FormButton from '../components/FormButton.js'
+import FormPasswordInput from '../components/FormPasswordInput.js'
 import { setAuthState } from '../reducers/auth/auth.js'
 
 const SignUp = ({ onSignUp, setEmail, setPassword, setName }) => {
@@ -45,13 +46,11 @@ const SignUp = ({ onSignUp, setEmail, setPassword, setName }) => {
           keyboardType='email-address'
           autoCapitalize='none'
         />
-        <FormInput
+        <FormPasswordInput
           name='Contraseña'
           onChangeText={setPassword}
-          placeholder='Contraseña'
-          secureTextEntry
+          placeholder='*******'
         />
-
         <FormButton
           buttonTitle='Registrarse'
           onPress={onSignUp}

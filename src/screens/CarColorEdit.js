@@ -7,6 +7,7 @@ import { setUserCarColorRedux } from '../reducers/user.js'
 import FormButton from '../components/FormButton.js'
 
 import DropDownPicker from 'react-native-dropdown-picker'
+import Toast from 'react-native-toast-message'
 
 const CarColorEdit = ({ navigation, route }) => {
   const { userId, carColorValue } = route.params
@@ -43,15 +44,21 @@ const CarColorEdit = ({ navigation, route }) => {
         carColor
       })
     }).then(response => {
-      if (response.ok) {
+      if (response.status === 200) {
         dispatch(setUserCarColorRedux(carColor))
+        Toast.show({
+          type: 'success',
+          text1: 'Color del coche actualizada.'
+        })
         navigation.goBack()
       } else {
-        console.log('The color car not updated')
-        navigation.goBack()
+        Toast.show({
+          type: 'error',
+          text1: 'El color de coche no se ha actualizado.'
+        })
       }
     }).catch(error => {
-      console.log('The color car update error', error)
+      console.log('ERROR - The color car not updated', error)
     })
   }
 

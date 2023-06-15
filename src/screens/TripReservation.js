@@ -7,7 +7,6 @@ import { auth } from '../firebaseConfig.js'
 import Toast from 'react-native-toast-message'
 
 const TripReservation = ({ route }) => {
-  console.log(route.params)
   const { trip, seats } = route.params
   const navigation = useNavigation()
   const tripDate = moment(trip.dateTime).locale('es').format('DD MMMM Y, H:mm')
@@ -23,7 +22,6 @@ const TripReservation = ({ route }) => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('data', data)
         if (data.status === 400) {
           Toast.show({
             type: 'error',
@@ -55,7 +53,7 @@ const TripReservation = ({ route }) => {
           })
         }
       })
-      .catch(error => console.log('Error al hacer la reserva', error))
+      .catch(error => console.log('ERROR - Not authorized', error))
   }
 
   return (
@@ -77,9 +75,9 @@ const TripReservation = ({ route }) => {
         </View>
       </View>
       <View className=' flex-col p-4 '>
-        <Text className='text-lg text-buttonColor font-bold mb-2'>Importe total</Text>
-        <Text className='text-4xl text-buttonColor font-bold'>{trip.price * seats}€</Text>
-        <Text className='text-xl text-buttonColor font-bold'>{trip.price + '€ / ' + seats} pasajero</Text>
+        <Text className='text-lg text-blueColor font-bold mb-2'>Importe total</Text>
+        <Text className='text-4xl text-blueColor font-bold'>{trip.price * seats}€</Text>
+        <Text className='text-xl text-blueColor font-bold'>{trip.price + '€ / ' + seats} pasajero</Text>
 
       </View>
       <View>

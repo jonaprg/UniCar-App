@@ -6,7 +6,7 @@ module.exports = {
       colors: {
         primary: '#488484',
         secondary: '#F1F4F8',
-        buttonColor: '#023047',
+        blueColor: '#023047',
         errorColor: '#7F0303'
       }
     }

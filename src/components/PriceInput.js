@@ -27,7 +27,7 @@ const PriceInput = ({ priceSelected }) => {
 
   return (
     <View className='flex-column items-center'>
-      <Text className=' text-lg font-medium text-buttonColor'>Precio por asiento</Text>
+      <Text className=' text-lg font-medium text-blueColor'>Precio por asiento</Text>
       <View className='flex-row justify-center items-center gap-3'>
         <AntDesign
           name='minuscircleo'

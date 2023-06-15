@@ -25,8 +25,6 @@ const AuthScreen = () => {
     const passwordValidation = validatePassword(password)
 
     if (!emailValidation || !passwordValidation) {
-      console.log('emailValidation', emailValidation)
-      console.log('passwordValidation', passwordValidation)
       Toast.show({
         type: 'error',
         text1: 'Error',
@@ -54,10 +52,20 @@ const AuthScreen = () => {
   const onSignUp = () => {
     const emailValidation = validateEmail(email)
     const passwordValidation = validatePassword(password)
-
-    if (!emailValidation || !passwordValidation) {
-      console.log('emailValidation', emailValidation)
-      console.log('passwordValidation', passwordValidation)
+    console.log(name)
+    if (!emailValidation || !passwordValidation || name === '') {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Ingrese todos los datos'
+      })
+    } else if (name === '') {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'El nombre no puede estar vacío'
+      })
+    } else if (!passwordValidation) {
       Toast.show({
         type: 'error',
         text1: 'Error',
@@ -70,25 +78,25 @@ const AuthScreen = () => {
           await updateProfile(auth.currentUser, {
             displayName: name
           })
-          await createDocUser(user)
-          dispatch(signIn(user._tokenResponse.idToken))
-          dispatch(setAuthState('signedIn'))
+          await createNewUser(user)
+          await signInWithEmailAndPassword(auth, email, password)
+            .then(user => {
+              dispatch(signIn(user._tokenResponse.idToken))
+              dispatch(setAuthState('signedIn'))
+            })
         })
         .catch(error => {
-          console.log('Not created user', error)
           Toast.show({
             type: 'error',
             text1: 'Error',
-            text2: 'El email ya existe o la contraseña no es válido'
-
+            text2: 'El email ya existe'
           })
+          console.log('ERROR - SignUp', error)
         })
     }
   }
 
-  const createDocUser = async (userData) => {
-    console.log('CREATE NEW USER', userData)
-
+  const createNewUser = async (userData) => {
     const token = await auth.currentUser.getIdToken()
     const user = {
       name: userData.user.displayName,
@@ -105,6 +113,7 @@ const AuthScreen = () => {
     })
       .then(response => response.json())
       .then(data => {
+        console.log(data)
         if (data.status === 201) {
           Toast.show({
             type: 'success',
@@ -113,7 +122,7 @@ const AuthScreen = () => {
           })
         }
       })
-      .catch(error => console.log('ERROR CREATE DOC USER', error))
+      .catch(error => console.log('ERROR - Create user', error))
   }
 
   return (

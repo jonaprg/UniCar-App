@@ -7,6 +7,7 @@ import { setUserCarBrandRedux } from '../reducers/user.js'
 import FormButton from '../components/FormButton.js'
 
 import DropDownPicker from 'react-native-dropdown-picker'
+import Toast from 'react-native-toast-message'
 
 const CarBrandEdit = ({ navigation, route }) => {
   const { userId, carBrandValue } = route.params
@@ -46,15 +47,24 @@ const CarBrandEdit = ({ navigation, route }) => {
         carBrand: newBrandCar
       })
     }).then(response => {
-      if (response.ok) {
+      if (response.status === 200) {
+        Toast.show({
+          type: 'success',
+          text1: 'Marca de coche actualizada'
+        })
         dispatch(setUserCarBrandRedux(newBrandCar))
         navigation.goBack()
       } else {
-        console.log('The brand car not updated')
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'La marca de coche no se ha actualizado'
+        })
       }
-    }).catch(error => {
-      console.log('The brand car update error', error)
     })
+      .catch(error => {
+        console.log('The brand car update error', error)
+      })
   }
 
   return (

@@ -70,7 +70,7 @@ const Home = () => {
   //     handleSearchTrip()
   //   }
   // }, [searchData])
-
+  console.log('search', searchData)
   const handleSearchTrip = async () => {
     const token = await AsyncStorage.getItem('@token')
     await fetch('http://192.168.1.41:3000/api/v1/trips/search', {
@@ -95,10 +95,10 @@ const Home = () => {
         Toast.show({
           type: 'error',
           text1: 'Error',
-          text2: 'No se encontraron viajes'
+          text2: 'No hay viajes disponibles o falta completar algún campo.'
         })
         navigation.navigate('Home')
-        console.log('ERRO GET TRIPS', error)
+        console.log('ERROR - Get Trips search', error)
       })
   }
 
@@ -119,12 +119,12 @@ const Home = () => {
             </Text>
             <View className='w-full bg-secondary rounded-3xl p-5 my-5'>
               <View className='mt-5'>
-                <Text className='text-lg font-medium text-buttonColor'>
+                <Text className='text-lg font-medium text-blueColor'>
                   Origen
                 </Text>
 
                 <GooglePlacesInput placeholder='De' onPlaceSelected={handleSearchPlaceOrigin} />
-                <Text className='text-lg font-medium text-buttonColor'>
+                <Text className='text-lg font-medium text-blueColor'>
                   Destino
                 </Text>
                 <GooglePlacesInput placeholder='A' onPlaceSelected={handleSearchPlaceDestination} />

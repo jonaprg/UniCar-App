@@ -26,7 +26,7 @@ const CreateTrip = () => {
 
   }
   const [tripData, setTripData] = useState(initialTripData)
-
+  console.log('created', tripData)
   const handlePlaceOrigin = (data) => {
     setTripData((prevState) => ({
       ...prevState,
@@ -63,7 +63,6 @@ const CreateTrip = () => {
   }
 
   useEffect(() => {
-    console.log('tripData:', tripData)
   }, [tripData])
 
   const createDocTrip = async () => {
@@ -127,7 +126,7 @@ const CreateTrip = () => {
           })
         }
       })
-      .catch(error => console.log('ERROR CREATE DOC TRIP', error))
+      .catch(error => console.log('ERROR - Not authorized', error))
   }
 
   return (
@@ -138,17 +137,17 @@ const CreateTrip = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
         <View className='bg-secondary  flex-1'>
           <View className='p-5'>
-            <Text className='text-2xl font-bold text-buttonColor'>
+            <Text className='text-2xl font-bold text-blueColor'>
               ¿Donde quieres ir?
             </Text>
             <View className='w-full bg-white shadow shadow-gray-500 rounded-3xl p-5 my-5'>
               <View className='mt-5'>
-                <Text className='text-lg font-medium text-buttonColor'>
+                <Text className='text-lg font-medium text-blueColor'>
                   Origen
                 </Text>
 
                 <GooglePlacesInput placeholder='De' onPlaceSelected={handlePlaceOrigin} />
-                <Text className='text-lg font-medium text-buttonColor'>
+                <Text className='text-lg font-medium text-blueColor'>
                   Destino
                 </Text>
                 <GooglePlacesInput placeholder='A' onPlaceSelected={handlePlaceDestination} value={tripData.destination} />

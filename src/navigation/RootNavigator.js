@@ -11,25 +11,27 @@ import { auth } from '../firebaseConfig.js'
 import { onAuthStateChanged } from 'firebase/auth'
 import { setUser } from '../reducers/user.js'
 import { getStorage, ref, getDownloadURL } from 'firebase/storage'
+import Toast from 'react-native-toast-message'
 
 const RootNavigator = () => {
   const { userToken } = useSelector((state) => state.auth)
-  const user = useSelector((state) => state.user)
   const [isLoading, setIsLoading] = React.useState(true)
   const storage = getStorage()
 
   const getPhoto = async (id) => {
     let urld
     const imageRef = await ref(storage, `profilePictures/${id}`)
-    console.log('imageRef', imageRef)
     if (imageRef._url !== undefined) {
       await getDownloadURL(imageRef)
         .then((url) => {
-          console.log('URL', url)
           urld = url
         })
         .catch((error) => {
-          console.log('ERROR', error)
+          Toast.show({
+            type: 'error',
+            text1: 'No se pudo obtener la foto de perfil'
+          })
+          console.log('ERROR - Get photo', error)
         })
     } else {
       urld = undefined
@@ -48,26 +50,32 @@ const RootNavigator = () => {
         }
       })
       const data = await response.json()
-
-      return data
+      if (response.status === 404 || response.status === 500) {
+        Toast.show({
+          type: 'error',
+          text2: 'No se pudo obtener la información del usuario'
+        })
+        return []
+      }
+      return data.userData
     } catch (error) {
       dispatch(signOut())
       dispatch(setAuthState('signIn'))
-      console.log('ERROR GET USER', error)
+      Toast.show({
+        type: 'error',
+        text2: 'No se pudo obtener la información del usuario'
+      })
     }
   }
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log('User is signed in')
         const userId = user.uid
         const url = await getPhoto(userId)
         await AsyncStorage.setItem('@userID', JSON.stringify(userId))
         const token = await user.getIdToken()
         await AsyncStorage.setItem('@token', JSON.stringify(token))
         const userData = await getUser(userId, token)
-        console.log('userDataAAA', userData)
-        console.log(user)
         dispatch(setUser({
           id: userId,
           name: userData.name,
@@ -82,7 +90,6 @@ const RootNavigator = () => {
         }))
         dispatch(restoreToken(token))
       } else {
-        console.log('User is signed out')
         dispatch(restoreToken(null))
       }
       setIsLoading(false)
@@ -93,8 +100,8 @@ const RootNavigator = () => {
   if (isLoading) {
     return <Splash />
   }
+
   console.log('userToken', userToken)
-  console.log('user', user)
 
   return (
     <NavigationContainer>

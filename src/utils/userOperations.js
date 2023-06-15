@@ -1,10 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { auth } from '../firebaseConfig.js'
 import { updateEmail } from 'firebase/auth'
+import Toast from 'react-native-toast-message'
 
 export const updateUserName = async (userID, newName) => {
+  let successUpdate = false
   const token = await AsyncStorage.getItem('@token')
-  await fetch(`http://192.168.1.41:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
+  await fetch(`http://192.168.1.41:3000/api/v1/users/${userID.replace(/""/g, '')}AA`, {
     method: 'PUT',
     headers: {
       'Content-type': 'application/json',
@@ -14,20 +16,28 @@ export const updateUserName = async (userID, newName) => {
       name: newName
     })
   }).then(response => {
-    console.log('response', response.status)
-    if (response.ok) {
-      console.log('user name updated')
+    if (response.status === 200) {
+      Toast.show({
+        type: 'success',
+        text1: 'Nombre actualizado correctamente'
+      })
+      successUpdate = true
     } else {
-      console.log('user name not updated')
+      Toast.show({
+        type: 'error',
+        text1: 'Error al actualizar el nombre',
+        text2: 'No se pudo actualizar el nombre'
+      })
     }
   }).catch(error => {
-    console.log('user name fetch update error', error)
+    console.log('ERROR - Not authorized', error)
   })
+  return successUpdate
 }
 
 export const updateUserPhone = async (userID, newPhone) => {
+  let successUpdate = false
   const token = await AsyncStorage.getItem('@token')
-  console.log('jajsdnaj', token)
   await fetch(`http://192.168.1.41:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
     method: 'PUT',
     headers: {
@@ -38,17 +48,27 @@ export const updateUserPhone = async (userID, newPhone) => {
       phone: newPhone
     })
   }).then(response => {
-    if (response.ok) {
-      console.log('user name updated')
+    if (response.status === 200) {
+      Toast.show({
+        type: 'success',
+        text1: 'Teléfono actualizado correctamente'
+      })
+      successUpdate = true
     } else {
-      console.log('user name not updated')
+      Toast.show({
+        type: 'error',
+        text1: 'Error al actualizar el teléfono',
+        text2: 'No se pudo actualizar el teléfono'
+      })
     }
   }).catch(error => {
-    console.log('user name fetch update error', error)
+    console.log('ERROR - Not authorized', error)
   })
+  return successUpdate
 }
 
 export const updateUserUniversity = async (userID, newUniversity) => {
+  let successUpdate = false
   const token = await AsyncStorage.getItem('@token')
   await fetch(`http://192.168.1.41:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
     method: 'PUT',
@@ -60,24 +80,43 @@ export const updateUserUniversity = async (userID, newUniversity) => {
       university: newUniversity
     })
   }).then(response => {
-    if (response.ok) {
-      console.log('user university updated')
+    if (response.status === 200) {
+      Toast.show({
+        type: 'success',
+        text1: 'Universidad actualizada correctamente'
+      })
+      successUpdate = true
     } else {
-      console.log('user university not updated')
+      Toast.show({
+        type: 'error',
+        text1: 'Error al actualizar la universidad',
+        text2: 'No se pudo actualizar la universidad'
+      })
     }
   }).catch(error => {
-    console.log('user university fetch update error', error)
+    console.log('ERROR - Not authorized', error)
   })
+  return successUpdate
 }
 
 export const updateUserEmail = async (userID, newEmail) => {
+  let successUpdate = false
   updateEmail(auth.currentUser, newEmail)
     .then(() => {
-      console.log('user email updated')
+      Toast.show({
+        type: 'success',
+        text1: 'Email actualizado correctamente'
+      })
+      successUpdate = true
     })
     .catch(error => {
-      console.log('user email update error', error)
+      Toast.show({
+        type: 'error',
+        text1: 'Email no se pudo actualizar'
+      })
+      console.log('ERROR - Email not updated', error)
     })
+  return successUpdate
 }
 
 export const getUserProfile = async (userID) => {
@@ -91,9 +130,8 @@ export const getUserProfile = async (userID) => {
       }
     })
     const data = await response.json().then(data => data)
-    console.log('Get user profile data', data)
     return data
   } catch (error) {
-    console.log('Errot get user profile', error)
+    console.log('ERROR - Not authorized', error)
   }
 }

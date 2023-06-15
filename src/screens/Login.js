@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 
 import FormInput from '../components/FormInput.js'
 import FormButton from '../components/FormButton.js'
+import FormPasswordInput from '../components/FormPasswordInput.js'
 import { setAuthState } from '../reducers/auth/auth.js'
 // import GoogleSignIn from '../components/GoogleSignIn.js'
 
@@ -43,11 +44,10 @@ const Login = ({ onLogin, setEmail, setPassword, errorMessage }) => {
         keyboardType='email-address'
         autoCapitalize='none'
       />
-      <FormInput
+      <FormPasswordInput
         name='Contraseña'
         onChangeText={setPassword}
-        placeholder='********'
-        secureTextEntry
+        placeholder='*******'
       />
       <FormButton
         buttonTitle='Iniciar sesión'

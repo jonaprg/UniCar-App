@@ -15,7 +15,7 @@ const RequestTrip = () => {
       </Text>
 
       <TouchableOpacity
-        className='bg-buttonColor py-5 px-5 rounded-lg shadow-lg shadow-black mt-10'
+        className='bg-blueColor py-5 px-5 rounded-lg shadow-lg shadow-black mt-10'
         onPress={() => navigation.navigate('Home')}
       >
         <Text className='text-white font-bold text-lg'>Volver al Inicio</Text>
