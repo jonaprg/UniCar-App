@@ -1,4 +1,4 @@
-import { getTripsFromDatabase } from '../../utils/tripsOperations.js'
+import { getTripsFromDatabase } from '../../api/tripsOperations.js'
 export const FETCH_TRIP_REQUEST = 'FETCH_TRIP_REQUEST'
 export const FETCH_TRIP_SUCCESS = 'FETCH_TRIP_SUCCESS'
 export const FETCH_TRIP_FAILURE = 'FETCH_TRIP_FAILURE'

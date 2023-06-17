@@ -1,27 +1,36 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, FlatList } from 'react-native'
-import moment from 'moment'
 import FormButton from '../components/FormButton.js'
 import {
   getUserProfile
-} from '../utils/userOperations.js'
+} from '../api/userOperations.js'
 import { useNavigation } from '@react-navigation/native'
-import localization from 'moment/locale/es'
 import { auth } from '../firebaseConfig.js'
+import Toast from 'react-native-toast-message'
 
 const DetailTripSearch = ({ route }) => {
   const { trip, isDriver, seats } = route.params
   const navigation = useNavigation()
-  const tripDate = moment(trip.dateTime).locale('es').format('LL')
-  const tripTime = moment(trip.dateTime).locale('es').format('LT')
+  const [date, time] = trip.dateTime.split(' ')
+  const [day, month, year] = date.split('/')
+  const [hour, minutes] = time.split(':')
+  const fechaActual = new Date()
+  const fechaExpiracion = new Date(year, month - 1, day, hour, minutes)
+  fechaExpiracion.setHours(fechaExpiracion.getHours() + 2)
 
-  const tripDateTime = moment(trip.dateTime).locale('es', localization)
-  const now = moment()
-  const isExpired = now.isAfter(tripDateTime.add(2, 'hours'))
+  const isExpired = fechaActual.toLocaleString() > fechaExpiracion.toLocaleString()
 
   const handleProfileUser = async (id) => {
-    const dataUser = await getUserProfile(id)
-    navigation.navigate('ProfileUserSearch', { dataUser, id })
+    const reponse = await getUserProfile(id)
+    if (reponse.status !== 200) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'No se ha podido cargar el perfil del usuario'
+      })
+    } else {
+      navigation.navigate('ProfileUserSearch', { data: reponse.userData, id })
+    }
   }
 
   return (
@@ -46,8 +55,8 @@ const DetailTripSearch = ({ route }) => {
               )
             : (
               <View className='justify-center items-center mb-5'>
-                <Text className='text-xl font-bold'>{tripDate}</Text>
-                <Text className='text-lg font-bold'>Salida - {tripTime}</Text>
+                <Text className='text-xl font-bold'>{date}</Text>
+                <Text className='text-lg font-bold'>Salida - {time}</Text>
               </View>
               )}
         </View>

@@ -2,18 +2,16 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import FormButton from '../components/FormButton.js'
 import { useNavigation } from '@react-navigation/native'
-import moment from 'moment'
 import { auth } from '../firebaseConfig.js'
 import Toast from 'react-native-toast-message'
 
 const TripReservation = ({ route }) => {
   const { trip, seats } = route.params
   const navigation = useNavigation()
-  const tripDate = moment(trip.dateTime).locale('es').format('DD MMMM Y, H:mm')
 
   const handleReservation = async () => {
     const token = await auth.currentUser.getIdToken()
-    await fetch(`http://192.168.1.41:3000/api/v1/trips/${trip.tripId}/request`, {
+    await fetch(`http://192.168.1.41:3000/api/v1/trips/${trip.tripId}/request/${seats}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
@@ -71,13 +69,14 @@ const TripReservation = ({ route }) => {
         </View>
         <View className='flex-col mb-5 '>
           <Text className='text-xl text-secondary font-base mb-1'>Salida</Text>
-          <Text className='text-2xl text-secondary font-bold'>{tripDate}</Text>
+          <Text className='text-2xl text-secondary font-bold'>{trip.dateTime}</Text>
         </View>
       </View>
       <View className=' flex-col p-4 '>
-        <Text className='text-lg text-blueColor font-bold mb-2'>Importe total</Text>
-        <Text className='text-4xl text-blueColor font-bold'>{trip.price * seats}€</Text>
-        <Text className='text-xl text-blueColor font-bold'>{trip.price + '€ / ' + seats} pasajero</Text>
+        <Text className='text-lg text-blueColor font-bold mb-2'>Importe total: {seats} pasajeros</Text>
+
+        <Text className='text-4xl text-blueColor font-bold'>{trip.price * seats}€ </Text>
+        <Text className='text-xl text-blueColor font-bold'>{trip.price + '€'} / 1 pasajero</Text>
 
       </View>
       <View>

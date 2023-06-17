@@ -5,6 +5,7 @@ import ProfileStack from './ProfileStack.js'
 import HomeStack from './HomeStack.js'
 import DriverStack from './DriverStack.js'
 import TripsStack from './TripsStack.js'
+import ChatStack from './ChatStack.js'
 
 const Tab = createBottomTabNavigator()
 const screenOptions = {
@@ -59,6 +60,16 @@ const BottomTab = () => {
           ),
           headerShown: false,
           title: 'Rutas'
+        }}
+      />
+      <Tab.Screen
+        name='ChatStack'
+        component={ChatStack}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Ionicons name='chatbox' size={24} color={color} />),
+          headerShown: false,
+          title: 'Perfil'
         }}
       />
       <Tab.Screen

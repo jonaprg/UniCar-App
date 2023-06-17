@@ -1,10 +1,13 @@
 import * as React from 'react'
-import { View, Pressable, StyleSheet, Image, Alert } from 'react-native'
+import { View, Pressable, StyleSheet, Image } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import * as ImagePicker from 'expo-image-picker'
 import { resetProfilePicture } from '../reducers/user.js'
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import Toast from 'react-native-toast-message'
+import { updateProfile } from 'firebase/auth'
+import { auth } from '../firebaseConfig.js'
+import { MaterialIcons } from '@expo/vector-icons'
 
 export default function ProfilePicture () {
   const user = useSelector((state) => state.user)
@@ -16,7 +19,10 @@ export default function ProfilePicture () {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync()
 
     if (permissionResult.granted === false) {
-      Alert.alert('La aplicación necesita permisos para acceder a la galería')
+      Toast.show({
+        type: 'error',
+        text2: 'La aplicación necesita permisos para acceder a la galería'
+      })
       return
     }
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -46,16 +52,23 @@ export default function ProfilePicture () {
           type: 'error',
           text2: 'No se pudo actualizar la foto de perfil'
         })
-        console.log('ERROR - Uploded photo', error)
+        console.log('ERROR - Uploded photo Storage', error)
       })
 
       const imageRef = await ref(storage, `profilePictures/${id}`)
       await getDownloadURL(imageRef)
         .then((url) => {
+          updateProfile(auth.currentUser, { photoURL: url })
+            .then(() => {
+
+            })
+            .catch((error) => {
+              console.log('ERROR - Uploded photo to Auth', error)
+            })
           dispatch(resetProfilePicture(url))
         })
         .catch((error) => {
-          console.log('ERROR - Get photo', error)
+          console.log('ERROR - Get photo the storage', error)
         })
     } catch (e) {
       console.log('ERROR - Save photo', e)
@@ -65,12 +78,12 @@ export default function ProfilePicture () {
   return (
     <View style={styles.container}>
       <Pressable onPress={pickeImage}>
-        {profilePicture !== undefined
+        {profilePicture !== undefined && profilePicture !== null && profilePicture !== ''
           ? (
             <Image source={{ uri: profilePicture }} style={styles.image} />
             )
           : (
-            <Image source={require('../../assets/profile.png')} style={styles.image} />
+            <MaterialIcons name='add-a-photo' size={60} color='black' />
             )}
       </Pressable>
     </View>

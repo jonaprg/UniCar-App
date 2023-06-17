@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import { View, Text } from 'react-native'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
-import moment from 'moment'
 
 import FormButton from './FormButton.js'
 
 const DatePickerModal = ({ dateTimeSelected, modeTime, titleButton }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
-  const [selectedDate, setSelectedDate] = useState(null)
+  const [selectedDate, setSelectedDate] = useState('')
 
   const showDatePicker = () => {
     setDatePickerVisibility(true)
@@ -18,12 +17,16 @@ const DatePickerModal = ({ dateTimeSelected, modeTime, titleButton }) => {
   }
 
   const handleConfirm = (date) => {
-    const datk = new Date()
-    console.log('A date has been pickeds: ', datk)
+    let selectedDate
+    if (modeTime === 'date') {
+      selectedDate = date.toLocaleDateString()
+    } else {
+      selectedDate = date.toLocaleString()
+    }
 
-    setSelectedDate(date)
+    setSelectedDate(selectedDate)
     if (dateTimeSelected) {
-      dateTimeSelected(date)
+      dateTimeSelected(selectedDate)
     }
     hideDatePicker()
   }
@@ -35,7 +38,6 @@ const DatePickerModal = ({ dateTimeSelected, modeTime, titleButton }) => {
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode={modeTime}
-        locale='es'
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
         is24Hour
@@ -43,9 +45,7 @@ const DatePickerModal = ({ dateTimeSelected, modeTime, titleButton }) => {
 
       <Text
         className='text-sm font-medium text-black/60 text-center my-2'
-      >{`${selectedDate && modeTime === 'datetime'
-      ? moment(selectedDate).locale('es').format('LLLL')
-      : moment(selectedDate).locale('es').format('LL')}`}
+      >{`${selectedDate || ''}`}
 
       </Text>
     </View>

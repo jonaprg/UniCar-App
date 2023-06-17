@@ -1,6 +1,25 @@
 import Toast from 'react-native-toast-message'
 import { auth } from '../firebaseConfig.js'
 
+export const getTripIdFromDatabase = async (id) => {
+  const token = await auth.currentUser.getIdToken()
+  try {
+    const response = await fetch(`http://192.168.1.41:3000/api/v1/trips/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${token.replace(/""/g, '')}`
+      }
+    })
+    if (response.status !== 200) {
+      return []
+    }
+    return response.message
+  } catch (error) {
+    console.log('ERROR - Not authorized', error)
+  }
+}
+
 export const getTripsFromDatabase = async () => {
   const token = await auth.currentUser.getIdToken()
   try {
@@ -77,7 +96,7 @@ export const getRequestsByTripFromDatabase = async (tripId) => {
   const token = await auth.currentUser.getIdToken()
   console.log('token', token)
   try {
-    const response = await fetch(`http://192.168.1.41:3000/api/v1/trips/${tripId}/requestsPassenger`, {
+    const response = await fetch(`http://192.168.1.41:3000/api/v1/trips/requestsPassengers/${tripId}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -92,4 +111,60 @@ export const getRequestsByTripFromDatabase = async (tripId) => {
   } catch (error) {
     console.log('ERROR GET USER', error)
   }
+}
+
+export const acceptPassenger = async (tripId, passengerId) => {
+  let success = false
+  const token = await auth.currentUser.getIdToken()
+  await fetch(`http://192.168.1.41:3000/api/v1/trips/${tripId}/${passengerId}/acceptPassenger`, {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token.replace(/"/g, '')}`
+    }
+  }).then(response => {
+    if (response.status === 200) {
+      Toast.show({
+        type: 'success',
+        text2: 'Se ha aceptado el pasajero correctamente'
+      })
+      success = true
+    } else {
+      Toast.show({
+        type: 'error',
+        text1: 'No se ha podido aceptar el pasajero'
+      })
+    }
+  }).catch(error => {
+    console.log('ERROR - Not authorized', error)
+  })
+  return success
+}
+
+export const rejectPassenger = async (tripId, passengerId) => {
+  let rejected = false
+  const token = await auth.currentUser.getIdToken()
+  await fetch(`http://192.168.1.41:3000/api/v1/trips/${tripId}/${passengerId}/rejectPassenger`, {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token.replace(/"/g, '')}`
+    }
+  }).then(response => {
+    if (response.status === 200) {
+      Toast.show({
+        type: 'success',
+        text2: 'Se ha rechazado el pasajero correctamente'
+      })
+      rejected = true
+    } else {
+      Toast.show({
+        type: 'error',
+        text1: 'No se ha podido rechazar el pasajero'
+      })
+    }
+  }).catch(error => {
+    console.log('ERROR - Not authorized', error)
+  })
+  return rejected
 }

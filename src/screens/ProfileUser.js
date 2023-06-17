@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 // import { getStorage, ref, getDownloadURL } from 'firebase/storage'
 const UserProfile = ({ route }) => {
-  const { dataUser, id } = route.params
+  const { data, id } = route.params
   const navigation = useNavigation()
   // const storage = getStorage()
 
@@ -15,24 +15,24 @@ const UserProfile = ({ route }) => {
         <View className=' border-b-2 border-secondary'>
           <View className='flex-row items-center mb-2'>
             <View className='flex-row '>
-              <Text className='text-2xl font-bold mr-1'>{dataUser.name}</Text>
+              <Text className='text-2xl font-bold mr-1'>{data.name}</Text>
             </View>
           </View>
           {/* Fecha y hora */}
           <View className='my-2'>
             <Text className='text-xl font-bold'>Móvil</Text>
-            <Text className='text-lg font-base'>{dataUser.phone ?? 'No esta disponible'}</Text>
+            <Text className='text-lg font-base'>{data.phone ?? 'No esta disponible'}</Text>
           </View>
         </View>
         <View className='flex-row justify-between items-center border-b-2 border-secondary'>
 
           <View className='flex-column my-5'>
             <Text className='text-lg font-bold'>Coche</Text>
-            {dataUser.carBrand
+            {data.carBrand
               ? (
                 <View>
-                  <Text className='text-lg font-base'>{dataUser.carBrand}</Text>
-                  <Text className='text-base font-base text-gray-500 '>{dataUser.carColor}</Text>
+                  <Text className='text-lg font-base'>{data.carBrand}</Text>
+                  <Text className='text-base font-base text-gray-500 '>{data.carColor}</Text>
                 </View>
                 )
               : (
@@ -42,7 +42,7 @@ const UserProfile = ({ route }) => {
 
           <View className='flex-column'>
             <Text className='text-lg font-normal'>Valoraciones</Text>
-            <Text className='text-lg font-bold'>No disponibles</Text>
+            <Text className='text-lg font-bold'>No hay valoraciones</Text>
           </View>
           <View>
             <Text />
@@ -50,10 +50,10 @@ const UserProfile = ({ route }) => {
         </View>
         <View className='flex-column my-5 border-b-2 border-secondary'>
           <Text className='text-lg font-normal'>Preferencias</Text>
-          {dataUser.preferences && dataUser.preferences.length > 0
+          {data.preferences && data.preferences.length > 0
             ? (
               <FlatList
-                data={dataUser.preferences}
+                data={data.preferences}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
                   <Text className='text-base font-bold my-2'>{item}</Text>

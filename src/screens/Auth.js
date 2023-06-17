@@ -9,7 +9,7 @@ import { setAuthState, signIn } from '../reducers/auth/auth.js'
 import Login from './Login.js'
 import SignUp from './Signup.js'
 import { auth } from '../firebaseConfig.js'
-import { validateEmail, validatePassword } from '../utils/validations'
+import { validateEmail, validatePassword } from '../api/validations.js'
 import Toast from 'react-native-toast-message'
 
 const AuthScreen = () => {

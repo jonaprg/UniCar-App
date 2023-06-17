@@ -16,7 +16,7 @@ import {
   updateUserEmail,
   updateUserUniversity,
   updateUserPhone
-} from '../utils/userOperations.js'
+} from '../api/userOperations.js'
 
 export default function ProfileInfo () {
   const user = useSelector((state) => state.user)

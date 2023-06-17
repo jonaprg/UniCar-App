@@ -6,8 +6,7 @@ import {
 } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
-import localization from 'moment/locale/es'
-import moment from 'moment'
+
 import { auth } from '../firebaseConfig.js'
 
 const TripsSearch = ({ route }) => {
@@ -22,21 +21,27 @@ const TripsSearch = ({ route }) => {
     navigation.navigate('DetailTripSearch', { trip: item, isDriver, isPassenger, seats })
   }
 
-  // Ordenar la lista por fecha
-  const sortedData = trips.sort((a, b) => {
-    const dateA = moment(a.dateTime)
-    const dateB = moment(b.dateTime)
-    return dateA - dateB
-  })
   // Verificar si hay viajes no expirados
-  const hasValidTrips = sortedData.some(item => {
-    const now = moment()
-    return !now.isAfter(moment(item.dateTime).locale('es', localization).add(2, 'hours'))
+  const hasValidTrips = trips.some(item => {
+    const [date, time] = item.dateTime.split(' ')
+    const [day, month, year] = date.split('/')
+    const [hour, minutes] = time.split(':')
+    const fechaActual = new Date()
+    const fechaExpiracion = new Date(year, month - 1, day, hour, minutes)
+    fechaExpiracion.setHours(fechaExpiracion.getHours() + 2)
+
+    return !(fechaActual.toLocaleString() > fechaExpiracion.toLocaleString())
   })
+
   const renderTrip = ({ item }) => {
-    const tripDateTime = moment(item.dateTime).locale('es', localization)
-    const now = moment()
-    const isExpired = now.isAfter(moment(item.dateTime).locale('es', localization).add(2, 'hours'))
+    const [date, time] = item.dateTime.split(' ')
+    const [day, month, year] = date.split('/')
+    const [hour, minutes] = time.split(':')
+    const fechaActual = new Date()
+    const fechaExpiracion = new Date(year, month - 1, day, hour, minutes)
+    fechaExpiracion.setHours(fechaExpiracion.getHours() + 2)
+
+    const isExpired = fechaActual.toLocaleString() > fechaExpiracion.toLocaleString()
 
     if (isExpired) {
       return null // No mostrar la tarjeta si ha expirado
@@ -48,7 +53,7 @@ const TripsSearch = ({ route }) => {
         <View className='flex-row justify-between'>
           <View className='flex-column align-middle text-center'>
             <Text className='text-base font-bold text-gray-900'>{item.origin} - {item.destination}</Text>
-            <Text className='text-base font-bold text-gray-900'>{isExpired ? 'Ha finalizado' : tripDateTime.format('DD MMM YY, H:mm')}</Text>
+            <Text className='text-base font-bold text-gray-900'>{isExpired ? 'Ha finalizado' : item.dateTime}</Text>
 
           </View>
         </View>
@@ -82,12 +87,12 @@ const TripsSearch = ({ route }) => {
   return (
     <View style={{ flex: 1 }}>
 
-      {sortedData.length !== 0 && hasValidTrips
+      {trips.length !== 0 && hasValidTrips
 
         ? (
           <FlatList
             className='bg-secondary flex-1 w-full'
-            data={sortedData}
+            data={trips}
             renderItem={renderTrip}
             keyExtractor={(item) => item.tripId.toString()}
 

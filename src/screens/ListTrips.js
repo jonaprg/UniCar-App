@@ -11,19 +11,17 @@ import {
 } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import localization from 'moment/locale/es'
-import moment from 'moment'
 import { auth } from '../firebaseConfig.js'
 
 import { fetchTrips } from '../reducers/actions/tripActions.js'
-import { deleteDriverTrip, deletePassengerTrip } from '../utils/tripsOperations.js'
+import { deleteDriverTrip, deletePassengerTrip } from '../api/tripsOperations.js'
 
 const TripScreen = () => {
   const dispatch = useDispatch()
   const { data, isLoading, error } = useSelector((state) => state.trips)
   const uid = auth.currentUser.uid
   const navigation = useNavigation()
-
+  console.log('data', data)
   useFocusEffect(
     React.useCallback(() => {
       dispatch(fetchTrips())
@@ -39,12 +37,6 @@ const TripScreen = () => {
   const handleRefresh = () => {
     dispatch(fetchTrips())
   }
-  // Ordenar la lista por fecha
-  const sortedData = data.sort((a, b) => {
-    const dateA = moment(a.dateTime)
-    const dateB = moment(b.dateTime)
-    return dateA - dateB
-  })
 
   const handleDeleteTrip = async (item) => {
     const isDriver = item.userDriver === uid.toString()
@@ -62,10 +54,14 @@ const TripScreen = () => {
   }
 
   const renderTrip = ({ item }) => {
-    const tripDateTime = moment(item.dateTime).locale('es', localization)
+    const [date, hours] = item.dateTime.split(' ')
+    const [day, month, year] = date.split('/')
+    const [hour, minutes] = hours.split(':')
+    const fechaActual = new Date()
+    const fechaExpiracion = new Date(year, month - 1, day, hour, minutes)
+    fechaExpiracion.setHours(fechaExpiracion.getHours() + 2)
 
-    const now = moment()
-    const isExpired = now.isAfter(moment(item.dateTime).locale('es', localization).add(2, 'hours'))
+    const isExpired = fechaActual.toLocaleString() > fechaExpiracion.toLocaleString()
 
     return (
 
@@ -73,7 +69,7 @@ const TripScreen = () => {
         <View className='flex-row justify-between'>
           <View className='flex-column align-middle text-center'>
             <Text className='text-base font-bold text-gray-900'>{item.origin} - {item.destination}</Text>
-            <Text className='text-base font-bold text-gray-900'>{isExpired ? 'Ha finalizado' : tripDateTime.format('DD MMM YY, H:mm')}</Text>
+            <Text className='text-base font-bold text-gray-900'>{isExpired ? 'Ha finalizado' : item.dateTime}</Text>
 
           </View>
         </View>
@@ -137,7 +133,7 @@ const TripScreen = () => {
             ? (
               <FlatList
                 className='bg-secondary flex-1 w-full'
-                data={sortedData}
+                data={data}
                 renderItem={renderTrip}
                 keyExtractor={(item) => item.tripId.toString()}
                 refreshControl={
