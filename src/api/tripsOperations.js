@@ -41,16 +41,14 @@ export const getTripsFromDatabase = async () => {
 
 export const deleteDriverTrip = async (tripID) => {
   const token = await auth.currentUser.getIdToken()
-  await fetch(`http://192.168.1.41:3000/api/v1/trips/${tripID}aa`, {
+  await fetch(`http://192.168.1.41:3000/api/v1/trips/${tripID}`, {
     method: 'DELETE',
     headers: {
       'Content-type': 'application/json',
       Authorization: `Bearer ${token.replace(/"/g, '')}`
     }
   }).then(response => {
-    console.log('data', response)
     if (response.status === 200) {
-      console.log('trip deleted from db')
       Toast.show({
         type: 'success',
         text1: 'Viaje eliminado',

@@ -69,7 +69,7 @@ const BottomTab = () => {
           tabBarIcon: ({ color }) => (
             <Ionicons name='chatbox' size={24} color={color} />),
           headerShown: false,
-          title: 'Perfil'
+          title: 'Chats'
         }}
       />
       <Tab.Screen

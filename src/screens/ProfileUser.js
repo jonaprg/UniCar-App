@@ -1,21 +1,62 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, FlatList } from 'react-native'
+import { useSelector } from 'react-redux'
+import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { auth, db } from '../firebaseConfig'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
+
 // import { getStorage, ref, getDownloadURL } from 'firebase/storage'
 const UserProfile = ({ route }) => {
   const { data, id } = route.params
+  const currentUser = useSelector(state => state.user)
+
   const navigation = useNavigation()
   // const storage = getStorage()
 
+  const createRoomdId = (uid1, uid2) => {
+    const smallerUid = uid1 < uid2 ? uid1 : uid2
+    const biggerUid = uid1 > uid2 ? uid1 : uid2
+    return `${smallerUid}-${biggerUid}`
+  }
+
+  const addRoomId = async (uid1, uid2) => {
+    const roomId = createRoomdId(uid1, uid2)
+    try {
+      const docRef = doc(db, 'chats', roomId)
+      const docSnap = await getDoc(docRef)
+      if (!docSnap.exists()) {
+        const roomData = {
+          participants: [uid1, uid2],
+          roomId,
+          otherUserName: data.name,
+          currentUserName: currentUser.name
+        }
+        await setDoc(doc(db, 'chats', roomId), roomData)
+      }
+    } catch (error) {
+      console.log('ERROR - Not authorized', error)
+    }
+    navigation.navigate('ChatScreen', { currentUser: auth.currentUser.uid, otherUser: id, roomId })
+  }
+  // Luego, en el lugar donde deseas crear la sala y obtener el roomId:
   return (
     <View className='bg-white rounded-lg shadow flex-1  '>
 
       {/* Contenido de la tarjeta */}
       <View className='p-4'>
         <View className=' border-b-2 border-secondary'>
-          <View className='flex-row items-center mb-2'>
-            <View className='flex-row '>
-              <Text className='text-2xl font-bold mr-1'>{data.name}</Text>
+          <View className='flex-row  flex-wrap mb-2'>
+            <View className='flex-row items-center'>
+              {data.profilePicture !== '' && data.profilePicture
+                ? (
+                  <Image source={{ uri: data.profilePicture }} className='w-16 h-16 rounded-full' />
+                  )
+                : (
+                  <Image source={require('../../assets/profile.png')} className='w-16 h-16 rounded-full ' />
+
+                  )}
+
+              <Text className='text-2xl font-bold ml-4'>{data.name}</Text>
             </View>
           </View>
           {/* Fecha y hora */}
@@ -69,7 +110,7 @@ const UserProfile = ({ route }) => {
           <Text className='text-lg font-normal'>Contacta vía mensaje</Text>
           <TouchableOpacity
             className='bg-blueColor px-3 py-2 rounded ml-auto'
-            onPress={() => console.log('Enviar mensaje')}
+            onPress={() => addRoomId(auth.currentUser.uid, id)}
           >
             <Text className='text-white font-bold'>Abrir chat</Text>
           </TouchableOpacity>

@@ -20,7 +20,6 @@ import {
 
 export default function ProfileInfo () {
   const user = useSelector((state) => state.user)
-  console.log(user)
   const navigation = useNavigation()
   const handleCarBrandEdit = (props) => {
     navigation.navigate('CarBrandEdit', props)
@@ -139,8 +138,12 @@ function InfoField ({
   handleRedux
 }) {
   const { id } = useSelector((state) => state.user)
-  const [localValue, setLocalValue] = React.useState(value)
+  const [localValue, setLocalValue] = React.useState(null)
   const dispatch = useDispatch()
+  React.useEffect(() => {
+    setLocalValue(value)
+  }, [value])
+
   return (
     <View style={styles.fieldContainer}>
       <MyText

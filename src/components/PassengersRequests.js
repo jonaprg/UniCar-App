@@ -8,14 +8,17 @@ import {
   Alert
 } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { useFocusEffect } from '@react-navigation/native'
-
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { getUserProfile } from '../api/userOperations.js'
+import Toast from 'react-native-toast-message'
 import { fetchRequestTrip } from '../reducers/actions/requestPassengersActions.js'
 import { acceptPassenger, rejectPassenger } from '../api/tripsOperations.js'
+
 const PassengersRequests = ({ tripId }) => {
   const dispatch = useDispatch()
   const { data, isLoading } = useSelector((state) => state.requestsPassengers)
-
+  console.log('dataPassengers', data)
+  const navigation = useNavigation()
   useFocusEffect(
     React.useCallback(() => {
       dispatch(fetchRequestTrip(tripId))
@@ -28,10 +31,7 @@ const PassengersRequests = ({ tripId }) => {
 
   const handleRejectPassenger = async (tripId, passengerId) => {
     try {
-      console.log('tripId', tripId, 'passengerId', passengerId)
-
       const response = await rejectPassenger(tripId, passengerId)
-      console.log('response', response)
       if (response) {
         dispatch(fetchRequestTrip(tripId))
       }
@@ -42,9 +42,7 @@ const PassengersRequests = ({ tripId }) => {
 
   const handleAcceptPassenger = async (tripId, passengerId) => {
     try {
-      console.log('tripId', tripId, 'passengerId', passengerId)
       const response = await acceptPassenger(tripId, passengerId)
-      console.log('response', response)
       if (response) {
         dispatch(fetchRequestTrip(tripId))
       }
@@ -66,6 +64,19 @@ const PassengersRequests = ({ tripId }) => {
     return iniciales
   }
 
+  const handleProfileUser = async (id) => {
+    const reponse = await getUserProfile(id)
+    if (reponse.status !== 200) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'No se ha podido cargar el perfil del usuario'
+      })
+    } else {
+      navigation.navigate('ProfileUser', { data: reponse.userData, id })
+    }
+  }
+
   const renderTrip = ({ item }) => {
     const iniciales = obtenerIniciales(item?.passengerName || '')
     return (
@@ -73,10 +84,12 @@ const PassengersRequests = ({ tripId }) => {
         <Text className='text-lg font-base text-blueColor '>Peticiones de pasajeros</Text>
 
         <View className=' py-3 flex-row items-center justify-between mb-10'>
-          <View className='flex-col'>
-            <Text className='text-lg font-bold text-gray-900'>{iniciales}</Text>
-            <Text className='text-sm font-bold text-gray-900'>Petición: {item?.seats} pasajeros</Text>
-          </View>
+          <TouchableOpacity onPress={() => handleProfileUser(item.passengerId)}>
+            <View className='flex-col'>
+              <Text className='text-lg font-bold text-gray-900'>{iniciales}</Text>
+              <Text className='text-sm font-bold text-gray-900'>Petición: {item?.seats} pasajeros</Text>
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity
             className='w-1/4 bg-primary py-2 px-2 rounded-full'
             onPress={() =>

@@ -63,7 +63,7 @@ const CarBrandEdit = ({ navigation, route }) => {
       }
     })
       .catch(error => {
-        console.log('The brand car update error', error)
+        console.log('ERROR - Not authorized', error)
       })
   }
 

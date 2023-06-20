@@ -9,6 +9,7 @@ import { setAuthState, signIn } from '../reducers/auth/auth.js'
 import Login from './Login.js'
 import SignUp from './Signup.js'
 import { auth } from '../firebaseConfig.js'
+import { setUserNameRedux } from '../reducers/user.js'
 import { validateEmail, validatePassword } from '../api/validations.js'
 import Toast from 'react-native-toast-message'
 
@@ -38,7 +39,7 @@ const AuthScreen = () => {
           dispatch(setAuthState('signedIn'))
         })
         .catch(error => {
-          console.log('onLogin', error)
+          console.log('ERROR - Not authorized', error)
           Toast.show({
             type: 'error',
             text1: 'Error',
@@ -52,7 +53,6 @@ const AuthScreen = () => {
   const onSignUp = () => {
     const emailValidation = validateEmail(email)
     const passwordValidation = validatePassword(password)
-    console.log(name)
     if (!emailValidation || !passwordValidation || name === '') {
       Toast.show({
         type: 'error',
@@ -83,6 +83,7 @@ const AuthScreen = () => {
             .then(user => {
               dispatch(signIn(user._tokenResponse.idToken))
               dispatch(setAuthState('signedIn'))
+              dispatch(setUserNameRedux(name))
             })
         })
         .catch(error => {
@@ -99,7 +100,7 @@ const AuthScreen = () => {
   const createNewUser = async (userData) => {
     const token = await auth.currentUser.getIdToken()
     const user = {
-      name: userData.user.displayName,
+      name,
       email: userData.user.email
     }
     const userID = userData.user.uid.replace(/""/g, '')
@@ -113,7 +114,6 @@ const AuthScreen = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         if (data.status === 201) {
           Toast.show({
             type: 'success',

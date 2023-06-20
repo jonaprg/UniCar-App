@@ -19,9 +19,9 @@ const DatePickerModal = ({ dateTimeSelected, modeTime, titleButton }) => {
   const handleConfirm = (date) => {
     let selectedDate
     if (modeTime === 'date') {
-      selectedDate = date.toLocaleDateString()
+      selectedDate = date.toLocaleDateString('es-ES')
     } else {
-      selectedDate = date.toLocaleString()
+      selectedDate = date.toLocaleString('es-ES')
     }
 
     setSelectedDate(selectedDate)

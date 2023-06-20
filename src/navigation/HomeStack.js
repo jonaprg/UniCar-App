@@ -6,6 +6,7 @@ import DetailTripSearch from '../screens/DetailTripSearch.js'
 import TripReservation from '../screens/TripReservation.js'
 import ProfileUserSearch from '../screens/ProfileUserSearch.js'
 import RequestTrip from '../screens/RequestTrip.js'
+import ChatScreen from '../screens/ChatScreen.js'
 
 const Stack = createNativeStackNavigator()
 
@@ -72,6 +73,18 @@ const HomeStack = () => {
           }
 
         }}
+      />
+      <Stack.Screen
+        name='ChatScreen'
+        component={ChatScreen}
+        options={{
+          title: 'Chat',
+          headerStyle: {
+            backgroundColor: '#488484'
+          },
+          headerTintColor: '#fff'
+        }}
+        // Configuración para la pantalla de edición del coche
       />
 
     </Stack.Navigator>

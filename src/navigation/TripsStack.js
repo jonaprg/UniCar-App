@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import ListTrips from '../screens/ListTrips.js'
 import DetailTrip from '../screens/DetailTrip.js'
 import ProfileUser from '../screens/ProfileUser.js'
+import ChatScreen from '../screens/ChatScreen.js'
 
 const Stack = createNativeStackNavigator()
 
@@ -43,7 +44,20 @@ const TripsStack = () => {
           headerTintColor: '#fff'
         }}
       />
+      <Stack.Screen
+        name='ChatScreen'
+        component={ChatScreen}
+        options={{
+          title: 'Chat',
+          headerStyle: {
+            backgroundColor: '#488484'
+          },
+          headerTintColor: '#fff'
+        }}
+        // Configuración para la pantalla de edición del coche
+      />
     </Stack.Navigator>
+
   )
 }
 

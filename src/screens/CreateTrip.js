@@ -26,7 +26,6 @@ const CreateTrip = () => {
 
   }
   const [tripData, setTripData] = useState(initialTripData)
-  console.log('created', tripData)
   const handlePlaceOrigin = (data) => {
     setTripData((prevState) => ({
       ...prevState,

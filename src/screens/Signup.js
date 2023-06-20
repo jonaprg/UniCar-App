@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, Image, KeyboardAvoidingView, Platform, Keyboard } from 'react-native'
+import { View, Text, Linking, TouchableOpacity, StyleSheet, Image, KeyboardAvoidingView, Platform, Keyboard } from 'react-native'
 import { useDispatch } from 'react-redux'
 import FormInput from '../components/FormInput.js'
 import FormButton from '../components/FormButton.js'
 import FormPasswordInput from '../components/FormPasswordInput.js'
 import { setAuthState } from '../reducers/auth/auth.js'
 
-const SignUp = ({ onSignUp, setEmail, setPassword, setName }) => {
+const POLICY_PRIVACY = 'https://github.com/jonaprg/UniCar-App/blob/master/docs/privacy-conditions/privacy-conditions.md'
+
+const SignUp = ({ onSignUp, setEmail, setPassword, setName, setToggleCheckBox }) => {
   const [keyboardOpen, setKeyboardOpen] = useState(false)
 
   const dispatch = useDispatch()
@@ -55,6 +57,14 @@ const SignUp = ({ onSignUp, setEmail, setPassword, setName }) => {
           buttonTitle='Registrarse'
           onPress={onSignUp}
         />
+
+        <View className='p-1 mt-3 flex  flex-col flex-wrap'>
+          <Text className='text-secondary text-xs'>*Si te registras aceptas nuestras politicas de privacidad</Text>
+
+          <TouchableOpacity onPress={() => Linking.openURL(POLICY_PRIVACY)}>
+            <Text className='text-buttonColor underline'>Politicas de privacidad</Text>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity
           className='justify-items-center bg-primary flex-row py-3 px-4 mt-5'
           onPress={() => dispatch(setAuthState('signIn'))}

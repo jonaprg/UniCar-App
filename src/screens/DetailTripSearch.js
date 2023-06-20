@@ -39,8 +39,8 @@ const DetailTripSearch = ({ route }) => {
       {/* Contenido de la tarjeta */}
       <View className='p-4  '>
         {/* Origen y destino */}
-        <View className='flex-row items-center mb-2'>
-          <View className='flex-row '>
+        <View className='flex-row items-center mb-2 '>
+          <View className='flex-row flex-wrap'>
             <Text className='text-xl font-bold mr-1'>{trip.origin} -</Text>
             <Text className='text-xl font-bold'>{trip.destination}</Text>
           </View>

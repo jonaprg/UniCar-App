@@ -21,7 +21,6 @@ const TripScreen = () => {
   const { data, isLoading, error } = useSelector((state) => state.trips)
   const uid = auth.currentUser.uid
   const navigation = useNavigation()
-  console.log('data', data)
   useFocusEffect(
     React.useCallback(() => {
       dispatch(fetchTrips())
@@ -39,7 +38,7 @@ const TripScreen = () => {
   }
 
   const handleDeleteTrip = async (item) => {
-    const isDriver = item.userDriver === uid.toString()
+    const isDriver = item?.userDriver === uid.toString()
 
     try {
       if (isDriver) {
@@ -54,7 +53,7 @@ const TripScreen = () => {
   }
 
   const renderTrip = ({ item }) => {
-    const [date, hours] = item.dateTime.split(' ')
+    const [date, hours] = item?.dateTime.split(' ')
     const [day, month, year] = date.split('/')
     const [hour, minutes] = hours.split(':')
     const fechaActual = new Date()
@@ -68,17 +67,17 @@ const TripScreen = () => {
       <View className=' m-2 rounded-lg bg-white shadow shadow-gray-900  p-4'>
         <View className='flex-row justify-between'>
           <View className='flex-column align-middle text-center'>
-            <Text className='text-base font-bold text-gray-900'>{item.origin} - {item.destination}</Text>
-            <Text className='text-base font-bold text-gray-900'>{isExpired ? 'Ha finalizado' : item.dateTime}</Text>
+            <Text className='text-base font-bold text-gray-900'>{item?.origin} - {item?.destination}</Text>
+            <Text className='text-base font-bold text-gray-900'>{isExpired ? 'Ha finalizado' : item?.dateTime}</Text>
 
           </View>
         </View>
-        <Text class='text-sm font-medium text-gray-600'>Plazas disponibles: {item.seatsAvailable === 0 ? 'No hay plazas' : item.seatsAvailable}</Text>
-        <Text>{item.userDriver === uid.toString() ? 'Conductor' : 'Pasajero'}</Text>
+        <Text class='text-sm font-medium text-gray-600'>Plazas disponibles: {item?.seatsAvailable === 0 ? 'No hay plazas' : item.seatsAvailable}</Text>
+        <Text>{item?.userDriver === uid.toString() ? 'Conductor' : 'Pasajero'}</Text>
 
         <View className='mt-5'>
           <View className='flex flex-row justify-between items-center'>
-            <Text className='text-base font-bold text-gray-900'>Precio: {item.price}€</Text>
+            <Text className='text-base font-bold text-gray-900'>Precio: {item?.price}€</Text>
             <TouchableOpacity
               className='w-1/3 bg-blueColor py-2 px-2 rounded-full'
               onPress={() => handleView(item)}
@@ -113,7 +112,6 @@ const TripScreen = () => {
 
     )
   }
-
   return (
     <View style={{ flex: 1 }}>
       {isLoading

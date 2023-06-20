@@ -51,26 +51,7 @@ const Home = () => {
       dateTime: data
     }))
   }
-  // useEffect(() => {
-  //   const areAllFieldsFilled = () => {
-  //     for (const key in searchData) {
-  //       if (searchData[key] === '') {
-  //         return false
-  //       }
-  //     }
-  //     return true
-  //   }
 
-  //   if (!areAllFieldsFilled()) {
-  //     Toast.show({
-  //       type: 'error',
-  //       text1: 'Por favor, complete todos los campos antes de buscar el viaje.'
-  //     })
-  //   } else {
-  //     handleSearchTrip()
-  //   }
-  // }, [searchData])
-  console.log('search', searchData)
   const handleSearchTrip = async () => {
     const token = await AsyncStorage.getItem('@token')
     await fetch('http://192.168.1.41:3000/api/v1/trips/search', {

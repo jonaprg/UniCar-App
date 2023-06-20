@@ -10,34 +10,12 @@ import { restoreToken, setAuthState, signOut } from '../reducers/auth/auth.js'
 import { auth } from '../firebaseConfig.js'
 import { onAuthStateChanged } from 'firebase/auth'
 import { setUser } from '../reducers/user.js'
-import { getStorage, ref, getDownloadURL } from 'firebase/storage'
 import Toast from 'react-native-toast-message'
 
 const RootNavigator = () => {
   const { userToken } = useSelector((state) => state.auth)
   const [isLoading, setIsLoading] = React.useState(true)
-  const storage = getStorage()
 
-  const getPhoto = async (id) => {
-    let urld
-    const imageRef = await ref(storage, `profilePictures/${id}`)
-    if (imageRef._url !== undefined) {
-      await getDownloadURL(imageRef)
-        .then((url) => {
-          urld = url
-        })
-        .catch((error) => {
-          Toast.show({
-            type: 'error',
-            text1: 'No se pudo obtener la foto de perfil'
-          })
-          console.log('ERROR - Get photo', error)
-        })
-    } else {
-      urld = undefined
-    }
-    return urld
-  }
   const dispatch = useDispatch()
 
   const getUser = async (userID, token) => {
@@ -71,7 +49,6 @@ const RootNavigator = () => {
     const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
       if (user) {
         const userId = user.uid
-        const url = await getPhoto(userId)
         await AsyncStorage.setItem('@userID', JSON.stringify(userId))
         const token = await user.getIdToken()
         await AsyncStorage.setItem('@token', JSON.stringify(token))
@@ -86,7 +63,7 @@ const RootNavigator = () => {
           carColor: userData.carColor,
           ratings: userData.ratings,
           preferences: userData.preferences,
-          profilePicture: url
+          profilePicture: userData.profilePicture
         }))
         dispatch(restoreToken(token))
       } else {

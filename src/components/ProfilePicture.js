@@ -5,9 +5,9 @@ import * as ImagePicker from 'expo-image-picker'
 import { resetProfilePicture } from '../reducers/user.js'
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import Toast from 'react-native-toast-message'
-import { updateProfile } from 'firebase/auth'
-import { auth } from '../firebaseConfig.js'
+import { db } from '../firebaseConfig.js'
 import { MaterialIcons } from '@expo/vector-icons'
+import { doc, setDoc } from 'firebase/firestore'
 
 export default function ProfilePicture () {
   const user = useSelector((state) => state.user)
@@ -58,13 +58,10 @@ export default function ProfilePicture () {
       const imageRef = await ref(storage, `profilePictures/${id}`)
       await getDownloadURL(imageRef)
         .then((url) => {
-          updateProfile(auth.currentUser, { photoURL: url })
-            .then(() => {
+          setDoc(doc(db, 'users', id), {
+            profilePicture: url
+          }, { merge: true })
 
-            })
-            .catch((error) => {
-              console.log('ERROR - Uploded photo to Auth', error)
-            })
           dispatch(resetProfilePicture(url))
         })
         .catch((error) => {

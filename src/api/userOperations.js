@@ -6,7 +6,7 @@ import Toast from 'react-native-toast-message'
 export const updateUserName = async (userID, newName) => {
   let successUpdate = false
   const token = await AsyncStorage.getItem('@token')
-  await fetch(`http://192.168.1.41:3000/api/v1/users/${userID.replace(/""/g, '')}AA`, {
+  await fetch(`http://192.168.1.41:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
     method: 'PUT',
     headers: {
       'Content-type': 'application/json',

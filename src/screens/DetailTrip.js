@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { auth } from '../firebaseConfig.js'
 
-import FormButton from '../components/FormButton.js'
 import PassengersRequests from '../components/PassengersRequests.js'
 import { getUserProfile } from '../api/userOperations.js'
 import Toast from 'react-native-toast-message'
@@ -38,8 +37,8 @@ const DetailTrip = ({ route }) => {
     <View className='bg-white rounded-lg shadow p-4 flex-1  '>
 
       <View className='p-4  '>
-        <View className='flex-row items-center mb-2'>
-          <View className='flex-row '>
+        <View className='flex-row items-center mb-2 '>
+          <View className='flex-row flex-wrap'>
             <Text className='text-xl font-bold mr-1'>{trip.origin} -</Text>
             <Text className='text-xl font-bold'>{trip.destination}</Text>
           </View>

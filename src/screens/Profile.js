@@ -16,7 +16,6 @@ const Profile = () => {
   const dispatch = useDispatch()
 
   const [refreshing, setRefreshing] = React.useState(false)
-
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true)
     const token = await auth.currentUser.getIdToken()
@@ -30,7 +29,6 @@ const Profile = () => {
         }
       })
       const data = await response.json().then(data => data)
-      console.log(auth.currentUser.photoURL)
       dispatch(setUser({
         id: userId,
         name: data.userData.name,
@@ -41,7 +39,7 @@ const Profile = () => {
         carColor: data.userData.carColor,
         ratings: data.userData.ratings,
         preferences: data.userData.preferences,
-        profilePicture: auth.currentUser.photoURL
+        profilePicture: data.userData.profilePicture
       }))
     } catch (error) {
       console.log('ERROR - Failed to refresh', error)
