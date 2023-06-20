@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   View, Text, TouchableOpacity,
   Image, TouchableWithoutFeedback,
   KeyboardAvoidingView,
-  Keyboard, Platform
+  Keyboard, Platform, StatusBar
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -83,18 +83,30 @@ const Home = () => {
       })
   }
 
+  useEffect(() => {
+    // Cambiar estilo de StatusBar al montar la pantalla
+    StatusBar.setBarStyle('light-content')
+    StatusBar.setBackgroundColor('transparent')
+
+    // Restaurar estilo de StatusBar al desmontar la pantalla
+    return () => {
+      StatusBar.setBarStyle('default')
+      StatusBar.setBackgroundColor('transparent')
+    }
+  }, [])
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
-        <View className='bg-primary flex-1'>
+        <View className='flex-1 bg-primary'>
           <Image
-            source={require('../../assets/headerHome.jpg')}
-            className='w-full h-52'
+            source={require('../../assets/headerHome.jpeg')}
+            style={{ width: '100%', height: 200 }}
           />
-          <View className='p-5'>
+          <View className='m-5'>
             <Text className='text-2xl font-bold text-secondary'>
               ¿Donde quieres ir?
             </Text>
@@ -119,7 +131,6 @@ const Home = () => {
                   >
                     <Text
                       className='text-white dark:text-black font-bold'
-
                     >
                       Buscar
                     </Text>

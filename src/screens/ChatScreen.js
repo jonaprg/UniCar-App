@@ -16,7 +16,6 @@ const ChatScreen = ({ route }) => {
       const msgs = querySnapshot.docs.map((doc) => {
         const data = doc.data()
         return {
-
           _id: doc.id,
           text: data.text,
           createdAt: data.createdAt.toDate(),
@@ -40,12 +39,17 @@ const ChatScreen = ({ route }) => {
 
   return (
     <GiftedChat
+      className='bg-white'
       messages={messages}
       user={{
         _id: currentUser
 
       }}
       onSend={handleSend}
+      textInputSytle={{
+        backgroundColor: '#EDEDED'
+
+      }}
     />
   )
 }
