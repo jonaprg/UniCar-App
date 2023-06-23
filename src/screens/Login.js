@@ -9,7 +9,7 @@ import FormPasswordInput from '../components/FormPasswordInput.js'
 import { setAuthState } from '../reducers/auth/auth.js'
 // import GoogleSignIn from '../components/GoogleSignIn.js'
 
-const Login = ({ onLogin, setEmail, setPassword, errorMessage }) => {
+const Login = ({ onLogin, setEmail, setPassword }) => {
   const dispatch = useDispatch()
   const [keyboardOpen, setKeyboardOpen] = useState(false)
 
@@ -38,7 +38,7 @@ const Login = ({ onLogin, setEmail, setPassword, errorMessage }) => {
         <Text className='text-4xl font-normal text-white'>y fácil</Text>
       </View>
       <FormInput
-        name='Correo electronico'
+        name='Correo electrónico'
         onChangeText={setEmail}
         placeholder='example@example.com'
         keyboardType='email-address'
@@ -53,13 +53,12 @@ const Login = ({ onLogin, setEmail, setPassword, errorMessage }) => {
         buttonTitle='Iniciar sesión'
         onPress={onLogin}
       />
-      <Text className='text-errorColor text-center'>{errorMessage}</Text>
       <TouchableOpacity
         className='justify-items-center bg-primary flex-row py-3 px-4 mt-5'
         onPress={() => dispatch(setAuthState('signUp'))}
       >
-        <Text className='font-bold text-gray-300'>No tienes una cuenta?</Text>
-        <Text className='font-bold text-white'> Registrarse</Text>
+        <Text className='font-bold text-base text-gray-300'>¿No tienes una cuenta?</Text>
+        <Text className='font-bold text-base text-white'> Regístrate aquí</Text>
       </TouchableOpacity>
     </View>
 

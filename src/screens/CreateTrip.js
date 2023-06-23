@@ -137,7 +137,7 @@ const CreateTrip = () => {
         <View className='bg-secondary  flex-1'>
           <View className='p-5'>
             <Text className='text-2xl font-bold text-blueColor'>
-              ¿Donde quieres ir?
+              ¿Dónde quieres ir?
             </Text>
             <View className='w-full bg-white shadow shadow-gray-500 rounded-3xl p-5 my-5'>
               <View className='mt-5'>
@@ -150,14 +150,14 @@ const CreateTrip = () => {
                   Destino
                 </Text>
                 <GooglePlacesInput placeholder='A' onPlaceSelected={handlePlaceDestination} value={tripData.destination} />
-                <DatePickerModal dateTimeSelected={(date) => handleDateTime(date)} modeTime='datetime' titleButton='Escoga el dia y hora' />
+                <DatePickerModal dateTimeSelected={(date) => handleDateTime(date)} modeTime='datetime' titleButton='Escoga el día y hora' />
                 <PriceInput priceSelected={handlePriceTrip} />
 
                 <View className='flex-row justify-between items-center my-5'>
                   <SeatsInput seatsSelected={handleSeats} />
 
                   <FormButton
-                    className='flex-row justify-center rounded-full p-3 w-2/4 self-center'
+                    className='flex-row justify-center bg-primary rounded-full p-3 w-2/4 self-center'
                     buttonTitle='Publicar viaje'
                     onPress={createDocTrip}
                   />

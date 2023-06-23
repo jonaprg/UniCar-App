@@ -103,12 +103,12 @@ const Home = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
         <View className='flex-1 bg-primary'>
           <Image
-            source={require('../../assets/headerHome.jpeg')}
+            source={require('../../assets/headerHome.jpg')}
             style={{ width: '100%', height: 200 }}
           />
           <View className='m-5'>
             <Text className='text-2xl font-bold text-secondary'>
-              ¿Donde quieres ir?
+              ¿Dónde quieres ir?
             </Text>
             <View className='w-full bg-secondary rounded-3xl p-5 my-5'>
               <View className='mt-5'>
@@ -121,7 +121,7 @@ const Home = () => {
                   Destino
                 </Text>
                 <GooglePlacesInput placeholder='A' onPlaceSelected={handleSearchPlaceDestination} />
-                <DatePickerModal dateTimeSelected={(date) => handleSearchDateTime(date)} modeTime='date' titleButton='Escoge el dia' />
+                <DatePickerModal dateTimeSelected={(date) => handleSearchDateTime(date)} modeTime='date' titleButton='Escoge el día' />
 
                 <View className='flex-row justify-between items-center my-3'>
                   <SeatsInput seatsSelected={handleSearchSeats} />
@@ -130,7 +130,7 @@ const Home = () => {
                     onPress={handleSearchTrip}
                   >
                     <Text
-                      className='text-white dark:text-black font-bold'
+                      className='text-white text-lg dark:text-black font-bold'
                     >
                       Buscar
                     </Text>

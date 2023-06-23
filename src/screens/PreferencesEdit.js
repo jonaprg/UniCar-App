@@ -68,7 +68,7 @@ const PreferencesEdit = ({ navigation, route }) => {
     >
       <View className='bg-secondary flex-1 justify-between  p-5'>
         <View>
-          <Text className='text-2xl font-bold mb-3'>Define tus preferencias de viaje</Text>
+          <Text className='text-2xl text-blueColor font-bold mb-3'>Define tus preferencias de viaje</Text>
           <DropDownPicker
             listMode='SCROLLVIEW'
             scrollViewProps={{
@@ -77,7 +77,7 @@ const PreferencesEdit = ({ navigation, route }) => {
             dropDownContainerStyle={{
               position: 'relative',
               top: 0,
-              minHeight: 400
+              minHeight: 450
             }}
             open={openCar}
             value={preferences}

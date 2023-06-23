@@ -51,25 +51,27 @@ const ChatListScreen = ({ navigation }) => {
     }
 
     return (
-      <View className=' m-2 rounded-sm bg-white shadow shadow-gray-600 p-4'>
-        <View className='flex-row justify-between align-middle '>
+      <View className=' m-1 rounded-sm bg-white shadow shadow-gray-600 p-4'>
+        <View className='flex-row  justify-between align-middle '>
           <Text className='text-base font-bold mt-1 text-gray-900'>{otherUser.name}</Text>
-          <TouchableOpacity
-            className='w-1/4 bg-primary py-2 px-2 rounded-full'
-            onPress={() => handleProfileUser(otherUser.uid)}
-          >
-            <Text className='text-white font-bold text-center'>
-              Ver Perfil
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            className='w-1/4 bg-blueColor py-2 px-2 rounded-full'
-            onPress={() => enterChat(otherUser)}
-          >
-            <Text className='text-white font-bold text-center'>
-              Chatear
-            </Text>
-          </TouchableOpacity>
+          <View className='flex-row  justify-around'>
+            <TouchableOpacity
+              className='w-1/3 bg-primary p-2 rounded-full'
+              onPress={() => handleProfileUser(otherUser.uid)}
+            >
+              <Text className='text-white font-bold text-center'>
+                Ver Perfil
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              className='w-1/3 bg-blueColor p-2 rounded-full'
+              onPress={() => enterChat(otherUser)}
+            >
+              <Text className='text-white font-bold text-center'>
+                Chatear
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
       </View>

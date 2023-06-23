@@ -101,21 +101,41 @@ export const updateUserUniversity = async (userID, newUniversity) => {
 
 export const updateUserEmail = async (userID, newEmail) => {
   let successUpdate = false
-  updateEmail(auth.currentUser, newEmail)
-    .then(() => {
+  const token = await AsyncStorage.getItem('@token')
+
+  await fetch(`http://192.168.1.41:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token.replace(/"/g, '')}`
+    },
+    body: JSON.stringify({
+      email: newEmail
+    })
+  }).then(response => {
+    if (response.status === 200) {
+      updateEmail(auth.currentUser, newEmail)
+        .then(async () => {
+        })
+        .catch(error => {
+          console.log('ERROR - Email not updated', error)
+        })
       Toast.show({
         type: 'success',
-        text1: 'Email actualizado correctamente'
+        text1: 'Correo electrónico actualizado correctamente'
       })
       successUpdate = true
-    })
-    .catch(error => {
+    } else {
       Toast.show({
         type: 'error',
-        text1: 'Email no se pudo actualizar'
+        text1: 'Error al actualizar el correo electrónico',
+        text2: 'Inténtelo de nuevo o más tarde'
       })
-      console.log('ERROR - Email not updated', error)
-    })
+    }
+  }).catch(error => {
+    console.log('ERROR - Not authorized', error)
+  })
+
   return successUpdate
 }
 

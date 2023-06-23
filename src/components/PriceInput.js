@@ -16,7 +16,7 @@ const PriceInput = ({ priceSelected }) => {
   }, [price, priceSelected])
 
   const handleIncreaseCount = useCallback(() => {
-    if (price < 15) {
+    if (price < 6) {
       const newSeats = price + 1
       setPrice(newSeats)
       if (priceSelected) {
@@ -27,8 +27,11 @@ const PriceInput = ({ priceSelected }) => {
 
   return (
     <View className='flex-column items-center'>
-      <Text className=' text-lg font-medium text-blueColor'>Precio por pasajero</Text>
-      <View className='flex-row justify-center items-center gap-3'>
+      <View className='flex-row  items-center mb-1'>
+        <Text className=' text-lg font-medium text-blueColor'>Precio por pasajero </Text>
+        <Text className='text-xs mt-1 text-gray-800'>(Máx 6€)</Text>
+      </View>
+      <View className='flex-row justify-center items-center gap-3 '>
         <AntDesign
           name='minuscircleo'
           size={24}
@@ -39,7 +42,7 @@ const PriceInput = ({ priceSelected }) => {
         <AntDesign
           name='pluscircleo'
           size={24}
-          color={price === 15 ? 'gray' : 'black'}
+          color={price === 6 ? 'gray' : 'black'}
           onPress={handleIncreaseCount}
         />
       </View>

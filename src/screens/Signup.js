@@ -42,7 +42,7 @@ const SignUp = ({ onSignUp, setEmail, setPassword, setName, setToggleCheckBox })
           placeholder='Nombre y apellido'
         />
         <FormInput
-          name='Correo electronico'
+          name='Correo electrónico'
           onChangeText={setEmail}
           placeholder='exemple@unicar.com'
           keyboardType='email-address'
@@ -58,19 +58,19 @@ const SignUp = ({ onSignUp, setEmail, setPassword, setName, setToggleCheckBox })
           onPress={onSignUp}
         />
 
-        <View className='p-1 mt-3 flex  flex-col flex-wrap'>
-          <Text className='text-secondary text-xs'>*Si te registras aceptas nuestras politicas de privacidad</Text>
+        <View className='p-1 mt-3 flex  flex-row flex-wrap'>
+          <Text className='text-secondary text-xs'>*Si te registras aceptas nuestras</Text>
 
           <TouchableOpacity onPress={() => Linking.openURL(POLICY_PRIVACY)}>
-            <Text className='text-buttonColor underline'>Politicas de privacidad</Text>
+            <Text className='text-buttonColor text-xs'> políticas de privacidad</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
           className='justify-items-center bg-primary flex-row py-3 px-4 mt-5'
           onPress={() => dispatch(setAuthState('signIn'))}
         >
-          <Text className='font-bold text-gray-300'>Tienes una cuenta?</Text>
-          <Text className='font-bold text-white'> Inicia sessión</Text>
+          <Text className='font-bold text-base text-gray-300'>Tienes una cuenta?</Text>
+          <Text className='font-bold text-base text-white'> Inicia sesión</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

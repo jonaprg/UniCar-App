@@ -11,7 +11,7 @@ const FormPasswordInput = ({ name, onChangeText, ...rest }) => {
 
   return (
     <View className='mb-4 w-64 '>
-      <Text className='block text-gray-800 text-base font-bold  '>{name}</Text>
+      <Text className='block text-blueColor text-lg font-bold  '>{name}</Text>
       <View className='flex-row items-center'>
         <TextInput
           className='px-3 py-3 bg-white border-gray-300  rounded-md flex-1'

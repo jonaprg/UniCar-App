@@ -81,20 +81,23 @@ const PassengersRequests = ({ tripId }) => {
     const iniciales = obtenerIniciales(item?.passengerName || '')
     return (
       <View>
-        <Text className='text-lg font-base text-blueColor '>Peticiones de pasajeros</Text>
+        <Text className='text-lg font-base'>Peticiones de pasajeros</Text>
 
         <View className=' py-3 flex-row items-center justify-between mb-10'>
           <TouchableOpacity onPress={() => handleProfileUser(item.passengerId)}>
             <View className='flex-col'>
-              <Text className='text-lg font-bold text-gray-900'>{iniciales}</Text>
-              <Text className='text-sm font-bold text-gray-900'>Petición: {item?.seats} pasajeros</Text>
+              <View className='flex-row items-center justify-between'>
+                <Text className='text-lg font-bold text-blueColor'>{iniciales} </Text>
+                <Text className=''>(Ver perfil)</Text>
+              </View>
+              <Text className='text-xs font-bold text-blueColor'>Petición de: {item?.seats} pasajero/s</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
             className='w-1/4 bg-primary py-2 px-2 rounded-full'
             onPress={() =>
 
-              Alert.alert('Quieres aceptar este pasajero?', 'Se aceptará al pasajero al viaje', [
+              Alert.alert('¿Quieres aceptar al pasajero?', 'Se aceptará al pasajero al viaje', [
                 {
                   text: 'Cancelar',
                   onPress: () => console.log('Cancel Pressed'),
@@ -111,7 +114,7 @@ const PassengersRequests = ({ tripId }) => {
             className='w-1/4 bg-errorColor py-2 px-2 rounded-full'
             onPress={() =>
 
-              Alert.alert('Quieres rechazar al pasajero?', 'Se rechazará al pasajero del viaje', [
+              Alert.alert('¿Quieres rechazar al pasajero?', 'Se rechazará al pasajero del viaje', [
                 {
                   text: 'Cancelar',
                   onPress: () => console.log('Cancel Pressed'),
@@ -149,8 +152,8 @@ const PassengersRequests = ({ tripId }) => {
             )
           : (
             <View>
-              <Text className='text-lg font-base text-blueColor '>Peticiones de pasajeros</Text>
-              <Text className='text-lg font-bold text-blueColor '>No hay peticiones de pasajeros</Text>
+              <Text className='text-lg font-base '>Peticiones de pasajeros</Text>
+              <Text className='text-base font-bold '>No hay peticiones de pasajeros</Text>
             </View>
             )
 }

@@ -18,17 +18,31 @@ const CarBrandEdit = ({ navigation, route }) => {
   const [dataBrandCar, setDataBrandCar] = useState([
     { label: 'Audi', value: 'Audi' },
     { label: 'Mercedes', value: 'Mercedes' },
+    { label: 'Seat', value: 'Seat' },
     { label: 'Bmw', value: 'Bmw' },
     { label: 'Lexus', value: 'Lexus' },
     { label: 'Toyota', value: 'Toyota' },
     { label: 'Honda', value: 'Honda' },
     { label: 'Hyundai', value: 'Hyundai' },
-    { label: 'Ferrari', value: 'Ferrari' },
     { label: 'Jaguar', value: 'Jaguar' },
     { label: 'Volvo', value: 'Volvo' },
     { label: 'Ford', value: 'Ford' },
     { label: 'Chevrolet', value: 'Chevrolet' },
-    { label: 'Tesla', value: 'Tesla' }
+    { label: 'Tesla', value: 'Tesla' },
+    { label: 'Volkswagen', value: 'Volkswagen' },
+    { label: 'Renault', value: 'Renault' },
+    { label: 'Peugeot', value: 'Peugeot' },
+    { label: 'Fiat', value: 'Fiat' },
+    { label: 'Opel', value: 'Opel' },
+    { label: 'Citroen', value: 'Citroen' },
+    { label: 'Mazda', value: 'Mazda' },
+    { label: 'Kia', value: 'Kia' },
+    { label: 'Nissan', value: 'Nissan' },
+    { label: 'Skoda', value: 'Skoda' },
+    { label: 'Mini', value: 'Mini' },
+    { label: 'Suzuki', value: 'Suzuki' },
+    { label: 'Otro', value: 'Otro' }
+
   ])
 
   useEffect(() => {
@@ -74,7 +88,7 @@ const CarBrandEdit = ({ navigation, route }) => {
     >
       <View className='bg-secondary flex-1 justify-between  p-5'>
         <View>
-          <Text className='text-2xl font-bold mb-3'>¿Que marca de coche tienes?</Text>
+          <Text className='text-2xl font-bold mb-3 text-blueColor'>¿Qué marca de coche tienes?</Text>
           <DropDownPicker
             listMode='SCROLLVIEW'
             scrollViewProps={{
@@ -83,7 +97,7 @@ const CarBrandEdit = ({ navigation, route }) => {
             dropDownContainerStyle={{
               position: 'relative', // to fix scroll issue ... it is by default 'absolute'
               top: 0,
-              minHeight: 350// to fix gap between label box and container
+              minHeight: 450// to fix gap between label box and container
             }}
             open={openCar}
             value={newBrandCar}

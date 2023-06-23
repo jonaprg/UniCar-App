@@ -25,7 +25,9 @@ const CarColorEdit = ({ navigation, route }) => {
     { label: 'Verde', value: 'Verde' },
     { label: 'Amarillo', value: 'Amarillo' },
     { label: 'Naranja', value: 'Naranja' },
-    { label: 'Morado', value: 'Morado' }
+    { label: 'Morado', value: 'Morado' },
+    { label: 'Marron', value: 'Marron' },
+    { label: 'Otro', value: 'Otro' }
   ])
 
   useEffect(() => {
@@ -69,7 +71,7 @@ const CarColorEdit = ({ navigation, route }) => {
     >
       <View className='bg-secondary flex-1 align-middle justify-between  p-5'>
         <View className='z-10'>
-          <Text className='text-2xl font-bold'>Editar color</Text>
+          <Text className='text-2xl font-bold text-blueColor'>¿Qué color tiene tu coche?</Text>
           <DropDownPicker
             listMode='SCROLLVIEW'
             scrollViewProps={{
@@ -78,7 +80,7 @@ const CarColorEdit = ({ navigation, route }) => {
             dropDownContainerStyle={{
               position: 'relative', // to fix scroll issue ... it is by default 'absolute'
               top: 0,
-              minHeight: 350// to fix gap between label box and container
+              minHeight: 450// to fix gap between label box and container
             }}
             open={openColor}
             value={carColor}

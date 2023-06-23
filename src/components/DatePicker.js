@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
-
-import FormButton from './FormButton.js'
 
 const DatePickerModal = ({ dateTimeSelected, modeTime, titleButton }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
@@ -21,9 +19,17 @@ const DatePickerModal = ({ dateTimeSelected, modeTime, titleButton }) => {
     if (modeTime === 'date') {
       selectedDate = date.toLocaleDateString('es-ES')
     } else {
-      selectedDate = date.toLocaleString('es-ES')
-    }
+      const options = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+      }
 
+      // Format the date as per the specified options
+      selectedDate = date.toLocaleString('es-ES', options)
+    }
     setSelectedDate(selectedDate)
     if (dateTimeSelected) {
       dateTimeSelected(selectedDate)
@@ -32,9 +38,15 @@ const DatePickerModal = ({ dateTimeSelected, modeTime, titleButton }) => {
   }
 
   return (
-    <View className='flex'>
-
-      <FormButton buttonTitle={titleButton} className='p-3 self-center ' onPress={showDatePicker} />
+    <View className='flex-row justify-between items-center my-3'>
+      <TouchableOpacity
+        className='w-1/2 bg-blueColor py-4 px-4 mt-4 rounded-full'
+        onPress={showDatePicker}
+      >
+        <Text className='text-white  font-bold text-center'>
+          {titleButton}
+        </Text>
+      </TouchableOpacity>
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode={modeTime}
@@ -42,12 +54,21 @@ const DatePickerModal = ({ dateTimeSelected, modeTime, titleButton }) => {
         onCancel={hideDatePicker}
         is24Hour
       />
+      {modeTime === 'date'
+        ? (
+          <Text
+            className='text-xl font-bold text-blueColor mt-5 mr-3 '
+          >{`${selectedDate || ''}`}
+          </Text>
+          )
+        : (
+          <Text
+            className='text-xl font-bold text-blueColor mt-5 '
+          >{`${selectedDate || ''}`}
+          </Text>
 
-      <Text
-        className='text-sm font-medium text-black/60 text-center my-2'
-      >{`${selectedDate || ''}`}
+          )}
 
-      </Text>
     </View>
   )
 }

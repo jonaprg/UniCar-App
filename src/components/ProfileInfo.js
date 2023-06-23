@@ -47,7 +47,7 @@ export default function ProfileInfo () {
           handleRedux={setUserNameRedux}
         />
         <InfoField
-          label='Correo electronico'
+          label='Correo electrónico'
           value={user?.email}
           canEdit
           handleUpdate={updateUserEmail}
@@ -61,7 +61,7 @@ export default function ProfileInfo () {
           handleRedux={setUserUniversityRedux}
         />
         <InfoField
-          label='Telefono'
+          label='Teléfono móvil'
           value={user.phone ? user.phone.toString() : ''}
           canEdit
           handleUpdate={updateUserPhone}
@@ -91,7 +91,7 @@ export default function ProfileInfo () {
               <Text>{user?.carColor ?? 'Sin color'}</Text>
             </View>
             <View className='py-2'>
-              <Text className='text-lg font-bold '>Valoraciones</Text>
+              <Text className='text-lg font-bold text-blueColor '>Valoraciones</Text>
               <Text>{user?.ratings ?? 'No hay valoraciones'}</Text>
             </View>
           </View>
@@ -185,6 +185,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    paddingVertical: 10
+    paddingVertical: 6
   }
 })
