@@ -35,7 +35,7 @@ const ProfileUserSearch = ({ route }) => {
   }
 
   return (
-    <View className='bg-white rounded-lg shadow flex-1  '>
+    <View className='bg-secondary rounded-lg shadow flex-1  '>
 
       {/* Contenido de la tarjeta */}
       <View className='p-4'>
@@ -76,13 +76,6 @@ const ProfileUserSearch = ({ route }) => {
                 )}
           </View>
 
-          <View className='flex-column'>
-            <Text className='text-lg font-normal'>Valoraciones</Text>
-            <Text className='text-lg font-bold'>No hay valoraciones</Text>
-          </View>
-          <View>
-            <Text />
-          </View>
         </View>
         <View className='flex-column my-5 border-b-2 border-secondary'>
           <Text className='text-lg font-normal'>Preferencias</Text>

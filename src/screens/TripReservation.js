@@ -55,7 +55,7 @@ const TripReservation = ({ route }) => {
   }
 
   return (
-    <View className='flex-1'>
+    <View className='flex-1 bg-secondary'>
 
       <View className='p-4 bg-primary'>
         <View className='flex-row justify-between mb-5  '>
@@ -72,7 +72,7 @@ const TripReservation = ({ route }) => {
           <Text className='text-2xl text-secondary font-bold'>{trip.dateTime}</Text>
         </View>
       </View>
-      <View className=' flex-col p-4 '>
+      <View className='  flex-col p-4 bg-secondary '>
         <Text className='text-lg text-blueColor font-bold mb-2'>Importe total: {seats} pasajero/s</Text>
 
         <Text className='text-4xl text-blueColor font-bold'>{trip.price * seats}€ </Text>

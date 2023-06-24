@@ -1,5 +1,4 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { auth, db } from '../firebaseConfig'
@@ -8,7 +7,6 @@ import { doc, getDoc, setDoc } from 'firebase/firestore'
 // import { getStorage, ref, getDownloadURL } from 'firebase/storage'
 const UserProfile = ({ route }) => {
   const { data, id } = route.params
-  const currentUser = useSelector(state => state.user)
 
   const navigation = useNavigation()
   // const storage = getStorage()
@@ -27,9 +25,7 @@ const UserProfile = ({ route }) => {
       if (!docSnap.exists()) {
         const roomData = {
           participants: [uid1, uid2],
-          roomId,
-          otherUserName: data.name,
-          currentUserName: currentUser.name
+          roomId
         }
         await setDoc(doc(db, 'chats', roomId), roomData)
       }
@@ -40,7 +36,7 @@ const UserProfile = ({ route }) => {
   }
   // Luego, en el lugar donde deseas crear la sala y obtener el roomId:
   return (
-    <View className='bg-white rounded-lg shadow flex-1  '>
+    <View className='bg-secondary rounded-lg shadow flex-1  '>
 
       {/* Contenido de la tarjeta */}
       <View className='p-4'>
@@ -81,13 +77,6 @@ const UserProfile = ({ route }) => {
                 )}
           </View>
 
-          <View className='flex-column'>
-            <Text className='text-lg font-normal'>Valoraciones</Text>
-            <Text className='text-lg font-bold'>No hay valoraciones</Text>
-          </View>
-          <View>
-            <Text />
-          </View>
         </View>
         <View className='flex-column my-5 border-b-2 border-secondary'>
           <Text className='text-lg font-normal'>Preferencias</Text>

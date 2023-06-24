@@ -98,10 +98,10 @@ const Home = () => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{ flex: 1 }}
+      className='flex-1 bg-primary'
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
-        <View className='flex-1 bg-primary'>
+        <View className=' bg-primary'>
           <Image
             source={require('../../assets/headerHome.jpg')}
             style={{ width: '100%', height: 200 }}

@@ -50,6 +50,7 @@ export default function ProfileInfo () {
           label='Correo electrónico'
           value={user?.email}
           canEdit
+          autoCapitalize='none'
           handleUpdate={updateUserEmail}
           handleRedux={setUserEmailRedux}
         />
@@ -80,24 +81,7 @@ export default function ProfileInfo () {
               </TouchableOpacity>
               <Text>{user?.carBrand ?? 'Sin modelo'}</Text>
             </View>
-            <View className='py-2'>
-              <TouchableOpacity
-                className='flex-row items-center'
-                onPress={() => handleCarColorEdit({ userId: user?.id, carColorValue: user?.carColor })}
-              >
-                <Text className='font-bold text-lg text-blueColor mr-2'>Color</Text>
-                <AntDesign name='edit' color='black' size={18} />
-              </TouchableOpacity>
-              <Text>{user?.carColor ?? 'Sin color'}</Text>
-            </View>
-            <View className='py-2'>
-              <Text className='text-lg font-bold text-blueColor '>Valoraciones</Text>
-              <Text>{user?.ratings ?? 'No hay valoraciones'}</Text>
-            </View>
-          </View>
-        </View>
-        <View className='flex mt-3'>
-          <View className='flex-row justify-between'>
+
             <View className='py-2'>
               <TouchableOpacity
                 className='flex-row items-center'
@@ -121,7 +105,16 @@ export default function ProfileInfo () {
                   />
                   )}
             </View>
-
+          </View>
+          <View className=''>
+            <TouchableOpacity
+              className='flex-row items-center'
+              onPress={() => handleCarColorEdit({ userId: user?.id, carColorValue: user?.carColor })}
+            >
+              <Text className='font-bold text-lg text-blueColor mr-2'>Color del coche</Text>
+              <AntDesign name='edit' color='black' size={18} />
+            </TouchableOpacity>
+            <Text>{user?.carColor ?? 'Sin color'}</Text>
           </View>
         </View>
 
@@ -135,7 +128,8 @@ function InfoField ({
   value,
   canEdit,
   handleUpdate,
-  handleRedux
+  handleRedux,
+  ...rest
 }) {
   const { id } = useSelector((state) => state.user)
   const [localValue, setLocalValue] = React.useState(null)
@@ -157,6 +151,7 @@ function InfoField ({
         {label}
       </MyText>
       <TextInput
+        {...rest}
         placeholder={label}
         value={localValue}
         onChangeText={canEdit && setLocalValue}

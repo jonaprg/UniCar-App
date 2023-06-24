@@ -98,7 +98,7 @@ const Profile = () => {
         }
         nestedScrollEnabled
       >
-        <View>
+        <View className='bg-secondary'>
           <ProfilePicture />
           <ProfileInfo />
           <View className='mt-5 items-center justify-center'>

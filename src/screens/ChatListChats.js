@@ -1,26 +1,32 @@
 import React, { useState, useLayoutEffect } from 'react'
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
 import { auth, db } from '../firebaseConfig.js'
-import { collection, onSnapshot, query, where } from 'firebase/firestore'
+import { collection, onSnapshot, query, where, doc, getDoc } from 'firebase/firestore'
 import { getUserProfile } from '../api/userOperations.js'
 import Toast from 'react-native-toast-message'
+import { Ionicons } from '@expo/vector-icons'
 
 const ChatListScreen = ({ navigation }) => {
   const [chatRooms, setChatRooms] = useState([])
-
   useLayoutEffect(() => {
     const q = query(collection(db, 'chats'), where('participants', 'array-contains', auth.currentUser.uid))
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const rooms = querySnapshot.docs.map((doc) => {
-        const data = doc.data()
-        const otherUserId = data.participants.filter((participant) => participant !== auth.currentUser.uid)
-        return {
-          roomId: doc.id,
-          otherUserId,
-          name: data.otherUserName
+    const unsubscribe = onSnapshot(q, async (querySnapshot) => {
+      const rooms = []
 
-        }
-      })
+      for (const docS of querySnapshot.docs) {
+        const data = docS.data()
+        const otherUserId = data.participants.filter((participant) => participant !== auth.currentUser.uid)
+
+        const userDoc = await getDoc(doc(db, 'users', otherUserId[0]))
+        const userName = userDoc.data().name
+
+        rooms.push({
+          roomId: docS.id,
+          otherUserId,
+          name: userName
+        })
+      }
+
       setChatRooms(rooms)
     })
 
@@ -51,26 +57,24 @@ const ChatListScreen = ({ navigation }) => {
     }
 
     return (
-      <View className=' m-1 rounded-sm bg-white shadow shadow-gray-600 p-4'>
-        <View className='flex-row  justify-between align-middle '>
+      <View className=' m-1 rounded-sm bg-white shadow shadow-gray-600 p-3'>
+        <View className='flex-row justify-between  '>
+
           <Text className='text-base font-bold mt-1 text-gray-900'>{otherUser.name}</Text>
-          <View className='flex-row  justify-around'>
+          <View className='flex-row gap-8'>
             <TouchableOpacity
-              className='w-1/3 bg-primary p-2 rounded-full'
+              className=' bg-primary p-2 rounded-full'
               onPress={() => handleProfileUser(otherUser.uid)}
             >
-              <Text className='text-white font-bold text-center'>
-                Ver Perfil
-              </Text>
+              <Ionicons name='information-circle-sharp' size={24} color='white' />
             </TouchableOpacity>
             <TouchableOpacity
-              className='w-1/3 bg-blueColor p-2 rounded-full'
+              className=' bg-blueColor p-2 rounded-full'
               onPress={() => enterChat(otherUser)}
             >
-              <Text className='text-white font-bold text-center'>
-                Chatear
-              </Text>
+              <Ionicons name='chatbox-ellipses-sharp' size={24} color='white' />
             </TouchableOpacity>
+
           </View>
         </View>
 
@@ -81,7 +85,7 @@ const ChatListScreen = ({ navigation }) => {
   console.log(chatRooms.length)
   return (
 
-    <View classname='flex-1'>
+    <View classname='flex-1 bg-secondary'>
       {chatRooms.length !== 0
         ? (
           <FlatList
