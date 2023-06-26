@@ -69,14 +69,14 @@ const TripReservation = ({ route }) => {
         </View>
         <View className='flex-col mb-5 '>
           <Text className='text-xl text-secondary font-base mb-1'>Salida</Text>
-          <Text className='text-2xl text-secondary font-bold'>{trip.dateTime}</Text>
+          <Text className='text-2xl text-secondary font-bold'>{trip.dateTime}h</Text>
         </View>
       </View>
       <View className='  flex-col p-4 bg-secondary '>
         <Text className='text-lg text-blueColor font-bold mb-2'>Importe total: {seats} pasajero/s</Text>
 
         <Text className='text-4xl text-blueColor font-bold'>{trip.price * seats}€ </Text>
-        <Text className='text-xl text-blueColor font-bold'>{trip.price + '€'} / 1 pasajero</Text>
+        <Text className='text-xl text-blueColor font-bold'>{trip.price + '€'} por pasajero</Text>
 
       </View>
       <View>

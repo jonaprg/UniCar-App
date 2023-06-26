@@ -53,14 +53,14 @@ const TripsSearch = ({ route }) => {
         <View className='flex-row justify-between'>
           <View className='flex-column align-middle text-center'>
             <Text className='text-base font-bold text-gray-900'>{item.origin} - {item.destination}</Text>
-            <Text className='text-base font-bold text-gray-900'>{isExpired ? 'Ha finalizado' : item.dateTime}</Text>
+            <Text className='text-base font-bold text-gray-900'>{isExpired ? 'Ha finalizado' : item.dateTime + 'h'}</Text>
 
           </View>
         </View>
         {!isExpired && (
           <Text class='text-sm font-medium text-gray-600'>Plazas disponibles: {item.seatsAvailable === 0 ? 'No hay plazas' : item.seatsAvailable}</Text>
         )}
-        <Text>{item.userDriver === uid.toString() && 'Eres el conductor'}</Text>
+        <Text className='text-gray-900 font-bold text-base'>{item.userDriver === uid.toString() && 'Eres el conductor'}</Text>
 
         <View className='mt-5'>
           {!isExpired && (

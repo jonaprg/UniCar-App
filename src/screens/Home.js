@@ -104,7 +104,7 @@ const Home = () => {
         <View className=' bg-primary'>
           <Image
             source={require('../../assets/headerHome.jpg')}
-            style={{ width: '100%', height: 200 }}
+            style={{ width: '100%', height: 150 }}
           />
           <View className='m-5'>
             <Text className='text-2xl font-bold text-secondary'>

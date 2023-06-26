@@ -11,7 +11,7 @@ const RequestTrip = () => {
       <FontAwesome5 name='user-clock' size={90} color='white' />
       <Text className='text-4xl font-bold mt-10 text-white'>Esperando...</Text>
       <Text className='text-xl w-10/12 text-white mt-2'>
-        El conductor debe aceptar, espere por favor o vuelva al inicio
+        El conductor debe aceptar tu solicitud, espera o vuelve al inicio
       </Text>
 
       <TouchableOpacity

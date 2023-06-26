@@ -53,7 +53,7 @@ const DetailTrip = ({ route }) => {
             : (
               <View className='justify-center items-center mb-5'>
                 <Text className='text-xl font-bold'>{date}</Text>
-                <Text className='text-lg font-bold'>Salida - {time}</Text>
+                <Text className='text-lg font-bold'>Salida - {time}h</Text>
               </View>
               )}
         </View>

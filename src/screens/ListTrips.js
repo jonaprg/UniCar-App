@@ -68,7 +68,7 @@ const TripScreen = () => {
         <View className='flex-row justify-between'>
           <View className='flex-column align-middle text-center'>
             <Text className='text-base font-bold text-gray-900'>{item?.origin} - {item?.destination}</Text>
-            <Text className='text-base font-bold text-gray-900'>{isExpired ? 'Ha finalizado' : item?.dateTime}</Text>
+            <Text className='text-base font-bold text-gray-900'>{isExpired ? 'Ha finalizado' : item?.dateTime + 'h'}</Text>
 
           </View>
         </View>
