@@ -80,7 +80,7 @@ const CarColorEdit = ({ navigation, route }) => {
             dropDownContainerStyle={{
               position: 'relative', // to fix scroll issue ... it is by default 'absolute'
               top: 0,
-              minHeight: 450// to fix gap between label box and container
+              minHeight: 400// to fix gap between label box and container
             }}
             open={openColor}
             value={carColor}

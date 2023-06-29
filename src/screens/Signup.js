@@ -52,7 +52,9 @@ const SignUp = ({ onSignUp, setEmail, setPassword, setName, setToggleCheckBox })
           name='Contraseña'
           onChangeText={setPassword}
           placeholder='*******'
+          hint='Ha de tener un mínimo 6 caracteres y máximo de 20, y tener una mayúsucula. No puede contener caracteres especiales.'
         />
+
         <FormButton
           buttonTitle='Registrarse'
           onPress={onSignUp}

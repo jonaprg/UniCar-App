@@ -52,12 +52,26 @@ const AuthScreen = () => {
 
   const onSignUp = () => {
     const emailValidation = validateEmail(email)
+
     const passwordValidation = validatePassword(password)
-    if (!emailValidation || !passwordValidation || name === '') {
+
+    if (email === '' && password === '' && name === '') {
       Toast.show({
         type: 'error',
         text1: 'Error',
         text2: 'Ingrese todos los datos'
+      })
+    } else if (email === '') {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'El correo electrónico no puede estar vacío'
+      })
+    } else if (password === '') {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'La contraseña no puede estar vacía'
       })
     } else if (name === '') {
       Toast.show({
@@ -65,11 +79,25 @@ const AuthScreen = () => {
         text1: 'Error',
         text2: 'El nombre no puede estar vacío'
       })
+    } else if (!passwordValidation && !emailValidation) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'El correo electrónico y la contraseña no son válidos'
+
+      })
+    } else if (!emailValidation) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'El correo electrónico no es válido'
+
+      })
     } else if (!passwordValidation) {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2: 'El correo o la contraseña no son válidos'
+        text2: 'La contraseña no es válida'
 
       })
     } else {
@@ -90,7 +118,7 @@ const AuthScreen = () => {
           Toast.show({
             type: 'error',
             text1: 'Error',
-            text2: 'El email ya existe'
+            text2: `El correo electrónico ${email} ya está en uso`
           })
           console.log('ERROR - SignUp', error)
         })

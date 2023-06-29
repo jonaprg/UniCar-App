@@ -23,7 +23,7 @@ const Home = () => {
 
   }
   const [searchData, setsearchData] = useState(initialSearchData)
-
+  console.log(searchData)
   const handleSearchPlaceOrigin = (data) => {
     setsearchData((prevState) => ({
       ...prevState,

@@ -137,7 +137,7 @@ const CreateTrip = () => {
         <View className='bg-secondary  flex-1'>
           <View className='p-5'>
             <Text className='text-2xl font-bold text-blueColor'>
-              ¿Dónde quieres ir?
+              ¿Que viaje vas a realizar?
             </Text>
             <View className='w-full bg-white shadow shadow-gray-500 rounded-3xl p-5 my-5'>
               <View className='mt-5'>

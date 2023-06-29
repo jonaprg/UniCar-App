@@ -77,7 +77,7 @@ const PreferencesEdit = ({ navigation, route }) => {
             dropDownContainerStyle={{
               position: 'relative',
               top: 0,
-              minHeight: 450
+              minHeight: 400
             }}
             open={openCar}
             value={preferences}

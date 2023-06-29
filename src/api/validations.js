@@ -1,15 +1,9 @@
 export const validateEmail = (email) => {
-  if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-    return 'Enter a valid email address!'
-  } else return true
+  const regex = /^[A-Za-z0-9]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
+  return regex.test(email)
 }
 
 export const validatePassword = (password) => {
-  if (
-    !/(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/i.test(
-      password
-    )
-  ) {
-    return 'Password should have 1 lowercase letter, 1 uppercase letter, 1 number, and be at least 8 characters long'
-  } else return true
+  const regex = /^(?=.*[A-Z])(?!.*[#\/\/&|])[A-Za-z0-9]{6,20}$/
+  return (regex.test(password))
 }
