@@ -61,7 +61,11 @@ npm run start
 - Follow the instructions provided in the project's documentation to set up and configure the backend server.
 - Now you need change the file (BASE_URL.js) for your IP address.
 
+7. Test with Jest
 
+```bash
+npm run test
+```
 
 
 
