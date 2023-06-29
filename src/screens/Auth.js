@@ -10,7 +10,7 @@ import Login from './Login.js'
 import SignUp from './Signup.js'
 import { auth } from '../firebaseConfig.js'
 import { setUserNameRedux } from '../reducers/user.js'
-import { validateEmail, validatePassword } from '../api/validations.js'
+import { validateEmail, validatePassword, validateName } from '../utils/validations.js'
 import Toast from 'react-native-toast-message'
 
 const AuthScreen = () => {
@@ -54,7 +54,7 @@ const AuthScreen = () => {
     const emailValidation = validateEmail(email)
 
     const passwordValidation = validatePassword(password)
-
+    const nameValidation = validateName(name)
     if (email === '' && password === '' && name === '') {
       Toast.show({
         type: 'error',
@@ -79,6 +79,12 @@ const AuthScreen = () => {
         text1: 'Error',
         text2: 'El nombre no puede estar vacío'
       })
+    } else if (!nameValidation) {
+      Toast.show({
+        type: 'error',
+        text1: 'El nombre no es válido',
+        text2: 'Debe contener al menos 3 caracteres'
+      })
     } else if (!passwordValidation && !emailValidation) {
       Toast.show({
         type: 'error',
@@ -96,8 +102,8 @@ const AuthScreen = () => {
     } else if (!passwordValidation) {
       Toast.show({
         type: 'error',
-        text1: 'Error',
-        text2: 'La contraseña no es válida'
+        text1: 'La contraseña no es válida',
+        text2: 'Debe contener al menos 6 caracteres'
 
       })
     } else {
