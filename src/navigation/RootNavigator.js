@@ -63,7 +63,7 @@ const RootNavigator = () => {
           carColor: userData.carColor,
           ratings: userData.ratings,
           preferences: userData.preferences,
-          profilePicture: userData.profilePicture
+          profilePicture: userData.profilePicture ?? ''
         }))
         dispatch(restoreToken(token))
       } else {
