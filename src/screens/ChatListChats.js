@@ -60,7 +60,7 @@ const ChatListScreen = ({ navigation }) => {
       <View className=' m-1 rounded-sm bg-white shadow shadow-gray-600 p-3'>
         <View className='flex-row justify-between  '>
 
-          <Text className='text-base font-bold mt-1 text-gray-900'>{otherUser.name}</Text>
+          <Text className='text-base font-bold mt-1 text-gray-900'>{otherUser.name ?? ''}</Text>
           <View className='flex-row gap-8'>
             <TouchableOpacity
               className=' bg-primary p-2 rounded-full'

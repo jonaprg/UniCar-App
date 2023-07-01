@@ -43,7 +43,7 @@ const UserProfile = ({ route }) => {
         <View className=' border-b-2 border-secondary'>
           <View className='flex-row  flex-wrap mb-2'>
             <View className='flex-row items-center'>
-              {data.profilePicture !== '' && data.profilePicture
+              {data.profilePicture !== '' || data.profilePicture !== 'undefined'
                 ? (
                   <Image source={{ uri: data.profilePicture }} className='w-16 h-16 rounded-full' />
                   )

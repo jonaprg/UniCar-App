@@ -42,11 +42,8 @@ export default function ProfilePicture () {
       const response = await fetch(uri)
       const blob = await response.blob()
       const storageRef = ref(storage, `profilePictures/${id}`)
-      uploadBytes(storageRef, blob).then((snapshot) => {
-        Toast.show({
-          type: 'success',
-          text2: 'Foto de perfil actualizada'
-        })
+      await uploadBytes(storageRef, blob).then((snapshot) => {
+        console.log('Uploaded photo Storage')
       }).catch((error) => {
         Toast.show({
           type: 'error',
@@ -55,18 +52,24 @@ export default function ProfilePicture () {
         console.log('ERROR - Uploded photo Storage', error)
       })
 
-      const imageRef = await ref(storage, `profilePictures/${id}`)
-      await getDownloadURL(imageRef)
-        .then((url) => {
-          setDoc(doc(db, 'users', id), {
-            profilePicture: url
+      setTimeout(async () => {
+        try {
+          const imageRef = ref(storage, `profilePictures/${id}`)
+          const url = await getDownloadURL(imageRef)
+
+          await setDoc(doc(db, 'users', id), {
+            profilePicture: url || ''
           }, { merge: true })
 
           dispatch(resetProfilePicture(url))
-        })
-        .catch((error) => {
-          console.log('ERROR - Get photo the storage', error)
-        })
+          Toast.show({
+            type: 'success',
+            text2: 'Foto de perfil actualizada'
+          })
+        } catch (error) {
+          console.log('ERROR - Get photo from storage', error)
+        }
+      }, 1000)
     } catch (e) {
       console.log('ERROR - Save photo', e)
     }

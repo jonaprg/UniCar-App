@@ -39,7 +39,7 @@ const Profile = () => {
         carColor: data.userData.carColor,
         ratings: data.userData.ratings,
         preferences: data.userData.preferences,
-        profilePicture: data.userData.profilePicture
+        profilePicture: data.userData.profilePicture ?? ''
       }))
     } catch (error) {
       console.log('ERROR - Failed to refresh', error)

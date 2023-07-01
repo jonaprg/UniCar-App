@@ -41,7 +41,7 @@ const TripsSearch = ({ route }) => {
     const fechaExpiracion = new Date(year, month - 1, day, hour, minutes)
     fechaExpiracion.setHours(fechaExpiracion.getHours() + 2)
 
-    const isExpired = fechaActual.toLocaleString() > fechaExpiracion.toLocaleString()
+    const isExpired = fechaActual > fechaExpiracion || (fechaActual.getTime() - fechaExpiracion.getTime()) >= 2 * 60 * 60 * 1000
 
     if (isExpired) {
       return null // No mostrar la tarjeta si ha expirado

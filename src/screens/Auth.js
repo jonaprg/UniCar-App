@@ -103,7 +103,7 @@ const AuthScreen = () => {
       Toast.show({
         type: 'error',
         text1: 'La contraseña no es válida',
-        text2: 'Debe contener al menos 6 caracteres'
+        text2: '6 caracteres como mínimo, 1 mayúscula y sin caracteres especiales'
 
       })
     } else {

@@ -33,7 +33,7 @@ const ProfileUserSearch = ({ route }) => {
     } catch (error) { console.log('ERROR - Not authorized', error) }
     navigation.navigate('ChatScreen', { currentUser: auth.currentUser.uid, otherUser: id, roomId })
   }
-
+  console.log(data.profilePicture)
   return (
     <View className='bg-secondary rounded-lg shadow flex-1  '>
 
@@ -42,7 +42,7 @@ const ProfileUserSearch = ({ route }) => {
         <View className=' border-b-2 border-secondary'>
           <View className='flex-row  flex-wrap mb-2'>
             <View className='flex-row items-center'>
-              {data.profilePicture !== ''
+              {data.profilePicture !== 'undefined' || data.profilePicture !== '' || data.profilePicture
                 ? (
                   <Image source={{ uri: data.profilePicture }} className='w-16 h-16 rounded-full' />
                   )

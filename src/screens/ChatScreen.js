@@ -71,8 +71,14 @@ const ChatScreen = ({ route }) => {
 
     onSnapshot(getUserProfilePicture, (doc) => {
       const data = doc.data()
-      setUserProfilePicture(data.profilePicture)
-      setUserName(data.name)
+      if (data.profilePicture !== '' ||
+      data.profilePicture !== undefined ||
+      data.profilePicture !== null ||
+      data.profilePicture !== 'undefined') { setUserProfilePicture(data.profilePicture) } else { setUserProfilePicture('No esta disponible') }
+
+      if (data.name !== '' || data.name !== undefined || data.name !== null || data.name !== 'undefined') {
+        setUserName(data.name)
+      } else { setUserName('No esta disponible') }
     })
     const getMessages = collection(roomRef, 'messages')
     const unsubscribe = onSnapshot(getMessages, (querySnapshot) => {
@@ -106,7 +112,7 @@ const ChatScreen = ({ route }) => {
       user={{
         _id: currentUser,
         name: userName || 'Usuario',
-        avatar: userProfilePicture || 'https://placeimg.com/140/140/any'
+        avatar: userProfilePicture || require('../../assets/profile.png')
       }}
       onSend={handleSend}
       messagesContainerStyle={{ backgroundColor: 'white' }}
