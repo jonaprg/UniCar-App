@@ -4,6 +4,7 @@ import FormButton from '../components/FormButton.js'
 import { useNavigation } from '@react-navigation/native'
 import { auth } from '../firebaseConfig.js'
 import Toast from 'react-native-toast-message'
+import { BASE_URL } from '../utils/base_url.js'
 
 const TripReservation = ({ route }) => {
   const { trip, seats } = route.params
@@ -11,7 +12,7 @@ const TripReservation = ({ route }) => {
 
   const handleReservation = async () => {
     const token = await auth.currentUser.getIdToken()
-    await fetch(`http://192.168.1.41:3000/api/v1/trips/${trip.tripId}/request/${seats}`, {
+    await fetch(`${BASE_URL}/api/v1/trips/${trip.tripId}/request/${seats}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',

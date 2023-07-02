@@ -1,10 +1,11 @@
 import Toast from 'react-native-toast-message'
 import { auth } from '../firebaseConfig.js'
+import { BASE_URL } from '../utils/base_url.js'
 
 export const getTripIdFromDatabase = async (id) => {
   const token = await auth.currentUser.getIdToken()
   try {
-    const response = await fetch(`http://192.168.1.41:3000/api/v1/trips/${id}`, {
+    const response = await fetch(`${BASE_URL}/api/v1/trips/${id}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -23,7 +24,7 @@ export const getTripIdFromDatabase = async (id) => {
 export const getTripsFromDatabase = async () => {
   const token = await auth.currentUser.getIdToken()
   try {
-    const response = await fetch('http://192.168.1.41:3000/api/v1/trips/user', {
+    const response = await fetch(`${BASE_URL}/api/v1/trips/user`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -41,7 +42,7 @@ export const getTripsFromDatabase = async () => {
 
 export const deleteDriverTrip = async (tripID) => {
   const token = await auth.currentUser.getIdToken()
-  await fetch(`http://192.168.1.41:3000/api/v1/trips/${tripID}`, {
+  await fetch(`${BASE_URL}/api/v1/trips/${tripID}`, {
     method: 'DELETE',
     headers: {
       'Content-type': 'application/json',
@@ -67,7 +68,7 @@ export const deleteDriverTrip = async (tripID) => {
 
 export const deletePassengerTrip = async (tripID) => {
   const token = await auth.currentUser.getIdToken()
-  await fetch(`http://192.168.1.41:3000/api/v1/trips/${tripID}/passenger`, {
+  await fetch(`${BASE_URL}/api/v1/trips/${tripID}/passenger`, {
     method: 'PUT',
     headers: {
       'Content-type': 'application/json',
@@ -94,7 +95,7 @@ export const getRequestsByTripFromDatabase = async (tripId) => {
   const token = await auth.currentUser.getIdToken()
   console.log('token', token)
   try {
-    const response = await fetch(`http://192.168.1.41:3000/api/v1/trips/requestsPassengers/${tripId}`, {
+    const response = await fetch(`${BASE_URL}/api/v1/trips/requestsPassengers/${tripId}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -114,7 +115,7 @@ export const getRequestsByTripFromDatabase = async (tripId) => {
 export const acceptPassenger = async (tripId, passengerId) => {
   let success = false
   const token = await auth.currentUser.getIdToken()
-  await fetch(`http://192.168.1.41:3000/api/v1/trips/${tripId}/${passengerId}/acceptPassenger`, {
+  await fetch(`${BASE_URL}/api/v1/trips/${tripId}/${passengerId}/acceptPassenger`, {
     method: 'PUT',
     headers: {
       'Content-type': 'application/json',
@@ -142,7 +143,7 @@ export const acceptPassenger = async (tripId, passengerId) => {
 export const rejectPassenger = async (tripId, passengerId) => {
   let rejected = false
   const token = await auth.currentUser.getIdToken()
-  await fetch(`http://192.168.1.41:3000/api/v1/trips/${tripId}/${passengerId}/rejectPassenger`, {
+  await fetch(`${BASE_URL}/api/v1/trips/${tripId}/${passengerId}/rejectPassenger`, {
     method: 'PUT',
     headers: {
       'Content-type': 'application/json',

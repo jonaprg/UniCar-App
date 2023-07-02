@@ -12,6 +12,8 @@ import ProfileInfo from '../components/ProfileInfo.js'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Toast } from 'react-native-toast-message/lib/src/Toast.js'
+import { BASE_URL } from '../utils/base_url.js'
+
 const Profile = () => {
   const dispatch = useDispatch()
 
@@ -21,7 +23,7 @@ const Profile = () => {
     const token = await auth.currentUser.getIdToken()
     const userId = await auth.currentUser.uid
     try {
-      const response = await fetch(`http://192.168.1.41:3000/api/v1/users/${userId}`, {
+      const response = await fetch(`${BASE_URL}/api/v1/users/${userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +68,7 @@ const Profile = () => {
     const token = await AsyncStorage.getItem('@token')
     const user = auth.currentUser
 
-    await fetch(`http://192.168.1.41:3000/api/v1/users/${user.uid.replace(/""/g, '')}`, {
+    await fetch(`${BASE_URL}/api/v1/users/${user.uid.replace(/""/g, '')}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json',

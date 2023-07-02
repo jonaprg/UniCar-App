@@ -12,6 +12,7 @@ import GooglePlacesInput from '../components/GooglePlacesInput.js'
 import DatePickerModal from '../components/DatePicker.js'
 import SeatsInput from '../components/SeatsInput.js'
 import { Toast } from 'react-native-toast-message/lib/src/Toast.js'
+import { BASE_URL } from '../utils/base_url.js'
 
 const Home = () => {
   const navigation = useNavigation()
@@ -54,7 +55,7 @@ const Home = () => {
 
   const handleSearchTrip = async () => {
     const token = await AsyncStorage.getItem('@token')
-    await fetch('http://192.168.1.41:3000/api/v1/trips/search', {
+    await fetch(`${BASE_URL}/api/v1/trips/search`, {
       method: 'POST',
       body: JSON.stringify({
         origin: searchData.origin,

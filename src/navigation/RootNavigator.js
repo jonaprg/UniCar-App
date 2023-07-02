@@ -11,6 +11,7 @@ import { auth } from '../firebaseConfig.js'
 import { onAuthStateChanged } from 'firebase/auth'
 import { setUser } from '../reducers/user.js'
 import Toast from 'react-native-toast-message'
+import { BASE_URL } from '../utils/base_url.js'
 
 const RootNavigator = () => {
   const { userToken } = useSelector((state) => state.auth)
@@ -20,7 +21,7 @@ const RootNavigator = () => {
 
   const getUser = async (userID, token) => {
     try {
-      const response = await fetch(`http://192.168.1.41:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
+      const response = await fetch(`${BASE_URL}/api/v1/users/${userID.replace(/""/g, '')}`, {
         method: 'GET',
         headers: {
           'Content-type': 'application/json',

@@ -2,11 +2,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { auth } from '../firebaseConfig.js'
 import { updateEmail } from 'firebase/auth'
 import Toast from 'react-native-toast-message'
+import { BASE_URL } from '../utils/base_url.js'
 
 export const updateUserName = async (userID, newName) => {
   let successUpdate = false
   const token = await AsyncStorage.getItem('@token')
-  await fetch(`http://192.168.1.41:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
+  await fetch(`${BASE_URL}/api/v1/users/${userID.replace(/""/g, '')}`, {
     method: 'PUT',
     headers: {
       'Content-type': 'application/json',
@@ -38,7 +39,7 @@ export const updateUserName = async (userID, newName) => {
 export const updateUserPhone = async (userID, newPhone) => {
   let successUpdate = false
   const token = await AsyncStorage.getItem('@token')
-  await fetch(`http://192.168.1.41:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
+  await fetch(`${BASE_URL}/api/v1/users/${userID.replace(/""/g, '')}`, {
     method: 'PUT',
     headers: {
       'Content-type': 'application/json',
@@ -70,7 +71,7 @@ export const updateUserPhone = async (userID, newPhone) => {
 export const updateUserUniversity = async (userID, newUniversity) => {
   let successUpdate = false
   const token = await AsyncStorage.getItem('@token')
-  await fetch(`http://192.168.1.41:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
+  await fetch(`${BASE_URL}/api/v1/users/${userID.replace(/""/g, '')}`, {
     method: 'PUT',
     headers: {
       'Content-type': 'application/json',
@@ -103,7 +104,7 @@ export const updateUserEmail = async (userID, newEmail) => {
   let successUpdate = false
   const token = await AsyncStorage.getItem('@token')
 
-  await fetch(`http://192.168.1.41:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
+  await fetch(`${BASE_URL}/api/v1/users/${userID.replace(/""/g, '')}`, {
     method: 'PUT',
     headers: {
       'Content-type': 'application/json',
@@ -142,7 +143,7 @@ export const updateUserEmail = async (userID, newEmail) => {
 export const getUserProfile = async (userID) => {
   const token = await AsyncStorage.getItem('@token')
   try {
-    const response = await fetch(`http://192.168.1.41:3000/api/v1/users/${userID.replace(/""/g, '')}`, {
+    const response = await fetch(`${BASE_URL}/api/v1/users/${userID.replace(/""/g, '')}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',

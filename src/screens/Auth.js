@@ -12,6 +12,7 @@ import { auth } from '../firebaseConfig.js'
 import { setUserNameRedux } from '../reducers/user.js'
 import { validateEmail, validatePassword, validateName } from '../utils/validations.js'
 import Toast from 'react-native-toast-message'
+import { BASE_URL } from '../utils/base_url.js'
 
 const AuthScreen = () => {
   const { authState } = useSelector((state) => state.auth)
@@ -138,7 +139,7 @@ const AuthScreen = () => {
       email: userData.user.email
     }
     const userID = userData.user.uid.replace(/""/g, '')
-    await fetch(`http://192.168.1.41:3000/api/v1/users/user/${userID}`, {
+    await fetch(`${BASE_URL}/api/v1/users/user/${userID}`, {
       method: 'POST',
       body: JSON.stringify(user),
       headers: {

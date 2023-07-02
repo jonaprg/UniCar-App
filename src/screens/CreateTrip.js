@@ -13,6 +13,7 @@ import FormButton from '../components/FormButton.js'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import { Toast } from 'react-native-toast-message/lib/src/Toast.js'
+import { BASE_URL } from '../utils/base_url.js'
 
 const CreateTrip = () => {
   const navigation = useNavigation()
@@ -83,7 +84,7 @@ const CreateTrip = () => {
       return // Si algún campo está vacío, no se realiza la petición
     }
     const token = await AsyncStorage.getItem('@token')
-    await fetch('http://192.168.1.41:3000/api/v1/trips/trip', {
+    await fetch(`${BASE_URL}/api/v1/trips/trip`, {
       method: 'POST',
       body: JSON.stringify(tripData),
       headers: {

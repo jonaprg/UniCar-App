@@ -8,6 +8,7 @@ import FormButton from '../components/FormButton.js'
 
 import DropDownPicker from 'react-native-dropdown-picker'
 import Toast from 'react-native-toast-message'
+import { BASE_URL } from '../utils/base_url.js'
 
 const CarBrandEdit = ({ navigation, route }) => {
   const { userId, carBrandValue } = route.params
@@ -51,7 +52,7 @@ const CarBrandEdit = ({ navigation, route }) => {
 
   const handleUpdateCarBrand = async () => {
     const token = await AsyncStorage.getItem('@token')
-    await fetch(`http://192.168.1.41:3000/api/v1/users/${userId}`, {
+    await fetch(`${BASE_URL}/api/v1/users/${userId}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
