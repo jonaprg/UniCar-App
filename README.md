@@ -24,9 +24,8 @@ npm install
 
 4. Set up Firebase:
 
-  - Create a new Firebase project at https://console.firebase.google.com.
-  - Generate your Firebase configuration object.
-  - Changes the Firebase configuration in firebaseConfig :
+  - Go to project configuration, and copy the firebase config SDK.
+  - Changes the Firebase configuration in firebaseConfig.js in UniCar-App project :
   ```
 {
   apiKey: 'apikey',
