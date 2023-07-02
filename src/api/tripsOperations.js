@@ -93,7 +93,6 @@ export const deletePassengerTrip = async (tripID) => {
 
 export const getRequestsByTripFromDatabase = async (tripId) => {
   const token = await auth.currentUser.getIdToken()
-  console.log('token', token)
   try {
     const response = await fetch(`${BASE_URL}/api/v1/trips/requestsPassengers/${tripId}`, {
       method: 'GET',

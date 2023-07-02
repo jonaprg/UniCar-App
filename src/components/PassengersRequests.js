@@ -17,7 +17,6 @@ import { acceptPassenger, rejectPassenger } from '../api/tripsOperations.js'
 const PassengersRequests = ({ tripId }) => {
   const dispatch = useDispatch()
   const { data, isLoading } = useSelector((state) => state.requestsPassengers)
-  console.log('dataPassengers', data)
   const navigation = useNavigation()
   useFocusEffect(
     React.useCallback(() => {

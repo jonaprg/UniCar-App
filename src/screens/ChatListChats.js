@@ -82,7 +82,6 @@ const ChatListScreen = ({ navigation }) => {
 
     )
   }
-  console.log(chatRooms.length)
   return (
 
     <View classname='flex-1 bg-secondary'>

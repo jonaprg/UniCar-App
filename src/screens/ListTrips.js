@@ -61,9 +61,6 @@ const TripScreen = () => {
     fechaExpiracion.setHours(fechaExpiracion.getHours() + 2)
 
     const isExpired = fechaActual > fechaExpiracion || (fechaActual.getTime() - fechaExpiracion.getTime()) >= 2 * 60 * 60 * 1000
-    console.log('fechaActual', fechaActual.toLocaleString())
-    console.log('fechaExpiracion', fechaExpiracion.toLocaleString())
-    console.log('isExpired', isExpired)
 
     return (
 

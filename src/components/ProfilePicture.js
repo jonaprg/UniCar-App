@@ -69,7 +69,7 @@ export default function ProfilePicture () {
         } catch (error) {
           console.log('ERROR - Get photo from storage', error)
         }
-      }, 1000)
+      }, 500)
     } catch (e) {
       console.log('ERROR - Save photo', e)
     }

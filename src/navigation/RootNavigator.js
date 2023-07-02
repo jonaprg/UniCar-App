@@ -79,8 +79,6 @@ const RootNavigator = () => {
     return <Splash />
   }
 
-  console.log('userToken', userToken)
-
   return (
     <NavigationContainer>
       {userToken ? <RootStack /> : <AuthStack />}
